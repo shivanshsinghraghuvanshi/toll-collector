@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/kelseyhightower/envconfig"
-	"github.com/ssinghraghuvanshi/toll-collector/tolltax"
+	"github.com/shivanshsinghraghuvanshi/toll-collector/tolltax"
 	"github.com/tinrab/retry"
 )
 
