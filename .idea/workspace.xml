@@ -3,12 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="9aae2851-6427-4ca2-813e-eb142d17b589" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/cmd/tolltax/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/cmd/tolltax/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/pb/tolltax.pb.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/tolltax.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/tolltax.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tolltax/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/client.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +54,21 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
+  <component name="RunManager">
+    <configuration name="docker-compose.yaml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.yaml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.docker-compose.yaml: Compose Deployment" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -70,7 +81,7 @@
       <workItem from="1614346322894" duration="1324000" />
       <workItem from="1614347672531" duration="5054000" />
       <workItem from="1614353004455" duration="315000" />
-      <workItem from="1614355579904" duration="4814000" />
+      <workItem from="1614355579904" duration="5890000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1614346462854</created>
@@ -121,7 +132,21 @@
       <option name="project" value="LOCAL" />
       <updated>1614361900647</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="TollTax Service Protobuf">
+      <created>1614363955754</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1614363955754</updated>
+    </task>
+    <task id="LOCAL-00009" summary="TollTax Service Last Stand">
+      <created>1614364121950</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1614364121950</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,7 +168,9 @@
     <MESSAGE value="First Commit" />
     <MESSAGE value="Added tolltax service" />
     <MESSAGE value="TollTax Service" />
-    <option name="LAST_COMMIT_MESSAGE" value="TollTax Service" />
+    <MESSAGE value="TollTax Service Protobuf" />
+    <MESSAGE value="TollTax Service Last Stand" />
+    <option name="LAST_COMMIT_MESSAGE" value="TollTax Service Last Stand" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
