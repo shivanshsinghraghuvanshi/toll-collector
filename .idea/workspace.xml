@@ -3,12 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="9aae2851-6427-4ca2-813e-eb142d17b589" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/db.dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/db.dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tolltax/cmd/tolltax/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/cmd/tolltax/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tolltax/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/tolltax.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/tolltax.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/up.sql" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/up.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tolltax/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/service.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +67,7 @@
       <workItem from="1614346322894" duration="1324000" />
       <workItem from="1614347672531" duration="5054000" />
       <workItem from="1614353004455" duration="315000" />
+      <workItem from="1614355579904" duration="2247000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1614346462854</created>
