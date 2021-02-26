@@ -6,7 +6,7 @@ COPY vendor vendor
 COPY tolltax tolltax
 RUN GO111MODULE=on go build -mod vendor -o /go/bin/app ./tolltax/cmd/tolltax
 
-FROM alpine:3.11
+FROM alpine:3.13
 WORKDIR /usr/bin
 COPY --from=build /go/bin .
 EXPOSE 8080
