@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9aae2851-6427-4ca2-813e-eb142d17b589" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tolltax/cmd/tolltax/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/cmd/tolltax/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/service.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +64,7 @@
       <workItem from="1614346322894" duration="1324000" />
       <workItem from="1614347672531" duration="5054000" />
       <workItem from="1614353004455" duration="315000" />
-      <workItem from="1614355579904" duration="2247000" />
+      <workItem from="1614355579904" duration="2559000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1614346462854</created>
@@ -90,7 +87,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614349192703</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="TollTax Service">
+      <created>1614361424724</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1614361424724</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -111,7 +115,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First Commit" />
     <MESSAGE value="Added tolltax service" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added tolltax service" />
+    <MESSAGE value="TollTax Service" />
+    <option name="LAST_COMMIT_MESSAGE" value="TollTax Service" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
