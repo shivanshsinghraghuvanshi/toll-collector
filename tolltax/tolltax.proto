@@ -1,0 +1,77 @@
+syntax = "proto3";
+package pb;
+
+
+message Owner{
+  int64 ownerid = 1;
+  string name = 2;
+  int64 accountnumber = 3;
+}
+
+message Car{
+  int64 carid = 1;
+  string make = 2;
+  string cartype = 3;
+  string carnumber = 4;
+}
+
+message Netc{
+  int64 netcid = 1;
+  string rfid = 2;
+  int64 fkownerid = 3;
+  int64 fkcarid = 4;
+}
+
+message TollBooth{
+  int64 tollboothid = 1;
+  string name = 2;
+  int64 accountnumber = 3;
+}
+
+message GenerateRFIDRequest {
+  Netc netc = 1;
+}
+message GenerateRFIDResponse {
+  string status = 1;
+}
+
+message ValidateRFIDRequest{
+  string rfid = 1;
+  int64 carid = 2;
+}
+
+message ValidateRFIDResponse{
+  bool ok = 1;
+}
+
+message DeductRequest{
+  string amount = 1;
+  Owner owner = 2;
+}
+
+message DeductResponse{
+  bool ok = 1;
+}
+
+message CreditRequest{
+  string amount = 1;
+  TollBooth booth = 2;
+}
+message CreditResponse{
+  bool ok = 1;
+}
+
+message CalculateAmountRequest{
+  Car car = 1;
+}
+
+message CalculateAmountResponse{
+  int32 deducible = 1;
+}
+service AccountService {
+  rpc GenerateRFID(GenerateRFIDRequest) returns (GenerateRFIDResponse){}
+  rpc ValidateRFID(ValidateRFIDRequest) returns(ValidateRFIDResponse){}
+  rpc DeductTransaction(DeductRequest) returns(DeductResponse){}
+  rpc CreditTransaction(CreditRequest) returns(CreditResponse){}
+  rpc CalculateDeductibleAmount(CalculateAmountRequest) returns(CalculateAmountResponse){}
+}
