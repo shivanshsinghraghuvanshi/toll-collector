@@ -1,6 +1,6 @@
 syntax = "proto3";
 package pb;
-
+option go_package = "./tolltaxpb";
 
 message Owner{
   int64 ownerid = 1;
@@ -68,7 +68,7 @@ message CalculateAmountRequest{
 message CalculateAmountResponse{
   int32 deducible = 1;
 }
-service AccountService {
+service TollTaxService {
   rpc GenerateRFID(GenerateRFIDRequest) returns (GenerateRFIDResponse){}
   rpc ValidateRFID(ValidateRFIDRequest) returns(ValidateRFIDResponse){}
   rpc DeductTransaction(DeductRequest) returns(DeductResponse){}

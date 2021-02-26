@@ -20,9 +20,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	var r Repository
+	var r tolltax.Repository
 	retry.ForeverSleep(2*time.Second, func(_ int) (err error) {
-		r, err = NewPostgresRepository(cfg.DatabaseURL)
+		r, err = tolltax.NewPostgresRepository(cfg.DatabaseURL)
 		if err != nil {
 			log.Println(err)
 		}
@@ -31,6 +31,6 @@ func main() {
 	defer r.Close()
 
 	log.Println("Listening on port 8080...")
-	s := NewService(r)
-	log.Fatal(ListenGRPC(s, 8080))
+	s := tolltax.NewService(r)
+	log.Fatal(tolltax.ListenGRPC(s, 8080))
 }
