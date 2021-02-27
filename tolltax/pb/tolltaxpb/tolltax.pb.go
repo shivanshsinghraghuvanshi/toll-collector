@@ -783,6 +783,91 @@ func (x *CalculateAmountResponse) GetDeducible() int32 {
 	return 0
 }
 
+type GetAllOwnersResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Owner []*Owner `protobuf:"bytes,1,rep,name=owner,proto3" json:"owner,omitempty"`
+}
+
+func (x *GetAllOwnersResponse) Reset() {
+	*x = GetAllOwnersResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_tolltax_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetAllOwnersResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAllOwnersResponse) ProtoMessage() {}
+
+func (x *GetAllOwnersResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_tolltax_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAllOwnersResponse.ProtoReflect.Descriptor instead.
+func (*GetAllOwnersResponse) Descriptor() ([]byte, []int) {
+	return file_tolltax_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *GetAllOwnersResponse) GetOwner() []*Owner {
+	if x != nil {
+		return x.Owner
+	}
+	return nil
+}
+
+type GetAllOwnersRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *GetAllOwnersRequest) Reset() {
+	*x = GetAllOwnersRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_tolltax_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetAllOwnersRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetAllOwnersRequest) ProtoMessage() {}
+
+func (x *GetAllOwnersRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_tolltax_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetAllOwnersRequest.ProtoReflect.Descriptor instead.
+func (*GetAllOwnersRequest) Descriptor() ([]byte, []int) {
+	return file_tolltax_proto_rawDescGZIP(), []int{15}
+}
+
 var File_tolltax_proto protoreflect.FileDescriptor
 
 var file_tolltax_proto_rawDesc = []byte{
@@ -844,8 +929,13 @@ var file_tolltax_proto_rawDesc = []byte{
 	0x52, 0x03, 0x63, 0x61, 0x72, 0x22, 0x37, 0x0a, 0x17, 0x43, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61,
 	0x74, 0x65, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
 	0x12, 0x1c, 0x0a, 0x09, 0x64, 0x65, 0x64, 0x75, 0x63, 0x69, 0x62, 0x6c, 0x65, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x05, 0x52, 0x09, 0x64, 0x65, 0x64, 0x75, 0x63, 0x69, 0x62, 0x6c, 0x65, 0x32, 0xee,
-	0x02, 0x0a, 0x0e, 0x54, 0x6f, 0x6c, 0x6c, 0x54, 0x61, 0x78, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
+	0x01, 0x28, 0x05, 0x52, 0x09, 0x64, 0x65, 0x64, 0x75, 0x63, 0x69, 0x62, 0x6c, 0x65, 0x22, 0x37,
+	0x0a, 0x14, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1f, 0x0a, 0x05, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x18,
+	0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x09, 0x2e, 0x70, 0x62, 0x2e, 0x4f, 0x77, 0x6e, 0x65, 0x72,
+	0x52, 0x05, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x22, 0x15, 0x0a, 0x13, 0x47, 0x65, 0x74, 0x41, 0x6c,
+	0x6c, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x32, 0xb3,
+	0x03, 0x0a, 0x0e, 0x54, 0x6f, 0x6c, 0x6c, 0x54, 0x61, 0x78, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
 	0x65, 0x12, 0x43, 0x0a, 0x0c, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x74, 0x65, 0x52, 0x46, 0x49,
 	0x44, 0x12, 0x17, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x74, 0x65, 0x52,
 	0x46, 0x49, 0x44, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18, 0x2e, 0x70, 0x62, 0x2e,
@@ -867,9 +957,13 @@ var file_tolltax_proto_rawDesc = []byte{
 	0x6f, 0x75, 0x6e, 0x74, 0x12, 0x1a, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x61, 0x6c, 0x63, 0x75, 0x6c,
 	0x61, 0x74, 0x65, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
 	0x1a, 0x1b, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x65, 0x41,
-	0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42,
-	0x0d, 0x5a, 0x0b, 0x2e, 0x2f, 0x74, 0x6f, 0x6c, 0x6c, 0x74, 0x61, 0x78, 0x70, 0x62, 0x62, 0x06,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12,
+	0x43, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x73, 0x12,
+	0x17, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x4f, 0x77, 0x6e, 0x65, 0x72,
+	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65,
+	0x74, 0x41, 0x6c, 0x6c, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x00, 0x42, 0x0d, 0x5a, 0x0b, 0x2e, 0x2f, 0x74, 0x6f, 0x6c, 0x6c, 0x74, 0x61,
+	0x78, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -884,7 +978,7 @@ func file_tolltax_proto_rawDescGZIP() []byte {
 	return file_tolltax_proto_rawDescData
 }
 
-var file_tolltax_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_tolltax_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_tolltax_proto_goTypes = []interface{}{
 	(*Owner)(nil),                   // 0: pb.Owner
 	(*Car)(nil),                     // 1: pb.Car
@@ -900,27 +994,32 @@ var file_tolltax_proto_goTypes = []interface{}{
 	(*CreditResponse)(nil),          // 11: pb.CreditResponse
 	(*CalculateAmountRequest)(nil),  // 12: pb.CalculateAmountRequest
 	(*CalculateAmountResponse)(nil), // 13: pb.CalculateAmountResponse
+	(*GetAllOwnersResponse)(nil),    // 14: pb.GetAllOwnersResponse
+	(*GetAllOwnersRequest)(nil),     // 15: pb.GetAllOwnersRequest
 }
 var file_tolltax_proto_depIdxs = []int32{
 	2,  // 0: pb.GenerateRFIDRequest.netc:type_name -> pb.Netc
 	0,  // 1: pb.DeductRequest.owner:type_name -> pb.Owner
 	3,  // 2: pb.CreditRequest.booth:type_name -> pb.TollBooth
 	1,  // 3: pb.CalculateAmountRequest.car:type_name -> pb.Car
-	4,  // 4: pb.TollTaxService.GenerateRFID:input_type -> pb.GenerateRFIDRequest
-	6,  // 5: pb.TollTaxService.ValidateRFID:input_type -> pb.ValidateRFIDRequest
-	8,  // 6: pb.TollTaxService.DeductTransaction:input_type -> pb.DeductRequest
-	10, // 7: pb.TollTaxService.CreditTransaction:input_type -> pb.CreditRequest
-	12, // 8: pb.TollTaxService.CalculateDeductibleAmount:input_type -> pb.CalculateAmountRequest
-	5,  // 9: pb.TollTaxService.GenerateRFID:output_type -> pb.GenerateRFIDResponse
-	7,  // 10: pb.TollTaxService.ValidateRFID:output_type -> pb.ValidateRFIDResponse
-	9,  // 11: pb.TollTaxService.DeductTransaction:output_type -> pb.DeductResponse
-	11, // 12: pb.TollTaxService.CreditTransaction:output_type -> pb.CreditResponse
-	13, // 13: pb.TollTaxService.CalculateDeductibleAmount:output_type -> pb.CalculateAmountResponse
-	9,  // [9:14] is the sub-list for method output_type
-	4,  // [4:9] is the sub-list for method input_type
-	4,  // [4:4] is the sub-list for extension type_name
-	4,  // [4:4] is the sub-list for extension extendee
-	0,  // [0:4] is the sub-list for field type_name
+	0,  // 4: pb.GetAllOwnersResponse.owner:type_name -> pb.Owner
+	4,  // 5: pb.TollTaxService.GenerateRFID:input_type -> pb.GenerateRFIDRequest
+	6,  // 6: pb.TollTaxService.ValidateRFID:input_type -> pb.ValidateRFIDRequest
+	8,  // 7: pb.TollTaxService.DeductTransaction:input_type -> pb.DeductRequest
+	10, // 8: pb.TollTaxService.CreditTransaction:input_type -> pb.CreditRequest
+	12, // 9: pb.TollTaxService.CalculateDeductibleAmount:input_type -> pb.CalculateAmountRequest
+	15, // 10: pb.TollTaxService.GetAllOwners:input_type -> pb.GetAllOwnersRequest
+	5,  // 11: pb.TollTaxService.GenerateRFID:output_type -> pb.GenerateRFIDResponse
+	7,  // 12: pb.TollTaxService.ValidateRFID:output_type -> pb.ValidateRFIDResponse
+	9,  // 13: pb.TollTaxService.DeductTransaction:output_type -> pb.DeductResponse
+	11, // 14: pb.TollTaxService.CreditTransaction:output_type -> pb.CreditResponse
+	13, // 15: pb.TollTaxService.CalculateDeductibleAmount:output_type -> pb.CalculateAmountResponse
+	14, // 16: pb.TollTaxService.GetAllOwners:output_type -> pb.GetAllOwnersResponse
+	11, // [11:17] is the sub-list for method output_type
+	5,  // [5:11] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_tolltax_proto_init() }
@@ -1097,6 +1196,30 @@ func file_tolltax_proto_init() {
 				return nil
 			}
 		}
+		file_tolltax_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetAllOwnersResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_tolltax_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetAllOwnersRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1104,7 +1227,7 @@ func file_tolltax_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_tolltax_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   14,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -1135,6 +1258,7 @@ type TollTaxServiceClient interface {
 	DeductTransaction(ctx context.Context, in *DeductRequest, opts ...grpc.CallOption) (*DeductResponse, error)
 	CreditTransaction(ctx context.Context, in *CreditRequest, opts ...grpc.CallOption) (*CreditResponse, error)
 	CalculateDeductibleAmount(ctx context.Context, in *CalculateAmountRequest, opts ...grpc.CallOption) (*CalculateAmountResponse, error)
+	GetAllOwners(ctx context.Context, in *GetAllOwnersRequest, opts ...grpc.CallOption) (*GetAllOwnersResponse, error)
 }
 
 type tollTaxServiceClient struct {
@@ -1190,6 +1314,15 @@ func (c *tollTaxServiceClient) CalculateDeductibleAmount(ctx context.Context, in
 	return out, nil
 }
 
+func (c *tollTaxServiceClient) GetAllOwners(ctx context.Context, in *GetAllOwnersRequest, opts ...grpc.CallOption) (*GetAllOwnersResponse, error) {
+	out := new(GetAllOwnersResponse)
+	err := c.cc.Invoke(ctx, "/pb.TollTaxService/GetAllOwners", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TollTaxServiceServer is the server API for TollTaxService service.
 type TollTaxServiceServer interface {
 	GenerateRFID(context.Context, *GenerateRFIDRequest) (*GenerateRFIDResponse, error)
@@ -1197,6 +1330,7 @@ type TollTaxServiceServer interface {
 	DeductTransaction(context.Context, *DeductRequest) (*DeductResponse, error)
 	CreditTransaction(context.Context, *CreditRequest) (*CreditResponse, error)
 	CalculateDeductibleAmount(context.Context, *CalculateAmountRequest) (*CalculateAmountResponse, error)
+	GetAllOwners(context.Context, *GetAllOwnersRequest) (*GetAllOwnersResponse, error)
 }
 
 // UnimplementedTollTaxServiceServer can be embedded to have forward compatible implementations.
@@ -1217,6 +1351,9 @@ func (*UnimplementedTollTaxServiceServer) CreditTransaction(context.Context, *Cr
 }
 func (*UnimplementedTollTaxServiceServer) CalculateDeductibleAmount(context.Context, *CalculateAmountRequest) (*CalculateAmountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CalculateDeductibleAmount not implemented")
+}
+func (*UnimplementedTollTaxServiceServer) GetAllOwners(context.Context, *GetAllOwnersRequest) (*GetAllOwnersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllOwners not implemented")
 }
 
 func RegisterTollTaxServiceServer(s *grpc.Server, srv TollTaxServiceServer) {
@@ -1313,6 +1450,24 @@ func _TollTaxService_CalculateDeductibleAmount_Handler(srv interface{}, ctx cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TollTaxService_GetAllOwners_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllOwnersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TollTaxServiceServer).GetAllOwners(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.TollTaxService/GetAllOwners",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TollTaxServiceServer).GetAllOwners(ctx, req.(*GetAllOwnersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _TollTaxService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "pb.TollTaxService",
 	HandlerType: (*TollTaxServiceServer)(nil),
@@ -1336,6 +1491,10 @@ var _TollTaxService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CalculateDeductibleAmount",
 			Handler:    _TollTaxService_CalculateDeductibleAmount_Handler,
+		},
+		{
+			MethodName: "GetAllOwners",
+			Handler:    _TollTaxService_GetAllOwners_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

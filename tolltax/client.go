@@ -38,6 +38,14 @@ func (c *Client) GenerateRFID(ctx context.Context, ownerid, carid int64) (*tollt
 
 }
 
+func (c *Client) GetAllOwners(ctx context.Context) (*tolltaxpb.GetAllOwnersResponse, error) {
+	r, err := c.service.GetAllOwners(ctx, nil)
+	if err != nil {
+		return nil, err
+	}
+	return &tolltaxpb.GetAllOwnersResponse{Owner: r.Owner}, err
+}
+
 func (c *Client) GenerateMatrix(ctx context.Context, n int) ([][]int, int) {
 	a := make([][]int, n)
 	for i, _ := range a {

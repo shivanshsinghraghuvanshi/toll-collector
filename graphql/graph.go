@@ -26,7 +26,11 @@ func (s *Server) Mutation() generated.MutationResolver {
 	return mutationResolver{server: s}
 }
 
-func (s *Server) Account() *tolltaxResolver {
+func (s *Server) Query() generated.QueryResolver {
+	return queryResolver{server: s}
+}
+
+func (s *Server) TollTax() *tolltaxResolver {
 	return &tolltaxResolver{
 		server: s,
 	}
@@ -34,8 +38,6 @@ func (s *Server) Account() *tolltaxResolver {
 
 func (s *Server) ToExecutableSchema() graphql.ExecutableSchema {
 	return generated.NewExecutableSchema(generated.Config{
-		Resolvers:  s,
-		Directives: generated.DirectiveRoot{},
-		Complexity: generated.ComplexityRoot{},
+		Resolvers: s,
 	})
 }

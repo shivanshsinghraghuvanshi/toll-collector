@@ -3,63 +3,69 @@
 # https://gqlgen.com/getting-started/
 
 type Car{
-    carid:ID
-    make:String!
-    cartype:String!
-    carnumber:String!
+  carid:ID
+  make:String!
+  cartype:String!
+  carnumber:String!
 }
 
 type Owner {
-    ownerid:ID
-    accountnumber:String!
-    name:String!
+  ownerid:ID
+  accountnumber:String!
+  name:String!
 }
 
 type Tollbooth{
-    tollboothid:ID
-    name:String!
-    accountnumber:String!
+  tollboothid:ID
+  name:String!
+  accountnumber:String!
 }
 
 type Netc{
-    netcid:ID
-    ownerid:String!
-    carid:String!
-    rfid:String!
+  netcid:ID
+  ownerid:String!
+  carid:String!
+  rfid:String!
 }
 
 type Deductible{
-    id:ID
-    cartype:String!
-    amount:Int!
+  id:ID
+  cartype:String!
+  amount:Int!
 }
 
 type Relation{
-    owner:Owner!
-    car:[Car!]
+  owner:Owner!
+  car:[Car!]
 }
 
 input NewRFID{
-    ownerid:String!
-    carid:String!
+  ownerid:String!
+  carid:String!
 }
 
 input NewOwner{
-    accountnumber:String!
-    name:String!
+  accountnumber:String!
+  name:String!
 }
 input NewTollBooth{
-    accountnumber:String!
-    name:String!
+  accountnumber:String!
+  name:String!
 }
 input NewCar{
-    make:String!
-    cartype:String!
-    carnumber:String!
+  make:String!
+  cartype:String!
+  carnumber:String!
 }
 type Mutation{
-    createOwner(input:NewOwner!):String!
-    createCar(input:NewCar):String!
-    createTollBooth(input:NewTollBooth):String!
-    createRFID(input:NewRFID):String!
+  createOwner(input:NewOwner!):String!
+  createCar(input:NewCar):String!
+  createTollBooth(input:NewTollBooth):String!
+  createRFID(input:NewRFID):String!
+}
+
+type Query{
+  cars:[Car!]
+  owners:[Owner!]
+  tollbooths:[Tollbooth!]
 }

@@ -67,10 +67,18 @@ message CalculateAmountRequest{
 message CalculateAmountResponse{
   int32 deducible = 1;
 }
+
+message GetAllOwnersResponse{
+  repeated Owner owner = 1;
+}
+message GetAllOwnersRequest{
+
+}
 service TollTaxService {
   rpc GenerateRFID(GenerateRFIDRequest) returns (GenerateRFIDResponse){}
   rpc ValidateRFID(ValidateRFIDRequest) returns(ValidateRFIDResponse){}
   rpc DeductTransaction(DeductRequest) returns(DeductResponse){}
   rpc CreditTransaction(CreditRequest) returns(CreditResponse){}
   rpc CalculateDeductibleAmount(CalculateAmountRequest) returns(CalculateAmountResponse){}
+  rpc GetAllOwners(GetAllOwnersRequest) returns(GetAllOwnersResponse){}
 }

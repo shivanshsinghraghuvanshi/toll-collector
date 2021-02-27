@@ -2,6 +2,7 @@ package tolltax
 
 import (
 	"context"
+	"github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/pb/tolltaxpb"
 )
 
 type Service interface {
@@ -10,6 +11,7 @@ type Service interface {
 	DeductTransaction(ctx context.Context, amount int32, owner *owner) bool
 	CreditTransaction(ctx context.Context, amount int32, tollbooth *tollbooth) bool
 	CalculateDeductibleAmount(ctx context.Context, amount int32, carnumber string) int32
+	GetAllOwners(ctx context.Context) ([]*tolltaxpb.Owner, error)
 }
 
 type netc struct {
@@ -32,6 +34,14 @@ type tollbooth struct {
 }
 type tolltaxService struct {
 	repository Repository
+}
+
+func (t *tolltaxService) GetAllOwners(ctx context.Context) ([]*tolltaxpb.Owner, error) {
+	r, err := t.repository.GetAllOwners(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return r, nil
 }
 
 func (t *tolltaxService) GenerateRFID(ctx context.Context, rfid string, ownerid, carid int64) (string, error) {

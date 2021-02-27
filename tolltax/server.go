@@ -14,6 +14,14 @@ type grpcServer struct {
 	service Service
 }
 
+func (g *grpcServer) GetAllOwners(ctx context.Context, request *tolltaxpb.GetAllOwnersRequest) (*tolltaxpb.GetAllOwnersResponse, error) {
+	r, err := g.service.GetAllOwners(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return &tolltaxpb.GetAllOwnersResponse{Owner: r}, err
+}
+
 func (g *grpcServer) GenerateRFID(ctx context.Context, request *tolltaxpb.GenerateRFIDRequest) (*tolltaxpb.GenerateRFIDResponse, error) {
 	u, _ := uuid.NewV4()
 	_, err := g.service.GenerateRFID(ctx, u.String(), request.Netc.Fkownerid, request.Netc.Fkcarid)

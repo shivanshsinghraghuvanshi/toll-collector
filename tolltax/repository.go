@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	_ "github.com/lib/pq"
+	"github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/pb/tolltaxpb"
 )
 
 type Repository interface {
@@ -13,6 +14,7 @@ type Repository interface {
 	DeductTransaction(ctx context.Context, amount int32, owner *owner) bool
 	CreditTransaction(ctx context.Context, amount int32, tollbooth *tollbooth) bool
 	CalculateDeductibleAmount(ctx context.Context, amount int32, carnumber string) int32
+	GetAllOwners(ctx context.Context) ([]*tolltaxpb.Owner, error)
 }
 
 type postgresRepository struct {
@@ -20,7 +22,7 @@ type postgresRepository struct {
 }
 
 func (r *postgresRepository) GenerateRFID(ctx context.Context, rfid string, ownerid, carid int64) (string, error) {
-	_, err := r.db.ExecContext(ctx, "INSERT INTO NETC(ownerid,carid,rfid) VALUES($1,$2,$3)", ownerid, carid, rfid)
+	_, err := r.db.ExecContext(ctx, "INSERT INTO netc(ownerid,carid,rfid) VALUES($1,$2,$3)", ownerid, carid, rfid)
 	if err != nil {
 		return "", err
 	}
@@ -41,6 +43,23 @@ func (r *postgresRepository) CreditTransaction(ctx context.Context, amount int32
 
 func (r *postgresRepository) CalculateDeductibleAmount(ctx context.Context, amount int32, carnumber string) int32 {
 	panic("implement me")
+}
+
+func (r *postgresRepository) GetAllOwners(ctx context.Context) ([]*tolltaxpb.Owner, error) {
+
+	rows, err := r.db.QueryContext(ctx, "SELECT * FROM owner")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	owners := []*tolltaxpb.Owner{}
+	for rows.Next() {
+		o := &tolltaxpb.Owner{}
+		if err = rows.Scan(&o.Ownerid, &o.Accountnumber, &o.Name); err == nil {
+			owners = append(owners, o)
+		}
+	}
+	return owners, err
 }
 
 func NewPostgresRepository(url string) (Repository, error) {
