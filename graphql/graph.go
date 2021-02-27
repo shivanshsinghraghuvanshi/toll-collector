@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/99designs/gqlgen/graphql"
+	"github.com/shivanshsinghraghuvanshi/toll-collector/graphql/graph/generated"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/tolltax"
 )
 
@@ -21,26 +22,20 @@ func NewGraphQLServer(tolltaxurl string) (*Server, error) {
 	}, nil
 }
 
-func (s *Server) Mutation() MutationResolver {
-	return &mutationResolver{
-		server: s,
-	}
+func (s *Server) Mutation() generated.MutationResolver {
+	return mutationResolver{server: s}
 }
 
-func (s *Server) Query() QueryResolver {
-	return &queryResolver{
-		server: s,
-	}
-}
-
-func (s *Server) Account() AccountResolver {
-	return &accountResolver{
+func (s *Server) Account() *tolltaxResolver {
+	return &tolltaxResolver{
 		server: s,
 	}
 }
 
 func (s *Server) ToExecutableSchema() graphql.ExecutableSchema {
-	return NewExecutableSchema(Config{
-		Resolvers: s,
+	return generated.NewExecutableSchema(generated.Config{
+		Resolvers:  s,
+		Directives: generated.DirectiveRoot{},
+		Complexity: generated.ComplexityRoot{},
 	})
 }
