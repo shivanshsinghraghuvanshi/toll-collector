@@ -1,0 +1,46 @@
+type Car{
+    carid:ID
+    make:String!
+    cartype:String!
+    carnumber:String!
+}
+
+type Owner {
+    ownerid:ID
+    accountnumber:String!
+    name:String!
+}
+
+type Tollbooth{
+    tollboothid:ID
+    name:String!
+    accountnumber:String!
+}
+
+type Netc{
+    netcid:ID
+    ownerid:String!
+    carid:String!
+    rfid:String!
+}
+
+type Deductible{
+    id:ID
+    cartype:String!
+    amount:Int!
+}
+
+type Relation{
+    owner:Owner!
+    car:[Car!]
+}
+
+input NewRFID{
+    ownerid:String!
+    carid:String!
+}
+type Mutation{
+    createOwner(input:Owner!):String!
+    createCar(input:Car!):String!
+    createRFID(input:NewRFID):String!
+}

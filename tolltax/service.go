@@ -5,7 +5,7 @@ import (
 )
 
 type Service interface {
-	GenerateRFID(ctx context.Context, rfid string, ownerid, carid int64) string
+	GenerateRFID(ctx context.Context, rfid string, ownerid, carid int64) (string, error)
 	ValidateRFID(ctx context.Context, rfid string, carid int64) bool
 	DeductTransaction(ctx context.Context, amount int32, owner *owner) bool
 	CreditTransaction(ctx context.Context, amount int32, tollbooth *tollbooth) bool
@@ -34,23 +34,27 @@ type tolltaxService struct {
 	repository Repository
 }
 
-func (t tolltaxService) GenerateRFID(ctx context.Context, rfid string, ownerid, carid int64) string {
+func (t *tolltaxService) GenerateRFID(ctx context.Context, rfid string, ownerid, carid int64) (string, error) {
+	r, err := t.repository.GenerateRFID(ctx, rfid, ownerid, carid)
+	if err != nil {
+		return "", err
+	}
+	return r, nil
+}
+
+func (t *tolltaxService) ValidateRFID(ctx context.Context, rfid string, carid int64) bool {
 	panic("implement me")
 }
 
-func (t tolltaxService) ValidateRFID(ctx context.Context, rfid string, carid int64) bool {
+func (t *tolltaxService) DeductTransaction(ctx context.Context, amount int32, owner *owner) bool {
 	panic("implement me")
 }
 
-func (t tolltaxService) DeductTransaction(ctx context.Context, amount int32, owner *owner) bool {
+func (t *tolltaxService) CreditTransaction(ctx context.Context, amount int32, tollbooth *tollbooth) bool {
 	panic("implement me")
 }
 
-func (t tolltaxService) CreditTransaction(ctx context.Context, amount int32, tollbooth *tollbooth) bool {
-	panic("implement me")
-}
-
-func (t tolltaxService) CalculateDeductibleAmount(ctx context.Context, amount int32, carnumber string) int32 {
+func (t *tolltaxService) CalculateDeductibleAmount(ctx context.Context, amount int32, carnumber string) int32 {
 	panic("implement me")
 }
 

@@ -3,6 +3,7 @@ package tolltax
 import (
 	"context"
 	"fmt"
+	"github.com/nu7hatch/gouuid"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/pb/tolltaxpb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -13,23 +14,31 @@ type grpcServer struct {
 	service Service
 }
 
-func (g grpcServer) GenerateRFID(ctx context.Context, request *tolltaxpb.GenerateRFIDRequest) (*tolltaxpb.GenerateRFIDResponse, error) {
+func (g *grpcServer) GenerateRFID(ctx context.Context, request *tolltaxpb.GenerateRFIDRequest) (*tolltaxpb.GenerateRFIDResponse, error) {
+	u, _ := uuid.NewV4()
+	_, err := g.service.GenerateRFID(ctx, u.String(), request.Netc.Fkownerid, request.Netc.Fkcarid)
+	if err != nil {
+		return nil, err
+	}
+	return &tolltaxpb.GenerateRFIDResponse{
+		Status: "OK",
+		Rfid:   u.String(),
+	}, nil
+}
+
+func (g *grpcServer) ValidateRFID(ctx context.Context, request *tolltaxpb.ValidateRFIDRequest) (*tolltaxpb.ValidateRFIDResponse, error) {
 	panic("implement me")
 }
 
-func (g grpcServer) ValidateRFID(ctx context.Context, request *tolltaxpb.ValidateRFIDRequest) (*tolltaxpb.ValidateRFIDResponse, error) {
+func (g *grpcServer) DeductTransaction(ctx context.Context, request *tolltaxpb.DeductRequest) (*tolltaxpb.DeductResponse, error) {
 	panic("implement me")
 }
 
-func (g grpcServer) DeductTransaction(ctx context.Context, request *tolltaxpb.DeductRequest) (*tolltaxpb.DeductResponse, error) {
+func (g *grpcServer) CreditTransaction(ctx context.Context, request *tolltaxpb.CreditRequest) (*tolltaxpb.CreditResponse, error) {
 	panic("implement me")
 }
 
-func (g grpcServer) CreditTransaction(ctx context.Context, request *tolltaxpb.CreditRequest) (*tolltaxpb.CreditResponse, error) {
-	panic("implement me")
-}
-
-func (g grpcServer) CalculateDeductibleAmount(ctx context.Context, request *tolltaxpb.CalculateAmountRequest) (*tolltaxpb.CalculateAmountResponse, error) {
+func (g *grpcServer) CalculateDeductibleAmount(ctx context.Context, request *tolltaxpb.CalculateAmountRequest) (*tolltaxpb.CalculateAmountResponse, error) {
 	panic("implement me")
 }
 

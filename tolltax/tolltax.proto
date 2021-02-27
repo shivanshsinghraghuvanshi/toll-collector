@@ -16,10 +16,8 @@ message Car{
 }
 
 message Netc{
-  int64 netcid = 1;
-  string rfid = 2;
-  int64 fkownerid = 3;
-  int64 fkcarid = 4;
+  int64 fkownerid = 1;
+  int64 fkcarid = 2;
 }
 
 message TollBooth{
@@ -33,6 +31,7 @@ message GenerateRFIDRequest {
 }
 message GenerateRFIDResponse {
   string status = 1;
+  string rfid = 2;
 }
 
 message ValidateRFIDRequest{

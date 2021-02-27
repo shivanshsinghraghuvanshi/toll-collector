@@ -2,14 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9aae2851-6427-4ca2-813e-eb142d17b589" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/aws.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphql/graph.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphql/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/graphql/schema.graphql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ecf1a9eb-1c23-41b5-8cfe-8d7eb4d3194f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ecf1a9eb-1c23-41b5-8cfe-8d7eb4d3194f.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ecf1a9eb-1c23-41b5-8cfe-8d7eb4d3194f/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ecf1a9eb-1c23-41b5-8cfe-8d7eb4d3194f/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/app.dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/app.dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tolltax/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tolltax/pb/tolltaxpb/tolltax.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/pb/tolltaxpb/tolltax.pb.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tolltax/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tolltax/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tolltax/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tolltax/tolltax.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/tolltax.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tolltax/up.sql" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/up.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vendor/modules.txt" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/modules.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,7 +78,16 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Go Build.go build github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/cmd/tolltax">
+    <configuration name="go build github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/cmd/tolltax" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="toll-collector" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/tolltax/cmd/tolltax/main.go" />
+      <package value="github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/cmd/tolltax" />
+      <directory value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
     <configuration name="docker-compose.yaml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
@@ -80,6 +98,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/cmd/tolltax" />
         <item itemvalue="Docker.docker-compose.yaml: Compose Deployment" />
       </list>
     </recent_temporary>
@@ -96,7 +115,8 @@
       <workItem from="1614346322894" duration="1324000" />
       <workItem from="1614347672531" duration="5054000" />
       <workItem from="1614353004455" duration="315000" />
-      <workItem from="1614355579904" duration="10003000" />
+      <workItem from="1614355579904" duration="11586000" />
+      <workItem from="1614408282863" duration="8985000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1614346462854</created>
@@ -168,7 +188,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614365199278</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="vendor directoty">
+      <created>1614369337376</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1614369337376</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -197,5 +224,16 @@
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/tolltax/server.go</url>
+          <line>46</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
