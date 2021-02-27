@@ -1,3 +1,7 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
 type Car{
     carid:ID
     make:String!
@@ -39,8 +43,23 @@ input NewRFID{
     ownerid:String!
     carid:String!
 }
+
+input NewOwner{
+    accountnumber:String!
+    name:String!
+}
+input NewTollBooth{
+    accountnumber:String!
+    name:String!
+}
+input NewCar{
+    make:String!
+    cartype:String!
+    carnumber:String!
+}
 type Mutation{
-    createOwner(input:Owner!):String!
-    createCar(input:Car!):String!
+    createOwner(input:NewOwner!):String!
+    createCar(input:NewCar):String!
+    createTollBooth(input:NewTollBooth):String!
     createRFID(input:NewRFID):String!
 }
