@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/pb/tolltaxpb"
 	"google.golang.org/grpc"
+	"log"
 )
 
 type Client struct {
@@ -39,10 +40,11 @@ func (c *Client) GenerateRFID(ctx context.Context, ownerid, carid int64) (*tollt
 }
 
 func (c *Client) GetAllOwners(ctx context.Context) (*tolltaxpb.GetAllOwnersResponse, error) {
-	r, err := c.service.GetAllOwners(ctx, nil)
+	r, err := c.service.GetAllOwners(ctx, &tolltaxpb.GetAllOwnersRequest{Ref: 1})
 	if err != nil {
 		return nil, err
 	}
+	log.Printf("all the owners are %v\n", r.Owner)
 	return &tolltaxpb.GetAllOwnersResponse{Owner: r.Owner}, err
 }
 

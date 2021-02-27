@@ -801,7 +801,7 @@ false posixrules
     <database id="4" parent="1" name="tolltax">
       <ObjectId>16401</ObjectId>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>559</IntrospectionStateNumber>
+      <IntrospectionStateNumber>823</IntrospectionStateNumber>
       <Relations>sequence|table|16402|16406|1
 sequence|table|16404|16406|2
 sequence|table|16412|16414|1
@@ -1046,7 +1046,7 @@ UC/16394
 </Acl>
       <StateNumber>527</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>560</IntrospectionStateNumber>
+      <IntrospectionStateNumber>824</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <extension id="41" parent="4" name="plpgsql">

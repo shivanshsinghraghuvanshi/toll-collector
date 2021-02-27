@@ -54,7 +54,7 @@ func (q queryResolver) Owners(ctx context.Context) ([]*model.Owner, error) {
 		}
 		o = append(o, owner)
 	}
-
+	log.Printf("number of item in owner is : %d\n", len(o))
 	return o, nil
 }
 

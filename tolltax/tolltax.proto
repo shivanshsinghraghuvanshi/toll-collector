@@ -72,7 +72,7 @@ message GetAllOwnersResponse{
   repeated Owner owner = 1;
 }
 message GetAllOwnersRequest{
-
+  int32 ref=1;
 }
 service TollTaxService {
   rpc GenerateRFID(GenerateRFIDRequest) returns (GenerateRFIDResponse){}
