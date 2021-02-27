@@ -3,23 +3,23 @@
 package model
 
 type Car struct {
-	Carid     *string `json:"carid"`
-	Make      string  `json:"make"`
-	Cartype   string  `json:"cartype"`
-	Carnumber string  `json:"carnumber"`
+	Carid     string `json:"carid"`
+	Make      string `json:"make"`
+	Cartype   string `json:"cartype"`
+	Carnumber string `json:"carnumber"`
 }
 
 type Deductible struct {
-	ID      *string `json:"id"`
-	Cartype string  `json:"cartype"`
-	Amount  int     `json:"amount"`
+	ID      string `json:"id"`
+	Cartype string `json:"cartype"`
+	Amount  int    `json:"amount"`
 }
 
 type Netc struct {
-	Netcid  *string `json:"netcid"`
-	Ownerid string  `json:"ownerid"`
-	Carid   string  `json:"carid"`
-	Rfid    string  `json:"rfid"`
+	Netcid  string `json:"netcid"`
+	Ownerid string `json:"ownerid"`
+	Carid   string `json:"carid"`
+	Rfid    string `json:"rfid"`
 }
 
 type NewCar struct {
@@ -44,9 +44,9 @@ type NewTollBooth struct {
 }
 
 type Owner struct {
-	Ownerid       *string `json:"ownerid"`
-	Accountnumber string  `json:"accountnumber"`
-	Name          string  `json:"name"`
+	Ownerid       string `json:"ownerid"`
+	Accountnumber string `json:"accountnumber"`
+	Name          string `json:"name"`
 }
 
 type Relation struct {
@@ -55,7 +55,7 @@ type Relation struct {
 }
 
 type Tollbooth struct {
-	Tollboothid   *string `json:"tollboothid"`
-	Name          string  `json:"name"`
-	Accountnumber string  `json:"accountnumber"`
+	Tollboothid   string `json:"tollboothid"`
+	Name          string `json:"name"`
+	Accountnumber string `json:"accountnumber"`
 }

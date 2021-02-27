@@ -3,33 +3,33 @@
 # https://gqlgen.com/getting-started/
 
 type Car{
-  carid:ID
+  carid:ID!
   make:String!
   cartype:String!
   carnumber:String!
 }
 
 type Owner {
-  ownerid:ID
+  ownerid:ID!
   accountnumber:String!
   name:String!
 }
 
 type Tollbooth{
-  tollboothid:ID
+  tollboothid:ID!
   name:String!
   accountnumber:String!
 }
 
 type Netc{
-  netcid:ID
+  netcid:ID!
   ownerid:String!
   carid:String!
   rfid:String!
 }
 
 type Deductible{
-  id:ID
+  id:ID!
   cartype:String!
   amount:Int!
 }

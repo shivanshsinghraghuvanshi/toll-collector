@@ -391,33 +391,33 @@ var sources = []*ast.Source{
 # https://gqlgen.com/getting-started/
 
 type Car{
-  carid:ID
+  carid:ID!
   make:String!
   cartype:String!
   carnumber:String!
 }
 
 type Owner {
-  ownerid:ID
+  ownerid:ID!
   accountnumber:String!
   name:String!
 }
 
 type Tollbooth{
-  tollboothid:ID
+  tollboothid:ID!
   name:String!
   accountnumber:String!
 }
 
 type Netc{
-  netcid:ID
+  netcid:ID!
   ownerid:String!
   carid:String!
   rfid:String!
 }
 
 type Deductible{
-  id:ID
+  id:ID!
   cartype:String!
   amount:Int!
 }
@@ -603,11 +603,14 @@ func (ec *executionContext) _Car_carid(ctx context.Context, field graphql.Collec
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOID2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Car_make(ctx context.Context, field graphql.CollectedField, obj *model.Car) (ret graphql.Marshaler) {
@@ -740,11 +743,14 @@ func (ec *executionContext) _Deductible_id(ctx context.Context, field graphql.Co
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOID2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Deductible_cartype(ctx context.Context, field graphql.CollectedField, obj *model.Deductible) (ret graphql.Marshaler) {
@@ -1010,11 +1016,14 @@ func (ec *executionContext) _Netc_netcid(ctx context.Context, field graphql.Coll
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOID2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Netc_ownerid(ctx context.Context, field graphql.CollectedField, obj *model.Netc) (ret graphql.Marshaler) {
@@ -1147,11 +1156,14 @@ func (ec *executionContext) _Owner_ownerid(ctx context.Context, field graphql.Co
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOID2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Owner_accountnumber(ctx context.Context, field graphql.CollectedField, obj *model.Owner) (ret graphql.Marshaler) {
@@ -1483,11 +1495,14 @@ func (ec *executionContext) _Tollbooth_tollboothid(ctx context.Context, field gr
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOID2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Tollbooth_name(ctx context.Context, field graphql.CollectedField, obj *model.Tollbooth) (ret graphql.Marshaler) {
@@ -2788,6 +2803,9 @@ func (ec *executionContext) _Car(ctx context.Context, sel ast.SelectionSet, obj 
 			out.Values[i] = graphql.MarshalString("Car")
 		case "carid":
 			out.Values[i] = ec._Car_carid(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "make":
 			out.Values[i] = ec._Car_make(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -2827,6 +2845,9 @@ func (ec *executionContext) _Deductible(ctx context.Context, sel ast.SelectionSe
 			out.Values[i] = graphql.MarshalString("Deductible")
 		case "id":
 			out.Values[i] = ec._Deductible_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "cartype":
 			out.Values[i] = ec._Deductible_cartype(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -2907,6 +2928,9 @@ func (ec *executionContext) _Netc(ctx context.Context, sel ast.SelectionSet, obj
 			out.Values[i] = graphql.MarshalString("Netc")
 		case "netcid":
 			out.Values[i] = ec._Netc_netcid(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "ownerid":
 			out.Values[i] = ec._Netc_ownerid(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -2946,6 +2970,9 @@ func (ec *executionContext) _Owner(ctx context.Context, sel ast.SelectionSet, ob
 			out.Values[i] = graphql.MarshalString("Owner")
 		case "ownerid":
 			out.Values[i] = ec._Owner_ownerid(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "accountnumber":
 			out.Values[i] = ec._Owner_accountnumber(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -3072,6 +3099,9 @@ func (ec *executionContext) _Tollbooth(ctx context.Context, sel ast.SelectionSet
 			out.Values[i] = graphql.MarshalString("Tollbooth")
 		case "tollboothid":
 			out.Values[i] = ec._Tollbooth_tollboothid(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "name":
 			out.Values[i] = ec._Tollbooth_name(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -3361,6 +3391,21 @@ func (ec *executionContext) marshalNCar2ᚖgithubᚗcomᚋshivanshsinghraghuvans
 		return graphql.Null
 	}
 	return ec._Car(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNID2string(ctx context.Context, v interface{}) (string, error) {
+	res, err := graphql.UnmarshalID(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNID2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
+	res := graphql.MarshalID(v)
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "must not be null")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) unmarshalNInt2int(ctx context.Context, v interface{}) (int, error) {
@@ -3709,21 +3754,6 @@ func (ec *executionContext) marshalOCar2ᚕᚖgithubᚗcomᚋshivanshsinghraghuv
 	}
 	wg.Wait()
 	return ret
-}
-
-func (ec *executionContext) unmarshalOID2ᚖstring(ctx context.Context, v interface{}) (*string, error) {
-	if v == nil {
-		return nil, nil
-	}
-	res, err := graphql.UnmarshalID(v)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOID2ᚖstring(ctx context.Context, sel ast.SelectionSet, v *string) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return graphql.MarshalID(*v)
 }
 
 func (ec *executionContext) unmarshalONewCar2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐNewCar(ctx context.Context, v interface{}) (*model.NewCar, error) {

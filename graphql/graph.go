@@ -11,7 +11,8 @@ type Server struct {
 }
 
 func NewGraphQLServer(tolltaxurl string) (*Server, error) {
-	// tolltax Service
+
+	// TOLL TAX SERVICE LOADING
 	t, err := tolltax.NewClient(tolltaxurl)
 	if err != nil {
 		return nil, err
