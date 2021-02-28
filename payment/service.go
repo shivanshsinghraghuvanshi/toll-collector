@@ -3,6 +3,7 @@ package payment
 import (
 	"context"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/payment/pb/paymentpb"
+	"log"
 	"time"
 )
 
@@ -25,10 +26,13 @@ func (p paymentService) ExecuteTransaction(ctx context.Context, request *payment
 }
 
 func (p paymentService) GetAccountDetails(ctx context.Context, request *paymentpb.GetAccountDetailsRequest) (*paymentpb.GetAccountDetailsResponse, error) {
+	log.Printf("request account number from payment service %v\n", request.AccountNumber)
 	r, err := p.repository.GetAccountDetails(ctx, request.AccountNumber)
 	if err != nil {
+		log.Fatalf("Error at service level %v", err)
 		return nil, err
 	}
+	log.Printf("payment service r balance %v\n", r.Balance)
 	return r, nil
 }
 
@@ -62,5 +66,5 @@ func inTimeSpan(start, end, check time.Time) bool {
 }
 
 func NewService(r Repository) Service {
-	return &paymentService{}
+	return &paymentService{r}
 }

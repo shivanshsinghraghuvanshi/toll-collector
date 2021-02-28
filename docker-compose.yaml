@@ -61,7 +61,7 @@ services:
   payment_db:
     image: paymentdb:latest
     build:
-      context: ./tolltax
+      context: ./payment
       dockerfile: ./db.dockerfile
     environment:
       POSTGRES_DB: tollcollector

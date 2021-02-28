@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	_ "github.com/lib/pq"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/payment/pb/paymentpb"
 	"log"
 	"time"
@@ -70,7 +71,9 @@ func (r *postgresRepository) ExecuteTransaction(ctx context.Context, request *pa
 }
 
 func (r *postgresRepository) GetAccountDetails(ctx context.Context, acc int64) (*paymentpb.GetAccountDetailsResponse, error) {
-	rows, err := r.db.QueryContext(ctx, "SELECT accountid, accountnumber, name, balance, lastUpdated FROM accountdetails where accountnumber=$1", acc)
+	log.Printf("from repository account number %v\n", acc)
+	rows, err := r.db.QueryContext(ctx, `SELECT accountid, accountnumber, name, balance,
+       lastUpdated from accountdetails where accountnumber=$1`, acc)
 	if err != nil {
 		return nil, err
 	}
@@ -79,10 +82,12 @@ func (r *postgresRepository) GetAccountDetails(ctx context.Context, acc int64) (
 	for rows.Next() {
 		err := rows.Scan(&o.Accountid, &o.Accountnumber, &o.AccountHolderName, &o.Balance, &o.LastUpdated)
 		if err != nil {
-			log.Fatal("Error while fetching the amount")
+			log.Fatal(err)
+			log.Fatal("Error while fetching the account details")
 			return nil, err
 		}
 	}
+	log.Printf(" repo payment data %v\n", o.Accountnumber)
 	return o, err
 }
 
@@ -123,6 +128,7 @@ func (r *postgresRepository) GetTransactionHistory(ctx context.Context) (*paymen
 func NewPostgresRepository(url string) (Repository, error) {
 	db, err := sql.Open("postgres", url)
 	if err != nil {
+		log.Println("Error while init new Server instance")
 		log.Fatal(err)
 		return nil, err
 	}
