@@ -2,6 +2,14 @@
 
 package model
 
+type AccountDetails struct {
+	Accountnumber     *int    `json:"Accountnumber"`
+	Accountid         *int    `json:"Accountid"`
+	AccountHolderName *string `json:"AccountHolderName"`
+	Balance           *int    `json:"Balance"`
+	LastUpdated       *string `json:"LastUpdated"`
+}
+
 type Car struct {
 	Carid     string `json:"carid"`
 	Make      string `json:"make"`
@@ -13,6 +21,11 @@ type Deductible struct {
 	ID      string `json:"id"`
 	Cartype string `json:"cartype"`
 	Amount  int    `json:"amount"`
+}
+
+type MatrixResponse struct {
+	Special int    `json:"special"`
+	Matrix  []*int `json:"matrix"`
 }
 
 type Netc struct {
@@ -60,6 +73,13 @@ type OwnerInfoDetails struct {
 	Action        *string `json:"Action"`
 }
 
+type PayTollTax struct {
+	Rfid    string  `json:"rfid"`
+	Tollid  int     `json:"tollid"`
+	Amount  int     `json:"amount"`
+	Remarks *string `json:"remarks"`
+}
+
 type Relation struct {
 	Owner *Owner `json:"owner"`
 	Car   []*Car `json:"car"`
@@ -75,6 +95,15 @@ type Tollbooth struct {
 	Tollboothid   string `json:"tollboothid"`
 	Name          string `json:"name"`
 	Accountnumber string `json:"accountnumber"`
+}
+
+type TransactionHistory struct {
+	TransactionID       *int    `json:"TransactionID"`
+	Timestamp           *string `json:"Timestamp"`
+	DebitAcoountNumber  *int    `json:"DebitAcoountNumber"`
+	CreditAccountNumber *int    `json:"CreditAccountNumber"`
+	Amount              *int    `json:"Amount"`
+	Remarks             *string `json:"Remarks"`
 }
 
 type ValidateRfid struct {

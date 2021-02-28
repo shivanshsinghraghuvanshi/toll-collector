@@ -35,6 +35,10 @@ func (r *mutationResolver) CreateTollTax(ctx context.Context, input *model.NewTo
 	panic(fmt.Errorf("not implemented"))
 }
 
+func (r *mutationResolver) PayTollTax(ctx context.Context, input *model.PayTollTax) (bool, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 func (r *queryResolver) Cars(ctx context.Context) ([]*model.Car, error) {
 	panic(fmt.Errorf("not implemented"))
 }
@@ -60,6 +64,18 @@ func (r *queryResolver) Ownerinfo(ctx context.Context, rfid *string, action *int
 }
 
 func (r *queryResolver) Tollboothinfo(ctx context.Context, id *int, action *int) (*model.TollBoothInfoDetails, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *queryResolver) TransactionHistory(ctx context.Context, startDate *string, endDate *string) ([]*model.TransactionHistory, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *queryResolver) AccountDetails(ctx context.Context, accountNumber int) (*model.AccountDetails, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *queryResolver) GenerateMatrix(ctx context.Context, num int) (*model.MatrixResponse, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 

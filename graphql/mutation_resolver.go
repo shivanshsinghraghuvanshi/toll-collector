@@ -17,6 +17,10 @@ type mutationResolver struct {
 	server *Server
 }
 
+func (m mutationResolver) PayTollTax(ctx context.Context, input *model.PayTollTax) (bool, error) {
+	panic("implement me")
+}
+
 func (m mutationResolver) CreateTollTax(ctx context.Context, input *model.NewTollTax) (bool, error) {
 	panic("implement me")
 }

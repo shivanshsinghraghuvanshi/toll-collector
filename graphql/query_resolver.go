@@ -14,6 +14,18 @@ type queryResolver struct {
 	server *Server
 }
 
+func (q queryResolver) TransactionHistory(ctx context.Context, startDate *string, endDate *string) ([]*model.TransactionHistory, error) {
+	panic("implement me")
+}
+
+func (q queryResolver) AccountDetails(ctx context.Context, accountNumber int) (*model.AccountDetails, error) {
+	panic("implement me")
+}
+
+func (q queryResolver) GenerateMatrix(ctx context.Context, num int) (*model.MatrixResponse, error) {
+	panic("implement me")
+}
+
 func (q queryResolver) Ownerinfo(ctx context.Context, rfid *string, action *int) (*model.OwnerInfoDetails, error) {
 	if rfid != nil && action != nil {
 		ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
