@@ -51,6 +51,14 @@ func (r *queryResolver) Carowners(ctx context.Context, ownerid *int) (*model.Rel
 	panic(fmt.Errorf("not implemented"))
 }
 
+func (r *queryResolver) Ownerinfo(ctx context.Context, rfid *string, action *int) (*model.OwnerInfoDetails, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *queryResolver) Tollboothinfo(ctx context.Context, id *int, action *int) (*model.TollBoothInfoDetails, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 

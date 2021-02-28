@@ -3,6 +3,7 @@ package tolltax
 import (
 	"context"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/pb/tolltaxpb"
+	"log"
 )
 
 type Service interface {
@@ -47,6 +48,7 @@ func (t *tolltaxService) GetTollBoothDetails(ctx context.Context, tollboothid in
 }
 
 func (t *tolltaxService) GetVehicleOwnerDetails(ctx context.Context, rfid string, action tolltaxpb.ACTION) (*tolltaxpb.VehicleOwnerDetailsResponse, error) {
+	log.Printf("Action Value is %v\n", action)
 	r, err := t.repository.GetVehicleOwnerDetails(ctx, rfid, action)
 	if err != nil {
 		return nil, err

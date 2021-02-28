@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/graphql/graph/model"
+	"github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/pb/tolltaxpb"
 	"log"
 	"strconv"
 	"time"
@@ -11,6 +12,49 @@ import (
 
 type queryResolver struct {
 	server *Server
+}
+
+func (q queryResolver) Ownerinfo(ctx context.Context, rfid *string, action *int) (*model.OwnerInfoDetails, error) {
+	if rfid != nil && action != nil {
+		ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
+		defer cancel()
+		r, err := q.server.tolltaxClient.GetOwnerDetails(ctx, *rfid, tolltaxpb.ACTION(*action))
+
+		if err != nil {
+			log.Fatal(err)
+			return nil, err
+		}
+		accnum := strconv.Itoa(int(r.Accountnumber))
+		act := r.Action.String()
+		return &model.OwnerInfoDetails{
+			Name:          &r.Name,
+			AccountNumber: &accnum,
+			Action:        &act,
+		}, nil
+	} else {
+		return nil, errors.New("arguments not proper")
+	}
+}
+
+func (q queryResolver) Tollboothinfo(ctx context.Context, id *int, action *int) (*model.TollBoothInfoDetails, error) {
+	if id != nil {
+		ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
+		defer cancel()
+		r, err := q.server.tolltaxClient.GetTollBoothDetails(ctx, int64(*id), tolltaxpb.ACTION(*action))
+		if err != nil {
+			log.Fatal(err)
+			return nil, err
+		}
+		accnum := strconv.Itoa(int(r.Accountnumber))
+		act := r.Action.String()
+		return &model.TollBoothInfoDetails{
+			Name:          &r.Name,
+			AccountNumber: &accnum,
+			Action:        &act,
+		}, nil
+	} else {
+		return nil, errors.New("arguments not proper")
+	}
 }
 
 func (q queryResolver) Deductions(ctx context.Context, cartype *string) (int, error) {

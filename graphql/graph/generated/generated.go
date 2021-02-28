@@ -77,17 +77,31 @@ type ComplexityRoot struct {
 		Ownerid       func(childComplexity int) int
 	}
 
+	OwnerInfoDetails struct {
+		AccountNumber func(childComplexity int) int
+		Action        func(childComplexity int) int
+		Name          func(childComplexity int) int
+	}
+
 	Query struct {
-		Carowners  func(childComplexity int, ownerid *int) int
-		Cars       func(childComplexity int) int
-		Deductions func(childComplexity int, cartype *string) int
-		Owners     func(childComplexity int) int
-		Tollbooths func(childComplexity int) int
+		Carowners     func(childComplexity int, ownerid *int) int
+		Cars          func(childComplexity int) int
+		Deductions    func(childComplexity int, cartype *string) int
+		Ownerinfo     func(childComplexity int, rfid *string, action *int) int
+		Owners        func(childComplexity int) int
+		Tollboothinfo func(childComplexity int, id *int, action *int) int
+		Tollbooths    func(childComplexity int) int
 	}
 
 	Relation struct {
 		Car   func(childComplexity int) int
 		Owner func(childComplexity int) int
+	}
+
+	TollBoothInfoDetails struct {
+		AccountNumber func(childComplexity int) int
+		Action        func(childComplexity int) int
+		Name          func(childComplexity int) int
 	}
 
 	Tollbooth struct {
@@ -110,6 +124,8 @@ type QueryResolver interface {
 	Tollbooths(ctx context.Context) ([]*model.Tollbooth, error)
 	Deductions(ctx context.Context, cartype *string) (int, error)
 	Carowners(ctx context.Context, ownerid *int) (*model.Relation, error)
+	Ownerinfo(ctx context.Context, rfid *string, action *int) (*model.OwnerInfoDetails, error)
+	Tollboothinfo(ctx context.Context, id *int, action *int) (*model.TollBoothInfoDetails, error)
 }
 
 type executableSchema struct {
@@ -285,6 +301,27 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Owner.Ownerid(childComplexity), true
 
+	case "OwnerInfoDetails.accountNumber":
+		if e.complexity.OwnerInfoDetails.AccountNumber == nil {
+			break
+		}
+
+		return e.complexity.OwnerInfoDetails.AccountNumber(childComplexity), true
+
+	case "OwnerInfoDetails.Action":
+		if e.complexity.OwnerInfoDetails.Action == nil {
+			break
+		}
+
+		return e.complexity.OwnerInfoDetails.Action(childComplexity), true
+
+	case "OwnerInfoDetails.name":
+		if e.complexity.OwnerInfoDetails.Name == nil {
+			break
+		}
+
+		return e.complexity.OwnerInfoDetails.Name(childComplexity), true
+
 	case "Query.carowners":
 		if e.complexity.Query.Carowners == nil {
 			break
@@ -316,12 +353,36 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Deductions(childComplexity, args["cartype"].(*string)), true
 
+	case "Query.ownerinfo":
+		if e.complexity.Query.Ownerinfo == nil {
+			break
+		}
+
+		args, err := ec.field_Query_ownerinfo_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.Ownerinfo(childComplexity, args["rfid"].(*string), args["action"].(*int)), true
+
 	case "Query.owners":
 		if e.complexity.Query.Owners == nil {
 			break
 		}
 
 		return e.complexity.Query.Owners(childComplexity), true
+
+	case "Query.tollboothinfo":
+		if e.complexity.Query.Tollboothinfo == nil {
+			break
+		}
+
+		args, err := ec.field_Query_tollboothinfo_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.Tollboothinfo(childComplexity, args["id"].(*int), args["action"].(*int)), true
 
 	case "Query.tollbooths":
 		if e.complexity.Query.Tollbooths == nil {
@@ -343,6 +404,27 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Relation.Owner(childComplexity), true
+
+	case "TollBoothInfoDetails.accountNumber":
+		if e.complexity.TollBoothInfoDetails.AccountNumber == nil {
+			break
+		}
+
+		return e.complexity.TollBoothInfoDetails.AccountNumber(childComplexity), true
+
+	case "TollBoothInfoDetails.Action":
+		if e.complexity.TollBoothInfoDetails.Action == nil {
+			break
+		}
+
+		return e.complexity.TollBoothInfoDetails.Action(childComplexity), true
+
+	case "TollBoothInfoDetails.name":
+		if e.complexity.TollBoothInfoDetails.Name == nil {
+			break
+		}
+
+		return e.complexity.TollBoothInfoDetails.Name(childComplexity), true
 
 	case "Tollbooth.accountnumber":
 		if e.complexity.Tollbooth.Accountnumber == nil {
@@ -470,6 +552,17 @@ type Relation{
   car:[Car!]
 }
 
+type OwnerInfoDetails{
+  name:String
+  accountNumber:String
+  Action:String
+}
+
+type TollBoothInfoDetails{
+  name:String
+  accountNumber:String
+  Action:String
+}
 input NewRFID{
   ownerid:String!
   carid:String!
@@ -506,6 +599,8 @@ type Query{
   tollbooths:[Tollbooth!]
   deductions(cartype:String):Int!
   carowners(ownerid:Int):Relation!
+  ownerinfo(rfid:String,action:Int):OwnerInfoDetails!
+  tollboothinfo(id:Int,action:Int):TollBoothInfoDetails!
 }
 `, BuiltIn: false},
 }
@@ -632,6 +727,54 @@ func (ec *executionContext) field_Query_deductions_args(ctx context.Context, raw
 		}
 	}
 	args["cartype"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_ownerinfo_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *string
+	if tmp, ok := rawArgs["rfid"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("rfid"))
+		arg0, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["rfid"] = arg0
+	var arg1 *int
+	if tmp, ok := rawArgs["action"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("action"))
+		arg1, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["action"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_tollboothinfo_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *int
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	var arg1 *int
+	if tmp, ok := rawArgs["action"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("action"))
+		arg1, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["action"] = arg1
 	return args, nil
 }
 
@@ -1373,6 +1516,102 @@ func (ec *executionContext) _Owner_name(ctx context.Context, field graphql.Colle
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _OwnerInfoDetails_name(ctx context.Context, field graphql.CollectedField, obj *model.OwnerInfoDetails) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OwnerInfoDetails",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OwnerInfoDetails_accountNumber(ctx context.Context, field graphql.CollectedField, obj *model.OwnerInfoDetails) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OwnerInfoDetails",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AccountNumber, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _OwnerInfoDetails_Action(ctx context.Context, field graphql.CollectedField, obj *model.OwnerInfoDetails) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "OwnerInfoDetails",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Action, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Query_cars(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -1553,6 +1792,90 @@ func (ec *executionContext) _Query_carowners(ctx context.Context, field graphql.
 	return ec.marshalNRelation2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐRelation(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Query_ownerinfo(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_ownerinfo_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().Ownerinfo(rctx, args["rfid"].(*string), args["action"].(*int))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.OwnerInfoDetails)
+	fc.Result = res
+	return ec.marshalNOwnerInfoDetails2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐOwnerInfoDetails(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Query_tollboothinfo(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_tollboothinfo_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().Tollboothinfo(rctx, args["id"].(*int), args["action"].(*int))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TollBoothInfoDetails)
+	fc.Result = res
+	return ec.marshalNTollBoothInfoDetails2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐTollBoothInfoDetails(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -1689,6 +2012,102 @@ func (ec *executionContext) _Relation_car(ctx context.Context, field graphql.Col
 	res := resTmp.([]*model.Car)
 	fc.Result = res
 	return ec.marshalOCar2ᚕᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐCarᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _TollBoothInfoDetails_name(ctx context.Context, field graphql.CollectedField, obj *model.TollBoothInfoDetails) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "TollBoothInfoDetails",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Name, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _TollBoothInfoDetails_accountNumber(ctx context.Context, field graphql.CollectedField, obj *model.TollBoothInfoDetails) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "TollBoothInfoDetails",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AccountNumber, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _TollBoothInfoDetails_Action(ctx context.Context, field graphql.CollectedField, obj *model.TollBoothInfoDetails) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "TollBoothInfoDetails",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Action, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Tollbooth_tollboothid(ctx context.Context, field graphql.CollectedField, obj *model.Tollbooth) (ret graphql.Marshaler) {
@@ -3248,6 +3667,34 @@ func (ec *executionContext) _Owner(ctx context.Context, sel ast.SelectionSet, ob
 	return out
 }
 
+var ownerInfoDetailsImplementors = []string{"OwnerInfoDetails"}
+
+func (ec *executionContext) _OwnerInfoDetails(ctx context.Context, sel ast.SelectionSet, obj *model.OwnerInfoDetails) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, ownerInfoDetailsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("OwnerInfoDetails")
+		case "name":
+			out.Values[i] = ec._OwnerInfoDetails_name(ctx, field, obj)
+		case "accountNumber":
+			out.Values[i] = ec._OwnerInfoDetails_accountNumber(ctx, field, obj)
+		case "Action":
+			out.Values[i] = ec._OwnerInfoDetails_Action(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var queryImplementors = []string{"Query"}
 
 func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) graphql.Marshaler {
@@ -3324,6 +3771,34 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				}
 				return res
 			})
+		case "ownerinfo":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_ownerinfo(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			})
+		case "tollboothinfo":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_tollboothinfo(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			})
 		case "__type":
 			out.Values[i] = ec._Query___type(ctx, field)
 		case "__schema":
@@ -3357,6 +3832,34 @@ func (ec *executionContext) _Relation(ctx context.Context, sel ast.SelectionSet,
 			}
 		case "car":
 			out.Values[i] = ec._Relation_car(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var tollBoothInfoDetailsImplementors = []string{"TollBoothInfoDetails"}
+
+func (ec *executionContext) _TollBoothInfoDetails(ctx context.Context, sel ast.SelectionSet, obj *model.TollBoothInfoDetails) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, tollBoothInfoDetailsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("TollBoothInfoDetails")
+		case "name":
+			out.Values[i] = ec._TollBoothInfoDetails_name(ctx, field, obj)
+		case "accountNumber":
+			out.Values[i] = ec._TollBoothInfoDetails_accountNumber(ctx, field, obj)
+		case "Action":
+			out.Values[i] = ec._TollBoothInfoDetails_Action(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -3720,6 +4223,20 @@ func (ec *executionContext) marshalNOwner2ᚖgithubᚗcomᚋshivanshsinghraghuva
 	return ec._Owner(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalNOwnerInfoDetails2githubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐOwnerInfoDetails(ctx context.Context, sel ast.SelectionSet, v model.OwnerInfoDetails) graphql.Marshaler {
+	return ec._OwnerInfoDetails(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNOwnerInfoDetails2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐOwnerInfoDetails(ctx context.Context, sel ast.SelectionSet, v *model.OwnerInfoDetails) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	return ec._OwnerInfoDetails(ctx, sel, v)
+}
+
 func (ec *executionContext) marshalNRelation2githubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐRelation(ctx context.Context, sel ast.SelectionSet, v model.Relation) graphql.Marshaler {
 	return ec._Relation(ctx, sel, &v)
 }
@@ -3747,6 +4264,20 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) marshalNTollBoothInfoDetails2githubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐTollBoothInfoDetails(ctx context.Context, sel ast.SelectionSet, v model.TollBoothInfoDetails) graphql.Marshaler {
+	return ec._TollBoothInfoDetails(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNTollBoothInfoDetails2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐTollBoothInfoDetails(ctx context.Context, sel ast.SelectionSet, v *model.TollBoothInfoDetails) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	return ec._TollBoothInfoDetails(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalNTollbooth2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐTollbooth(ctx context.Context, sel ast.SelectionSet, v *model.Tollbooth) graphql.Marshaler {

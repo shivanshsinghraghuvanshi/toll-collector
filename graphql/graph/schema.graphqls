@@ -39,6 +39,17 @@ type Relation{
   car:[Car!]
 }
 
+type OwnerInfoDetails{
+  name:String
+  accountNumber:String
+  Action:String
+}
+
+type TollBoothInfoDetails{
+  name:String
+  accountNumber:String
+  Action:String
+}
 input NewRFID{
   ownerid:String!
   carid:String!
@@ -75,4 +86,6 @@ type Query{
   tollbooths:[Tollbooth!]
   deductions(cartype:String):Int!
   carowners(ownerid:Int):Relation!
+  ownerinfo(rfid:String,action:Int):OwnerInfoDetails!
+  tollboothinfo(id:Int,action:Int):TollBoothInfoDetails!
 }

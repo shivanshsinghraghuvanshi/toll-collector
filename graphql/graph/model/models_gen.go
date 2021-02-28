@@ -49,9 +49,21 @@ type Owner struct {
 	Name          string `json:"name"`
 }
 
+type OwnerInfoDetails struct {
+	Name          *string `json:"name"`
+	AccountNumber *string `json:"accountNumber"`
+	Action        *string `json:"Action"`
+}
+
 type Relation struct {
 	Owner *Owner `json:"owner"`
 	Car   []*Car `json:"car"`
+}
+
+type TollBoothInfoDetails struct {
+	Name          *string `json:"name"`
+	AccountNumber *string `json:"accountNumber"`
+	Action        *string `json:"Action"`
 }
 
 type Tollbooth struct {
