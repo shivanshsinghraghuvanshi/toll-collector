@@ -8,8 +8,7 @@ services:
     depends_on:
       - tolltax_db
     environment:
-      #DATABASE_URL: postgres://boomshiva:123456@tolltax_db/tollcollector?sslmode=disable
-      DATABASE_URL: postgresql://postgres:admin123456@toll-collection.cr1qmxeqm6pf.us-east-1.rds.amazonaws.com:5432/tolltax?sslmode=disable
+      DATABASE_URL: postgres://boomshiva:123456@tolltax_db/tollcollector?sslmode=disable
     restart: on-failure
   payment:
     build:
@@ -19,7 +18,7 @@ services:
       - tolltax
       - payment_db
     environment:
-      DATABASE_URL: postgresql://postgres:admin123456@toll-collection.cr1qmxeqm6pf.us-east-1.rds.amazonaws.com:5432/tolltax?sslmode=disable
+      DATABASE_URL: postgres://boomshiva:123456@payment_db/tollcollector?sslmode=disable
       TOLLTAX_SERVICE_URL: tolltax:8080
     restart: on-failure
   graphql:
@@ -30,6 +29,7 @@ services:
       - 8000:8080
     depends_on:
       - tolltax
+      - payment
     environment:
       TOLLTAX_SERVICE_URL: tolltax:8080
     restart: on-failure
