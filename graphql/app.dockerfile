@@ -4,6 +4,8 @@ WORKDIR /go/src/github.com/ssinghraghuvanshi/toll-collector
 COPY go.mod go.sum ./
 COPY vendor vendor
 COPY tolltax tolltax
+COPY reporting reporting
+COPY payment payment
 COPY graphql graphql
 RUN GO111MODULE=on go build -mod vendor -o /go/bin/app ./graphql
 

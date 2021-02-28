@@ -19,7 +19,31 @@ func (q queryResolver) TransactionHistory(ctx context.Context, startDate *string
 }
 
 func (q queryResolver) AccountDetails(ctx context.Context, accountNumber int) (*model.AccountDetails, error) {
-	panic("implement me")
+	if accountNumber != 0 {
+		ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
+		defer cancel()
+		r, err := q.server.paymentClient.GetAccountDetails(ctx, int64(accountNumber))
+
+		if err != nil {
+			log.Fatal(err)
+			return nil, err
+		}
+		accNum := int(r.Accountnumber)
+		accId := int(r.Accountid)
+		name := r.AccountHolderName
+		b := int(r.Balance)
+		lu := r.LastUpdated
+		return &model.AccountDetails{
+			Accountnumber:     &accNum,
+			Accountid:         &accId,
+			AccountHolderName: &name,
+			Balance:           &b,
+			LastUpdated:       &lu,
+		}, err
+
+	} else {
+		return nil, errors.New("arguments not proper")
+	}
 }
 
 func (q queryResolver) GenerateMatrix(ctx context.Context, num int) (*model.MatrixResponse, error) {

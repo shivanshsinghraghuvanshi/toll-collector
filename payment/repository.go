@@ -36,7 +36,6 @@ func (r *postgresRepository) ExecuteTransaction(ctx context.Context, request *pa
 		// everything went through commit. or else rollback
 		err = tx.Commit()
 	}()
-
 	// Now lets try to implement the transaction
 	// constraint A debit account should have balance greater than amount
 	cbalance, e := r.getBalance(ctx, request.CreditAccountNumber)
@@ -63,6 +62,11 @@ func (r *postgresRepository) ExecuteTransaction(ctx context.Context, request *pa
 	} else {
 		return nil, errors.New("Not Enough Balance in Account")
 	}
+	return &paymentpb.ExecuteTResponse{
+		Status:  true,
+		Amount:  request.Amount,
+		Message: "Successfully executed trasaction",
+	}, nil
 }
 
 func (r *postgresRepository) GetAccountDetails(ctx context.Context, acc int64) (*paymentpb.GetAccountDetailsResponse, error) {

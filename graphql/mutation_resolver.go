@@ -18,7 +18,14 @@ type mutationResolver struct {
 }
 
 func (m mutationResolver) PayTollTax(ctx context.Context, input *model.PayTollTax) (bool, error) {
-	panic("implement me")
+	ctx, cancel := context.WithTimeout(ctx, 30*time.Second) // just to give ample time to get the transaction go through backened me 5 second gap hai
+	defer cancel()
+	r, err := m.server.tolltaxClient.PayTollTax(ctx, input.Rfid, int64(input.Tollid), int32(input.Amount), *input.Remarks)
+	if err != nil {
+		log.Println(err)
+		return false, err
+	}
+	return r, err
 }
 
 func (m mutationResolver) CreateTollTax(ctx context.Context, input *model.NewTollTax) (bool, error) {
