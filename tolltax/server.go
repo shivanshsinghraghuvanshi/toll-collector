@@ -26,9 +26,9 @@ func (g *grpcServer) PayTollTax(ctx context.Context, request *tolltaxpb.PayTollT
 		log.Fatal("Cannot get ID")
 		return nil, e1
 	}
-	tOd, e2 := g.GetVehicleOwnerDetails(ctx, &tolltaxpb.VehicleOwnerDetailsRequest{
-		Rfid:   request.Rfid,
-		Action: 0,
+	tOd, e2 := g.GetTollBoothDetails(ctx, &tolltaxpb.TollBoothDetailsRequest{
+		Tollboothid: request.Tollid,
+		Action:      0,
 	})
 	if e2 != nil {
 		log.Fatal("Cannot get tollbooth Details")

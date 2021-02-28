@@ -39,8 +39,10 @@ func (r *postgresRepository) ExecuteTransaction(ctx context.Context, request *pa
 	}()
 	// Now lets try to implement the transaction
 	// constraint A debit account should have balance greater than amount
+	log.Printf("Credit Account Number %v and Debit Account Number %v\n", request.CreditAccountNumber, request.DebitAccountNumber)
 	cbalance, e := r.getBalance(ctx, request.CreditAccountNumber)
 	dbalance, ex := r.getBalance(ctx, request.DebitAccountNumber)
+	log.Printf("Credit Account Balance %v and Debit Account Account %v\n", cbalance, dbalance)
 	if float32(request.Amount) < dbalance && e == nil && ex == nil {
 		// should do an entry in transaction table
 		_, err = tx.ExecContext(ctx, "INSERT INTO  transactionDetails(timestamp,debitaccountnumber,creditaccountnumber,amount,remarks) values($1,$2,$3,$4,$5)", time.Now(), request.DebitAccountNumber, request.CreditAccountNumber, request.Amount, request.Remarks)
@@ -51,12 +53,16 @@ func (r *postgresRepository) ExecuteTransaction(ctx context.Context, request *pa
 		// if successful update values in accountdetails table
 		_, err = tx.ExecContext(ctx, "Update accountdetails SET balance=$1 where accountnumber=$2", cbalance+float32(request.Amount), request.CreditAccountNumber)
 		if err != nil {
+			log.Fatal("Error while adding vale commit")
+			log.Fatal(err)
 			return nil, err
 		}
 		// Sleep Requirement
 		time.Sleep(time.Second * 5)
 		_, err = tx.ExecContext(ctx, "Update accountdetails SET balance=$1 where accountnumber=$2", dbalance-float32(request.Amount), request.DebitAccountNumber)
 		if err != nil {
+			log.Fatal("Error while deducting commit")
+			log.Fatal(err)
 			return nil, err
 		}
 

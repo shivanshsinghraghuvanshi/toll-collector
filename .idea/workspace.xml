@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="9aae2851-6427-4ca2-813e-eb142d17b589" name="Default Changelist" comment="Setup Docker Compose for payment Service with dependencies">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment/new.sql" beforeDir="false" afterPath="$PROJECT_DIR$/payment/new.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/payment/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/payment/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/payment/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tolltax/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/server.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +114,7 @@
       <workItem from="1614451218109" duration="242000" />
       <workItem from="1614494203229" duration="19005000" />
       <workItem from="1614518094293" duration="19622000" />
-      <workItem from="1614541125393" duration="7840000" />
+      <workItem from="1614541125393" duration="9006000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1614346462854</created>
@@ -399,7 +396,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614542875541</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Worked on Transaction API">
+      <created>1614549085253</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1614549085253</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -419,7 +423,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="vendor directoty" />
     <MESSAGE value="Graphql Support" />
     <MESSAGE value="Changes with graphql server" />
     <MESSAGE value="Added Generate RFID end to end Testing" />
@@ -444,7 +447,8 @@
     <MESSAGE value="Integrated All" />
     <MESSAGE value="Fixed Protobuf Issue" />
     <MESSAGE value="Correction in url config for payment service binding" />
-    <option name="LAST_COMMIT_MESSAGE" value="Correction in url config for payment service binding" />
+    <MESSAGE value="Worked on Transaction API" />
+    <option name="LAST_COMMIT_MESSAGE" value="Worked on Transaction API" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
