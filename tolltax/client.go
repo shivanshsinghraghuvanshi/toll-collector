@@ -68,6 +68,28 @@ func (c *Client) CalculateDeductibleAmount(ctx context.Context, cartype string) 
 	return r, nil
 }
 
+func (c *Client) GetOwnerDetails(ctx context.Context, rfid string, action tolltaxpb.ACTION) (*tolltaxpb.VehicleOwnerDetailsResponse, error) {
+	r, err := c.service.GetVehicleOwnerDetails(ctx, &tolltaxpb.VehicleOwnerDetailsRequest{
+		Rfid:   rfid,
+		Action: action,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return r, nil
+}
+
+func (c *Client) GetTollBoothDetails(ctx context.Context, id int64, action tolltaxpb.ACTION) (*tolltaxpb.VehicleOwnerDetailsResponse, error) {
+	r, err := c.service.GetTollBoothDetails(ctx, &tolltaxpb.TollBoothDetailsRequest{
+		Tollboothid: id,
+		Action:      action,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return r, nil
+}
+
 func (c *Client) GenerateMatrix(ctx context.Context, n int) ([][]int, int) {
 	a := make([][]int, n)
 	for i, _ := range a {

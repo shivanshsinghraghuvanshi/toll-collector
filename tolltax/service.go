@@ -12,6 +12,8 @@ type Service interface {
 	CreditTransaction(ctx context.Context, amount int32, tollbooth *tollbooth) bool
 	CalculateDeductibleAmount(ctx context.Context, cartype string) (int32, error)
 	GetAllOwners(ctx context.Context) ([]*tolltaxpb.Owner, error)
+	GetTollBoothDetails(ctx context.Context, tollboothid int64, action tolltaxpb.ACTION) (*tolltaxpb.VehicleOwnerDetailsResponse, error)
+	GetVehicleOwnerDetails(ctx context.Context, rfid string, action tolltaxpb.ACTION) (*tolltaxpb.VehicleOwnerDetailsResponse, error)
 }
 
 type netc struct {
@@ -34,6 +36,22 @@ type tollbooth struct {
 }
 type tolltaxService struct {
 	repository Repository
+}
+
+func (t *tolltaxService) GetTollBoothDetails(ctx context.Context, tollboothid int64, action tolltaxpb.ACTION) (*tolltaxpb.VehicleOwnerDetailsResponse, error) {
+	r, err := t.repository.GetTollBoothDetails(ctx, tollboothid, action)
+	if err != nil {
+		return nil, err
+	}
+	return r, nil
+}
+
+func (t *tolltaxService) GetVehicleOwnerDetails(ctx context.Context, rfid string, action tolltaxpb.ACTION) (*tolltaxpb.VehicleOwnerDetailsResponse, error) {
+	r, err := t.repository.GetVehicleOwnerDetails(ctx, rfid, action)
+	if err != nil {
+		return nil, err
+	}
+	return r, nil
 }
 
 func (t *tolltaxService) GetAllOwners(ctx context.Context) ([]*tolltaxpb.Owner, error) {

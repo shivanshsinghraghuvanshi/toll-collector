@@ -16,10 +16,48 @@ type Repository interface {
 	CalculateDeductibleAmount(ctx context.Context, cartype string) (int32, error)
 	GetAllOwners(ctx context.Context) ([]*tolltaxpb.Owner, error)
 	CreateNewOwner(ctx context.Context, o *tolltaxpb.CreateNewOwnerRequest) (*tolltaxpb.CreateNewOwnerResponse, error)
+	GetTollBoothDetails(ctx context.Context, tollboothid int64, action tolltaxpb.ACTION) (*tolltaxpb.VehicleOwnerDetailsResponse, error)
+	GetVehicleOwnerDetails(ctx context.Context, rfid string, action tolltaxpb.ACTION) (*tolltaxpb.VehicleOwnerDetailsResponse, error)
 }
 
 type postgresRepository struct {
 	db *sql.DB
+}
+
+func (r *postgresRepository) GetTollBoothDetails(ctx context.Context, tollboothid int64, action tolltaxpb.ACTION) (*tolltaxpb.VehicleOwnerDetailsResponse, error) {
+	rows, err := r.db.QueryContext(ctx, "SELECT name, accountnumber from tollbooth where tollboothid=$1", tollboothid)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	v := &tolltaxpb.VehicleOwnerDetailsResponse{}
+	for rows.Next() {
+		err := rows.Scan(&v.Name, &v.Accountnumber)
+		if err != nil {
+			log.Fatal("Error while fetching the amount")
+			return nil, err
+		}
+	}
+	v.Action = action
+	return v, nil
+}
+
+func (r *postgresRepository) GetVehicleOwnerDetails(ctx context.Context, rfid string, action tolltaxpb.ACTION) (*tolltaxpb.VehicleOwnerDetailsResponse, error) {
+	rows, err := r.db.QueryContext(ctx, "SELECT name, accountnumber from owner where ownerid = (SELECT ownerid from netc where rfid=$1)", rfid)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	v := &tolltaxpb.VehicleOwnerDetailsResponse{}
+	for rows.Next() {
+		err := rows.Scan(&v.Name, &v.Accountnumber)
+		if err != nil {
+			log.Fatal("Error while fetching the amount")
+			return nil, err
+		}
+	}
+	v.Action = action
+	return v, nil
 }
 
 func (r *postgresRepository) CreateNewOwner(ctx context.Context, o *tolltaxpb.CreateNewOwnerRequest) (*tolltaxpb.CreateNewOwnerResponse, error) {

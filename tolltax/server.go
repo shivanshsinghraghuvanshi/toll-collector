@@ -15,6 +15,23 @@ type grpcServer struct {
 	service Service
 }
 
+func (g *grpcServer) GetVehicleOwnerDetails(ctx context.Context, request *tolltaxpb.VehicleOwnerDetailsRequest) (*tolltaxpb.VehicleOwnerDetailsResponse, error) {
+
+	r, err := g.service.GetVehicleOwnerDetails(ctx, request.Rfid, request.Action)
+	if err != nil {
+		return nil, err
+	}
+	return r, nil
+}
+
+func (g *grpcServer) GetTollBoothDetails(ctx context.Context, request *tolltaxpb.TollBoothDetailsRequest) (*tolltaxpb.VehicleOwnerDetailsResponse, error) {
+	r, err := g.service.GetTollBoothDetails(ctx, request.Tollboothid, request.Action)
+	if err != nil {
+		return nil, err
+	}
+	return r, nil
+}
+
 func (g *grpcServer) CalculateDeductibleAmount(ctx context.Context, request *tolltaxpb.CalculateAmountRequest) (*tolltaxpb.CalculateAmountResponse, error) {
 	r, err := g.service.CalculateDeductibleAmount(ctx, request.Cartype)
 	if err != nil {
@@ -54,14 +71,6 @@ func (g *grpcServer) ValidateRFID(ctx context.Context, request *tolltaxpb.Valida
 		return nil, err
 	}
 	return &tolltaxpb.ValidateRFIDResponse{Ok: r}, nil
-}
-
-func (g *grpcServer) DeductTransaction(ctx context.Context, request *tolltaxpb.DeductRequest) (*tolltaxpb.DeductResponse, error) {
-	panic("implement me")
-}
-
-func (g *grpcServer) CreditTransaction(ctx context.Context, request *tolltaxpb.CreditRequest) (*tolltaxpb.CreditResponse, error) {
-	panic("implement me")
 }
 
 func ListenGRPC(s Service, port int) error {
