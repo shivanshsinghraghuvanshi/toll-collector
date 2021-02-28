@@ -8,8 +8,8 @@ services:
     depends_on:
       - tolltax_db
     environment:
-      DATABASE_URL: postgres://boomshiva:123456@tolltax_db/tollcollector?sslmode=disable
-      #DATABASE_URL: postgresql://postgres:admin123456@toll-collection.cr1qmxeqm6pf.us-east-1.rds.amazonaws.com:5432/tolltax?sslmode=disable
+      #DATABASE_URL: postgres://boomshiva:123456@tolltax_db/tollcollector?sslmode=disable
+      DATABASE_URL: postgresql://postgres:admin123456@toll-collection.cr1qmxeqm6pf.us-east-1.rds.amazonaws.com:5432/tolltax?sslmode=disable
     restart: on-failure
     #  catalog:
     #    build:

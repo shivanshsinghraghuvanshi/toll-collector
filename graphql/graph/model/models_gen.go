@@ -59,3 +59,8 @@ type Tollbooth struct {
 	Name          string `json:"name"`
 	Accountnumber string `json:"accountnumber"`
 }
+
+type ValidateRfid struct {
+	Rfid  string `json:"rfid"`
+	Carid int    `json:"carid"`
+}

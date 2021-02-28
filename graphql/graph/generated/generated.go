@@ -60,6 +60,7 @@ type ComplexityRoot struct {
 		CreateOwner     func(childComplexity int, input model.NewOwner) int
 		CreateRfid      func(childComplexity int, input *model.NewRfid) int
 		CreateTollBooth func(childComplexity int, input *model.NewTollBooth) int
+		ValidateRfid    func(childComplexity int, input model.ValidateRfid) int
 	}
 
 	Netc struct {
@@ -98,6 +99,7 @@ type MutationResolver interface {
 	CreateCar(ctx context.Context, input *model.NewCar) (string, error)
 	CreateTollBooth(ctx context.Context, input *model.NewTollBooth) (string, error)
 	CreateRfid(ctx context.Context, input *model.NewRfid) (string, error)
+	ValidateRfid(ctx context.Context, input model.ValidateRfid) (bool, error)
 }
 type QueryResolver interface {
 	Cars(ctx context.Context) ([]*model.Car, error)
@@ -216,6 +218,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.CreateTollBooth(childComplexity, args["input"].(*model.NewTollBooth)), true
+
+	case "Mutation.validateRFID":
+		if e.complexity.Mutation.ValidateRfid == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_validateRFID_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.ValidateRfid(childComplexity, args["input"].(model.ValidateRfid)), true
 
 	case "Netc.carid":
 		if e.complexity.Netc.Carid == nil {
@@ -445,11 +459,16 @@ input NewCar{
   cartype:String!
   carnumber:String!
 }
+input ValidateRFID{
+  rfid:String!
+  carid:Int!
+}
 type Mutation{
   createOwner(input:NewOwner!):String!
   createCar(input:NewCar):String!
   createTollBooth(input:NewTollBooth):String!
   createRFID(input:NewRFID):String!
+  validateRFID(input:ValidateRFID!):Boolean!
 }
 
 type Query{
@@ -517,6 +536,21 @@ func (ec *executionContext) field_Mutation_createTollBooth_args(ctx context.Cont
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 		arg0, err = ec.unmarshalONewTollBooth2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐNewTollBooth(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_validateRFID_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.ValidateRfid
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNValidateRFID2githubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐValidateRfid(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -989,6 +1023,48 @@ func (ec *executionContext) _Mutation_createRFID(ctx context.Context, field grap
 	res := resTmp.(string)
 	fc.Result = res
 	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_validateRFID(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_validateRFID_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().ValidateRfid(rctx, args["input"].(model.ValidateRfid))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Netc_netcid(ctx context.Context, field graphql.CollectedField, obj *model.Netc) (ret graphql.Marshaler) {
@@ -2782,6 +2858,34 @@ func (ec *executionContext) unmarshalInputNewTollBooth(ctx context.Context, obj 
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputValidateRFID(ctx context.Context, obj interface{}) (model.ValidateRfid, error) {
+	var it model.ValidateRfid
+	var asMap = obj.(map[string]interface{})
+
+	for k, v := range asMap {
+		switch k {
+		case "rfid":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("rfid"))
+			it.Rfid, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "carid":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("carid"))
+			it.Carid, err = ec.unmarshalNInt2int(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
 // endregion **************************** input.gotpl *****************************
 
 // region    ************************** interface.gotpl ***************************
@@ -2901,6 +3005,11 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			}
 		case "createRFID":
 			out.Values[i] = ec._Mutation_createRFID(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "validateRFID":
+			out.Values[i] = ec._Mutation_validateRFID(ctx, field)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -3461,6 +3570,11 @@ func (ec *executionContext) marshalNTollbooth2ᚖgithubᚗcomᚋshivanshsinghrag
 		return graphql.Null
 	}
 	return ec._Tollbooth(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNValidateRFID2githubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐValidateRfid(ctx context.Context, v interface{}) (model.ValidateRfid, error) {
+	res, err := ec.unmarshalInputValidateRFID(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) marshalN__Directive2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚋintrospectionᚐDirective(ctx context.Context, sel ast.SelectionSet, v introspection.Directive) graphql.Marshaler {

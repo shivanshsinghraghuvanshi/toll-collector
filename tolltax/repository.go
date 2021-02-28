@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	_ "github.com/lib/pq"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/pb/tolltaxpb"
+	"log"
 )
 
 type Repository interface {
@@ -30,21 +31,19 @@ func (r *postgresRepository) GenerateRFID(ctx context.Context, rfid string, owne
 }
 
 func (r *postgresRepository) ValidateRFID(ctx context.Context, rfid string, carid int64) (bool, error) {
-	rows, err := r.db.QueryContext(ctx, "SELECT * from netc where carid = $1 and rfid =$2", carid, rfid)
+	rows, err := r.db.QueryContext(ctx, "SELECT COUNT(*) from netc where carid = $1 and rfid =$2", carid, rfid)
 	if err != nil {
 		return false, err
 	}
 	defer rows.Close()
-	counter := 0
-	for rows.Next() {
-		if err = rows.Scan(); err == nil {
-			counter++
-		}
-	}
-	if counter == 0 {
+
+	count := checkCount(rows)
+
+	log.Printf("count is %v\n", count)
+	if count == 0 {
 		return false, nil
 	} else {
-		return true, nil
+		return true, err
 	}
 }
 
@@ -95,4 +94,15 @@ func (r *postgresRepository) Close() {
 
 func (r *postgresRepository) Ping() error {
 	return r.db.Ping()
+}
+
+func checkCount(rows *sql.Rows) (count int) {
+	for rows.Next() {
+		err := rows.Scan(&count)
+		if err != nil {
+			log.Fatal("Some issue while scanning the count")
+			return 0
+		}
+	}
+	return count
 }

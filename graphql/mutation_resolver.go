@@ -17,6 +17,17 @@ type mutationResolver struct {
 	server *Server
 }
 
+func (m mutationResolver) ValidateRfid(ctx context.Context, input model.ValidateRfid) (bool, error) {
+	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
+	defer cancel()
+	r, err := m.server.tolltaxClient.ValidateRFID(ctx, input.Rfid, int64(input.Carid))
+	if err != nil {
+		log.Println(err)
+		return false, err
+	}
+	return r.Ok, nil
+}
+
 func (m mutationResolver) CreateOwner(ctx context.Context, input model.NewOwner) (string, error) {
 	panic("implement me")
 }

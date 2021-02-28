@@ -57,11 +57,16 @@ input NewCar{
   cartype:String!
   carnumber:String!
 }
+input ValidateRFID{
+  rfid:String!
+  carid:Int!
+}
 type Mutation{
   createOwner(input:NewOwner!):String!
   createCar(input:NewCar):String!
   createTollBooth(input:NewTollBooth):String!
   createRFID(input:NewRFID):String!
+  validateRFID(input:ValidateRFID!):Boolean!
 }
 
 type Query{
