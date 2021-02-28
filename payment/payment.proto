@@ -1,0 +1,58 @@
+syntax = "proto3";
+package pb;
+option go_package = "./paymentpb";
+
+
+message ExecuteTRequest{
+  int64 debitAccountNumber = 1;
+  int64 creditAccountNumber = 2;
+  int32 amount = 3;
+  string remarks = 4;
+}
+
+message ExecuteTResponse{
+  bool status = 1;
+  int32 amount = 2;
+  string message = 3;
+}
+
+message GetAccountDetailsRequest{
+  int64 accountNumber = 1;
+}
+
+message GetAccountDetailsResponse{
+  int64 accountnumber = 1;
+  int64 accountid = 2;
+  string accountHolderName = 3;
+  int64 balance = 5;
+  string lastUpdated = 6;
+}
+message TransactionFilter{
+  int64 accountNumber = 1;
+  string remarks = 2;
+  repeated string transactionid = 3;
+  ACTION action = 4;
+}
+enum ACTION{
+  DEBIT = 0;
+  CREDIT = 1;
+}
+message GetTransactionHistoryRequest{
+  string startDate = 1;
+  string endDate = 2;
+  TransactionFilter filters = 3;
+}
+
+message GetTransactionHistoryResponse{
+  int64 transactionID = 1;
+  string timestamp = 2;
+  int64 debitAcoountNumber = 3;
+  int64 creditAccountNumber = 4;
+  int32 amount = 5;
+  string remarks = 6;
+}
+service PaymentService{
+  rpc ExecuteTransaction(ExecuteTRequest) returns (ExecuteTResponse){}
+  rpc GetAccountDetails(GetAccountDetailsRequest) returns (GetAccountDetailsResponse){}
+  rpc GetTransactionHistory(GetTransactionHistoryRequest) returns(GetTransactionHistoryResponse){}
+}
