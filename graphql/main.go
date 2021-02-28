@@ -9,6 +9,7 @@ import (
 
 type AppConfig struct {
 	TollTaxServiceURL string `envconfig:"TOLLTAX_SERVICE_URL"`
+	PaymentServiceURL string `envconfig:"PAYMENT_SERVICE_URL"`
 }
 
 func main() {
@@ -18,7 +19,7 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Printf("%v context is loaded from env\n", cfg.TollTaxServiceURL)
-	s, err := NewGraphQLServer(cfg.TollTaxServiceURL)
+	s, err := NewGraphQLServer(cfg.TollTaxServiceURL, cfg.PaymentServiceURL)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -3,94 +3,125 @@
 # https://gqlgen.com/getting-started/
 
 type Car{
-  carid:ID!
-  make:String!
-  cartype:String!
-  carnumber:String!
+    carid:ID!
+    make:String!
+    cartype:String!
+    carnumber:String!
 }
 
 type Owner {
-  ownerid:ID!
-  accountnumber:String!
-  name:String!
+    ownerid:ID!
+    accountnumber:String!
+    name:String!
 }
 
 type Tollbooth{
-  tollboothid:ID!
-  name:String!
-  accountnumber:String!
+    tollboothid:ID!
+    name:String!
+    accountnumber:String!
 }
 
 type Netc{
-  netcid:ID!
-  ownerid:String!
-  carid:String!
-  rfid:String!
+    netcid:ID!
+    ownerid:String!
+    carid:String!
+    rfid:String!
 }
 
 type Deductible{
-  id:ID!
-  cartype:String!
-  amount:Int!
+    id:ID!
+    cartype:String!
+    amount:Int!
 }
 
 type Relation{
-  owner:Owner!
-  car:[Car!]
+    owner:Owner!
+    car:[Car!]
 }
 
 type OwnerInfoDetails{
-  name:String
-  accountNumber:String
-  Action:String
+    name:String
+    accountNumber:String
+    Action:String
 }
 
 type TollBoothInfoDetails{
-  name:String
-  accountNumber:String
-  Action:String
+    name:String
+    accountNumber:String
+    Action:String
 }
 input NewRFID{
-  ownerid:String!
-  carid:String!
+    ownerid:String!
+    carid:String!
 }
 
 input NewOwner{
-  accountnumber:String!
-  name:String!
+    accountnumber:String!
+    name:String!
 }
 input NewTollBooth{
-  accountnumber:String!
-  name:String!
+    accountnumber:String!
+    name:String!
 }
 input NewCar{
-  make:String!
-  cartype:String!
-  carnumber:String!
+    make:String!
+    cartype:String!
+    carnumber:String!
 }
 input NewTollTax{
-  cartype:String
-  amount:Int
+    cartype:String
+    amount:Int
 }
 input ValidateRFID{
-  rfid:String!
-  carid:Int!
-}
-type Mutation{
-  createOwner(input:NewOwner!):String!
-  createCar(input:NewCar):String!
-  createTollBooth(input:NewTollBooth):String!
-  createRFID(input:NewRFID):String!
-  validateRFID(input:ValidateRFID!):Boolean!
-  createTollTax(input:NewTollTax):Boolean!
+    rfid:String!
+    carid:Int!
 }
 
+input PayTollTax{
+    rfid:String!
+    tollid:Int!
+    amount:Int!
+    remarks:String
+}
+type TransactionHistory{
+    TransactionID:Int
+    Timestamp:String
+    DebitAcoountNumber:Int
+    CreditAccountNumber:Int
+    Amount:Int
+    Remarks:String
+}
+type MatrixResponse{
+    special:Int!
+    matrix:[Int]
+}
+type AccountDetails{
+    Accountnumber:Int
+    Accountid:Int
+    AccountHolderName:String
+    Balance:Int
+    LastUpdated:String
+}
+type Mutation{
+    createOwner(input:NewOwner!):String!
+    createCar(input:NewCar):String!
+    createTollBooth(input:NewTollBooth):String!
+    createRFID(input:NewRFID):String!
+    validateRFID(input:ValidateRFID!):Boolean!
+    createTollTax(input:NewTollTax):Boolean!
+    payTollTax(input:PayTollTax):Boolean!
+}
+
+
 type Query{
-  cars:[Car!]
-  owners:[Owner!]
-  tollbooths:[Tollbooth!]
-  deductions(cartype:String):Int!
-  carowners(ownerid:Int):Relation!
-  ownerinfo(rfid:String,action:Int):OwnerInfoDetails!
-  tollboothinfo(id:Int,action:Int):TollBoothInfoDetails!
+    cars:[Car!]
+    owners:[Owner!]
+    tollbooths:[Tollbooth!]
+    deductions(cartype:String):Int!
+    carowners(ownerid:Int):Relation!
+    ownerinfo(rfid:String,action:Int):OwnerInfoDetails!
+    tollboothinfo(id:Int,action:Int):TollBoothInfoDetails!
+    transactionHistory(startDate:String,endDate:String):[TransactionHistory]
+    accountDetails(accountNumber:Int!):AccountDetails!
+    generateMatrix(num:Int!):MatrixResponse
 }

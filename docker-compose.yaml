@@ -46,6 +46,7 @@ services:
       - payment
     environment:
       TOLLTAX_SERVICE_URL: tolltax:8080
+      PAYMENT_SERVICE_URL: payment:8080
     restart: on-failure
   tolltax_db:
     image: tolltaxdb:latest

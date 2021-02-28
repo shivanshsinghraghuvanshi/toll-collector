@@ -3,14 +3,16 @@ package main
 import (
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/graphql/graph/generated"
+	"github.com/shivanshsinghraghuvanshi/toll-collector/payment"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/tolltax"
 )
 
 type Server struct {
 	tolltaxClient *tolltax.Client
+	paymentClient *payment.Client
 }
 
-func NewGraphQLServer(tolltaxurl string) (*Server, error) {
+func NewGraphQLServer(tolltaxurl string, paymentServiceUrl string) (*Server, error) {
 
 	// TOLL TAX SERVICE LOADING
 	t, err := tolltax.NewClient(tolltaxurl)
@@ -18,8 +20,13 @@ func NewGraphQLServer(tolltaxurl string) (*Server, error) {
 		return nil, err
 	}
 
+	// Payment Service Wiring
+	p, e := payment.NewClient(tolltaxurl)
+	if e != nil {
+		return nil, err
+	}
 	return &Server{
-		t,
+		t, p,
 	}, nil
 }
 
@@ -33,6 +40,12 @@ func (s *Server) Query() generated.QueryResolver {
 
 func (s *Server) TollTax() *tolltaxResolver {
 	return &tolltaxResolver{
+		server: s,
+	}
+}
+
+func (s *Server) Payment() *paymentResolver {
+	return &paymentResolver{
 		server: s,
 	}
 }
