@@ -21,6 +21,7 @@ services:
       - tolltax_db
     environment:
       DATABASE_URL: postgres://boomshiva:123456@tolltax_db/tollcollector?sslmode=disable
+      PAYMENT_SERVICE_URL: payment:8080
     restart: on-failure
   payment:
     image: payment:latest
@@ -32,7 +33,6 @@ services:
       - payment_db
     environment:
       DATABASE_URL: postgres://boomshiva:123456@payment_db/tollcollector?sslmode=disable
-      TOLLTAX_SERVICE_URL: tolltax:8080
     restart: on-failure
   graphql:
     image: tolltaxcollectorgraph:latest

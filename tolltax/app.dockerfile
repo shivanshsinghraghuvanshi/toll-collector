@@ -3,6 +3,7 @@ RUN apk --no-cache add gcc g++ make ca-certificates
 WORKDIR /go/src/github.com/ssinghraghuvanshi/toll-collector
 COPY go.mod go.sum ./
 COPY vendor vendor
+COPY payment payment
 COPY tolltax tolltax
 RUN GO111MODULE=on go build -mod vendor -o /go/bin/app ./tolltax/cmd/tolltax
 

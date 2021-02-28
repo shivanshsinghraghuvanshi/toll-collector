@@ -100,15 +100,26 @@ message VehicleOwnerDetailsResponse{
   int64 accountnumber = 2;
   ACTION action = 3;
 }
+
+message PayTollTaxRequest{
+  string rfid = 1;
+  int64 tollid = 2;
+  int32 amount = 3;
+  string remarks = 4;
+}
+message PayTollTaxResponse{
+  bool ok = 1;
+}
 service TollTaxService {
   // Implemented
   rpc GenerateRFID(GenerateRFIDRequest) returns (GenerateRFIDResponse){}
   rpc ValidateRFID(ValidateRFIDRequest) returns(ValidateRFIDResponse){}
   rpc CalculateDeductibleAmount(CalculateAmountRequest) returns(CalculateAmountResponse){}
   rpc GetAllOwners(GetAllOwnersRequest) returns(GetAllOwnersResponse){}
-
+  rpc PayTollTax(PayTollTaxRequest) returns (PayTollTaxResponse){}
   // Not Implemented
   rpc GetVehicleOwnerDetails(VehicleOwnerDetailsRequest) returns (VehicleOwnerDetailsResponse){}
   rpc GetTollBoothDetails(tollBoothDetailsRequest) returns (VehicleOwnerDetailsResponse){}
   rpc CreateNewOwner(CreateNewOwnerRequest) returns(CreateNewOwnerResponse){}
+
 }

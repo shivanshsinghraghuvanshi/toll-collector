@@ -3,8 +3,10 @@ package payment
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/payment/pb/paymentpb"
 	"log"
+	"time"
 )
 import _ "github.com/lib/pq"
 
@@ -20,11 +22,51 @@ type postgresRepository struct {
 }
 
 func (r *postgresRepository) ExecuteTransaction(ctx context.Context, request *paymentpb.ExecuteTRequest) (*paymentpb.ExecuteTResponse, error) {
-	panic("implement me")
+
+	// -----> set context for transaction
+	tx, err := r.db.BeginTx(ctx, nil)
+	if err != nil {
+		return nil, err
+	}
+	defer func() {
+		if err != nil {
+			tx.Rollback()
+			return
+		}
+		// everything went through commit. or else rollback
+		err = tx.Commit()
+	}()
+
+	// Now lets try to implement the transaction
+	// constraint A debit account should have balance greater than amount
+	cbalance, e := r.getBalance(ctx, request.CreditAccountNumber)
+	dbalance, ex := r.getBalance(ctx, request.DebitAccountNumber)
+	if float32(request.Amount) < dbalance && e == nil && ex == nil {
+		// should do an entry in transaction table
+		_, err = tx.ExecContext(ctx, "INSERT INTO  transactionDetails(timestamp,debitaccountnumber,creditaccountnumber,amount,remarks) values($1,$2,$3,$4,$5)", time.Now(), request.DebitAccountNumber, request.CreditAccountNumber, request.Amount, request.Remarks)
+		if err != nil {
+			return nil, err
+		}
+
+		// if successful update values in accountdetails table
+		_, err = tx.ExecContext(ctx, "Update accountdetails SET balance=$1 where accountnumber=$2", cbalance+float32(request.Amount), request.CreditAccountNumber)
+		if err != nil {
+			return nil, err
+		}
+		// Sleep Requirement
+		time.Sleep(time.Second * 5)
+		_, err = tx.ExecContext(ctx, "Update accountdetails SET balance=$1 where accountnumber=$2", dbalance-float32(request.Amount), request.DebitAccountNumber)
+		if err != nil {
+			return nil, err
+		}
+
+	} else {
+		return nil, errors.New("Not Enough Balance in Account")
+	}
 }
 
 func (r *postgresRepository) GetAccountDetails(ctx context.Context, acc int64) (*paymentpb.GetAccountDetailsResponse, error) {
-	rows, err := r.db.QueryContext(ctx, "SELECT accountid, accountnumber, name, balance, lastUpdated FROM  where accountnumber=$1", acc)
+	rows, err := r.db.QueryContext(ctx, "SELECT accountid, accountnumber, name, balance, lastUpdated FROM accountdetails where accountnumber=$1", acc)
 	if err != nil {
 		return nil, err
 	}
@@ -35,6 +77,23 @@ func (r *postgresRepository) GetAccountDetails(ctx context.Context, acc int64) (
 		if err != nil {
 			log.Fatal("Error while fetching the amount")
 			return nil, err
+		}
+	}
+	return o, err
+}
+
+func (r *postgresRepository) getBalance(ctx context.Context, acc int64) (float32, error) {
+	rows, err := r.db.QueryContext(ctx, "SELECT balance FROM accountdetails where accountnumber=$1", acc)
+	if err != nil {
+		return 0, err
+	}
+	defer rows.Close()
+	var o float32
+	for rows.Next() {
+		err := rows.Scan(&o)
+		if err != nil {
+			log.Fatal("Error while fetching the amount")
+			return 0, err
 		}
 	}
 	return o, err

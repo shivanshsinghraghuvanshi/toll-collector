@@ -10,7 +10,8 @@ import (
 )
 
 type Config struct {
-	DatabaseURL string `envconfig:"DATABASE_URL"`
+	DatabaseURL       string `envconfig:"DATABASE_URL"`
+	PaymentServiceURL string `envconfig:"PAYMENT_SERVICE_URL"`
 }
 
 func main() {
@@ -32,5 +33,5 @@ func main() {
 
 	log.Println("Listening on port 8080...")
 	s := tolltax.NewService(r)
-	log.Fatal(tolltax.ListenGRPC(s, 8080))
+	log.Fatal(tolltax.ListenGRPC(s, cfg.PaymentServiceURL, 8080))
 }

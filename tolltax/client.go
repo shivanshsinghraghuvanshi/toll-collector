@@ -90,18 +90,81 @@ func (c *Client) GetTollBoothDetails(ctx context.Context, id int64, action tollt
 	return r, nil
 }
 
-func (c *Client) GenerateMatrix(ctx context.Context, n int) ([][]int, int) {
-	a := make([][]int, n)
-	for i, _ := range a {
-		a[i] = make([]int, n)
+func (c *Client) PayTollTax(ctx context.Context, rfid string, tollid int64, amount int32, remarks string) (bool, error) {
+	in := &tolltaxpb.PayTollTaxRequest{
+		Rfid:    rfid,
+		Tollid:  tollid,
+		Amount:  amount,
+		Remarks: remarks,
 	}
-	var s int
+	r, err := c.service.PayTollTax(ctx, in)
+	if err != nil {
+		return false, err
+	}
+	return r.Ok, nil
+}
 
+func (c *Client) GenerateMatrix(ctx context.Context, n int) ([]int, int) {
+
+	var s int
 	//TODO Core Logic to create Matrix
 	if (n*n)%2 == 1 {
 		s = ((n * n) / 2) + 1
+		return spiralEven(n), s
 	} else {
-		s = 0
+		return spiralOdd(n), 0
 	}
-	return a, s
+}
+
+func spiralEven(n int) []int {
+	left, top, right, bottom := 0, 0, n-1, n-1
+	sz := n * n
+	s := make([]int, sz)
+	i := 1
+	for left < right {
+		for c := left; c <= right; c++ {
+			s[top*n+c] = i
+			i++
+		}
+		top++
+		for r := top; r <= bottom; r++ {
+			s[r*n+right] = i
+			i++
+		}
+		right--
+		if top == bottom {
+			break
+		}
+		for c := right; c >= left; c-- {
+			s[bottom*n+c] = i
+			i++
+		}
+		bottom--
+		for r := bottom; r >= top; r-- {
+			s[r*n+left] = i
+			i++
+		}
+		left++
+	}
+	s[top*n+left] = i
+
+	return s
+}
+
+func spiralOdd(n int) []int {
+	m := spiralEven(n)
+	m = rotate(m, n)
+	m = rotate(m, n)
+	return m
+}
+
+func rotate(q []int, n int) []int {
+	s := make([]int, n*n)
+	for i := 0; i < n; i++ {
+		for j := 0; j < n; j++ {
+			s[i] = q[n-j-1]
+			s[j] = q[i]
+		}
+	}
+	return s
 }

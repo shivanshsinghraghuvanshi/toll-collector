@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/nu7hatch/gouuid"
+	"github.com/shivanshsinghraghuvanshi/toll-collector/payment"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/pb/tolltaxpb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -12,7 +13,34 @@ import (
 )
 
 type grpcServer struct {
-	service Service
+	service       Service
+	paymentClient *payment.Client
+}
+
+func (g *grpcServer) PayTollTax(ctx context.Context, request *tolltaxpb.PayTollTaxRequest) (*tolltaxpb.PayTollTaxResponse, error) {
+	vOd, e1 := g.GetVehicleOwnerDetails(ctx, &tolltaxpb.VehicleOwnerDetailsRequest{
+		Rfid:   request.Rfid,
+		Action: 0,
+	})
+	if e1 != nil {
+		log.Fatal("Cannot get ID")
+		return nil, e1
+	}
+	tOd, e2 := g.GetVehicleOwnerDetails(ctx, &tolltaxpb.VehicleOwnerDetailsRequest{
+		Rfid:   request.Rfid,
+		Action: 0,
+	})
+	if e2 != nil {
+		log.Fatal("Cannot get tollbooth Details")
+		return nil, e2
+	}
+	t, err := g.paymentClient.ExecuteTransaction(ctx, vOd.Accountnumber, tOd.Accountnumber, request.Amount, request.Remarks)
+	if err != nil {
+		log.Fatal("Cannot get tollbooth Details")
+		return nil, err
+	}
+	n := &tolltaxpb.PayTollTaxResponse{Ok: t.Status}
+	return n, nil
 }
 
 func (g *grpcServer) GetVehicleOwnerDetails(ctx context.Context, request *tolltaxpb.VehicleOwnerDetailsRequest) (*tolltaxpb.VehicleOwnerDetailsResponse, error) {
@@ -73,13 +101,20 @@ func (g *grpcServer) ValidateRFID(ctx context.Context, request *tolltaxpb.Valida
 	return &tolltaxpb.ValidateRFIDResponse{Ok: r}, nil
 }
 
-func ListenGRPC(s Service, port int) error {
+func ListenGRPC(s Service, paymentserviceURL string, port int) error {
+
+	paymentClient, err := payment.NewClient(paymentserviceURL)
+	if err != nil {
+		log.Fatal("Cannot Connect to tolltax service")
+		return err
+	}
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
+		paymentClient.Close()
 		return err
 	}
 	serv := grpc.NewServer()
-	tolltaxpb.RegisterTollTaxServiceServer(serv, &grpcServer{s})
+	tolltaxpb.RegisterTollTaxServiceServer(serv, &grpcServer{s, paymentClient})
 	reflection.Register(serv)
 	return serv.Serve(lis)
 }
