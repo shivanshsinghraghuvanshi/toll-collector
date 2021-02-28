@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9aae2851-6427-4ca2-813e-eb142d17b589" name="Default Changelist" comment="Setup Docker Compose for payment Service with dependencies">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/payment/new.sql" beforeDir="false" afterPath="$PROJECT_DIR$/payment/new.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tolltax/up.sql" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/up.sql" afterDir="false" />
     </list>
@@ -113,7 +114,7 @@
       <workItem from="1614408282863" duration="26170000" />
       <workItem from="1614451218109" duration="242000" />
       <workItem from="1614494203229" duration="19005000" />
-      <workItem from="1614518094293" duration="657000" />
+      <workItem from="1614518094293" duration="1334000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1614346462854</created>
@@ -325,7 +326,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614517308399</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Setting up docker compose with image">
+      <created>1614519426237</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1614519426237</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -366,7 +374,8 @@
     <MESSAGE value="Init Payment Service Stubs" />
     <MESSAGE value="Initaite structure and binding for payment service" />
     <MESSAGE value="Setup Docker Compose for payment Service with dependencies" />
-    <option name="LAST_COMMIT_MESSAGE" value="Setup Docker Compose for payment Service with dependencies" />
+    <MESSAGE value="Setting up docker compose with image" />
+    <option name="LAST_COMMIT_MESSAGE" value="Setting up docker compose with image" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
