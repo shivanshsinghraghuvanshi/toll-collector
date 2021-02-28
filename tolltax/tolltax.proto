@@ -83,15 +83,32 @@ message CreateNewOwnerRequest{
 message CreateNewOwnerResponse{
   int64 ownerid = 1;
 }
+message VehicleOwnerDetailsRequest{
+  string rfid = 1;
+  ACTION action = 2;
+}
+enum ACTION{
+  DEBIT = 0;
+  CREDIT = 1;
+}
+message tollBoothDetailsRequest{
+  int64 tollboothid = 1;
+  ACTION action = 2;
+}
+message VehicleOwnerDetailsResponse{
+  string name = 1;
+  int64 accountnumber = 2;
+  ACTION action = 3;
+}
 service TollTaxService {
+  // Implemented
   rpc GenerateRFID(GenerateRFIDRequest) returns (GenerateRFIDResponse){}
   rpc ValidateRFID(ValidateRFIDRequest) returns(ValidateRFIDResponse){}
   rpc CalculateDeductibleAmount(CalculateAmountRequest) returns(CalculateAmountResponse){}
-
-
-  rpc DeductTransaction(DeductRequest) returns(DeductResponse){}
-  rpc CreditTransaction(CreditRequest) returns(CreditResponse){}
-
   rpc GetAllOwners(GetAllOwnersRequest) returns(GetAllOwnersResponse){}
+
+  // Not Implemented
+  rpc GetVehicleOwnerDetails(VehicleOwnerDetailsRequest) returns (VehicleOwnerDetailsResponse){}
+  rpc GetTollBoothDetails(tollBoothDetailsRequest) returns (VehicleOwnerDetailsResponse){}
   rpc CreateNewOwner(CreateNewOwnerRequest) returns(CreateNewOwnerResponse){}
 }

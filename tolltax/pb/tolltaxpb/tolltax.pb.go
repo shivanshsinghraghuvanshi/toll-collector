@@ -29,6 +29,52 @@ const (
 // of the legacy proto package is being used.
 const _ = proto.ProtoPackageIsVersion4
 
+type ACTION int32
+
+const (
+	ACTION_DEBIT  ACTION = 0
+	ACTION_CREDIT ACTION = 1
+)
+
+// Enum value maps for ACTION.
+var (
+	ACTION_name = map[int32]string{
+		0: "DEBIT",
+		1: "CREDIT",
+	}
+	ACTION_value = map[string]int32{
+		"DEBIT":  0,
+		"CREDIT": 1,
+	}
+)
+
+func (x ACTION) Enum() *ACTION {
+	p := new(ACTION)
+	*p = x
+	return p
+}
+
+func (x ACTION) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ACTION) Descriptor() protoreflect.EnumDescriptor {
+	return file_tolltax_proto_enumTypes[0].Descriptor()
+}
+
+func (ACTION) Type() protoreflect.EnumType {
+	return &file_tolltax_proto_enumTypes[0]
+}
+
+func (x ACTION) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ACTION.Descriptor instead.
+func (ACTION) EnumDescriptor() ([]byte, []int) {
+	return file_tolltax_proto_rawDescGZIP(), []int{0}
+}
+
 type Owner struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -979,6 +1025,179 @@ func (x *CreateNewOwnerResponse) GetOwnerid() int64 {
 	return 0
 }
 
+type VehicleOwnerDetailsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Rfid   string `protobuf:"bytes,1,opt,name=rfid,proto3" json:"rfid,omitempty"`
+	Action ACTION `protobuf:"varint,2,opt,name=action,proto3,enum=pb.ACTION" json:"action,omitempty"`
+}
+
+func (x *VehicleOwnerDetailsRequest) Reset() {
+	*x = VehicleOwnerDetailsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_tolltax_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VehicleOwnerDetailsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VehicleOwnerDetailsRequest) ProtoMessage() {}
+
+func (x *VehicleOwnerDetailsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_tolltax_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VehicleOwnerDetailsRequest.ProtoReflect.Descriptor instead.
+func (*VehicleOwnerDetailsRequest) Descriptor() ([]byte, []int) {
+	return file_tolltax_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *VehicleOwnerDetailsRequest) GetRfid() string {
+	if x != nil {
+		return x.Rfid
+	}
+	return ""
+}
+
+func (x *VehicleOwnerDetailsRequest) GetAction() ACTION {
+	if x != nil {
+		return x.Action
+	}
+	return ACTION_DEBIT
+}
+
+type TollBoothDetailsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Tollboothid int64  `protobuf:"varint,1,opt,name=tollboothid,proto3" json:"tollboothid,omitempty"`
+	Action      ACTION `protobuf:"varint,2,opt,name=action,proto3,enum=pb.ACTION" json:"action,omitempty"`
+}
+
+func (x *TollBoothDetailsRequest) Reset() {
+	*x = TollBoothDetailsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_tolltax_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TollBoothDetailsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TollBoothDetailsRequest) ProtoMessage() {}
+
+func (x *TollBoothDetailsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_tolltax_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TollBoothDetailsRequest.ProtoReflect.Descriptor instead.
+func (*TollBoothDetailsRequest) Descriptor() ([]byte, []int) {
+	return file_tolltax_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *TollBoothDetailsRequest) GetTollboothid() int64 {
+	if x != nil {
+		return x.Tollboothid
+	}
+	return 0
+}
+
+func (x *TollBoothDetailsRequest) GetAction() ACTION {
+	if x != nil {
+		return x.Action
+	}
+	return ACTION_DEBIT
+}
+
+type VehicleOwnerDetailsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name          string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Accountnumber int64  `protobuf:"varint,2,opt,name=accountnumber,proto3" json:"accountnumber,omitempty"`
+	Action        ACTION `protobuf:"varint,3,opt,name=action,proto3,enum=pb.ACTION" json:"action,omitempty"`
+}
+
+func (x *VehicleOwnerDetailsResponse) Reset() {
+	*x = VehicleOwnerDetailsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_tolltax_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VehicleOwnerDetailsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VehicleOwnerDetailsResponse) ProtoMessage() {}
+
+func (x *VehicleOwnerDetailsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_tolltax_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VehicleOwnerDetailsResponse.ProtoReflect.Descriptor instead.
+func (*VehicleOwnerDetailsResponse) Descriptor() ([]byte, []int) {
+	return file_tolltax_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *VehicleOwnerDetailsResponse) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *VehicleOwnerDetailsResponse) GetAccountnumber() int64 {
+	if x != nil {
+		return x.Accountnumber
+	}
+	return 0
+}
+
+func (x *VehicleOwnerDetailsResponse) GetAction() ACTION {
+	if x != nil {
+		return x.Action
+	}
+	return ACTION_DEBIT
+}
+
 var File_tolltax_proto protoreflect.FileDescriptor
 
 var file_tolltax_proto_rawDesc = []byte{
@@ -1055,40 +1274,65 @@ var file_tolltax_proto_rawDesc = []byte{
 	0x65, 0x72, 0x22, 0x32, 0x0a, 0x16, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4e, 0x65, 0x77, 0x4f,
 	0x77, 0x6e, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07,
 	0x6f, 0x77, 0x6e, 0x65, 0x72, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x6f,
-	0x77, 0x6e, 0x65, 0x72, 0x69, 0x64, 0x32, 0xfe, 0x03, 0x0a, 0x0e, 0x54, 0x6f, 0x6c, 0x6c, 0x54,
-	0x61, 0x78, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x43, 0x0a, 0x0c, 0x47, 0x65, 0x6e,
-	0x65, 0x72, 0x61, 0x74, 0x65, 0x52, 0x46, 0x49, 0x44, 0x12, 0x17, 0x2e, 0x70, 0x62, 0x2e, 0x47,
-	0x65, 0x6e, 0x65, 0x72, 0x61, 0x74, 0x65, 0x52, 0x46, 0x49, 0x44, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x1a, 0x18, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x74, 0x65,
-	0x52, 0x46, 0x49, 0x44, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x43,
-	0x0a, 0x0c, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x65, 0x52, 0x46, 0x49, 0x44, 0x12, 0x17,
-	0x2e, 0x70, 0x62, 0x2e, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x65, 0x52, 0x46, 0x49, 0x44,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18, 0x2e, 0x70, 0x62, 0x2e, 0x56, 0x61, 0x6c,
-	0x69, 0x64, 0x61, 0x74, 0x65, 0x52, 0x46, 0x49, 0x44, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x22, 0x00, 0x12, 0x56, 0x0a, 0x19, 0x43, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x65,
-	0x44, 0x65, 0x64, 0x75, 0x63, 0x74, 0x69, 0x62, 0x6c, 0x65, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74,
-	0x12, 0x1a, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x65, 0x41,
-	0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1b, 0x2e, 0x70,
-	0x62, 0x2e, 0x43, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x65, 0x41, 0x6d, 0x6f, 0x75, 0x6e,
-	0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x3c, 0x0a, 0x11, 0x44,
-	0x65, 0x64, 0x75, 0x63, 0x74, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x12, 0x11, 0x2e, 0x70, 0x62, 0x2e, 0x44, 0x65, 0x64, 0x75, 0x63, 0x74, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x1a, 0x12, 0x2e, 0x70, 0x62, 0x2e, 0x44, 0x65, 0x64, 0x75, 0x63, 0x74, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x3c, 0x0a, 0x11, 0x43, 0x72, 0x65,
-	0x64, 0x69, 0x74, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x11,
-	0x2e, 0x70, 0x62, 0x2e, 0x43, 0x72, 0x65, 0x64, 0x69, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x1a, 0x12, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x72, 0x65, 0x64, 0x69, 0x74, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x43, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x41, 0x6c,
-	0x6c, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x73, 0x12, 0x17, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74,
-	0x41, 0x6c, 0x6c, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x1a, 0x18, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x4f, 0x77, 0x6e, 0x65,
-	0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x49, 0x0a, 0x0e,
-	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4e, 0x65, 0x77, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x12, 0x19,
-	0x2e, 0x70, 0x62, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4e, 0x65, 0x77, 0x4f, 0x77, 0x6e,
-	0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x70, 0x62, 0x2e, 0x43,
-	0x72, 0x65, 0x61, 0x74, 0x65, 0x4e, 0x65, 0x77, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x0d, 0x5a, 0x0b, 0x2e, 0x2f, 0x74, 0x6f, 0x6c,
-	0x6c, 0x74, 0x61, 0x78, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x77, 0x6e, 0x65, 0x72, 0x69, 0x64, 0x22, 0x54, 0x0a, 0x1a, 0x56, 0x65, 0x68, 0x69, 0x63, 0x6c,
+	0x65, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x72, 0x66, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x72, 0x66, 0x69, 0x64, 0x12, 0x22, 0x0a, 0x06, 0x61, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x0a, 0x2e, 0x70, 0x62, 0x2e, 0x41, 0x43,
+	0x54, 0x49, 0x4f, 0x4e, 0x52, 0x06, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x5f, 0x0a, 0x17,
+	0x74, 0x6f, 0x6c, 0x6c, 0x42, 0x6f, 0x6f, 0x74, 0x68, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x0b, 0x74, 0x6f, 0x6c, 0x6c, 0x62,
+	0x6f, 0x6f, 0x74, 0x68, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x74, 0x6f,
+	0x6c, 0x6c, 0x62, 0x6f, 0x6f, 0x74, 0x68, 0x69, 0x64, 0x12, 0x22, 0x0a, 0x06, 0x61, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x0a, 0x2e, 0x70, 0x62, 0x2e, 0x41,
+	0x43, 0x54, 0x49, 0x4f, 0x4e, 0x52, 0x06, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x7b, 0x0a,
+	0x1b, 0x56, 0x65, 0x68, 0x69, 0x63, 0x6c, 0x65, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x44, 0x65, 0x74,
+	0x61, 0x69, 0x6c, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04,
+	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65,
+	0x12, 0x24, 0x0a, 0x0d, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x6e, 0x75, 0x6d, 0x62, 0x65,
+	0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0d, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74,
+	0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x22, 0x0a, 0x06, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x0a, 0x2e, 0x70, 0x62, 0x2e, 0x41, 0x43, 0x54, 0x49,
+	0x4f, 0x4e, 0x52, 0x06, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x2a, 0x1f, 0x0a, 0x06, 0x41, 0x43,
+	0x54, 0x49, 0x4f, 0x4e, 0x12, 0x09, 0x0a, 0x05, 0x44, 0x45, 0x42, 0x49, 0x54, 0x10, 0x00, 0x12,
+	0x0a, 0x0a, 0x06, 0x43, 0x52, 0x45, 0x44, 0x49, 0x54, 0x10, 0x01, 0x32, 0xb6, 0x04, 0x0a, 0x0e,
+	0x54, 0x6f, 0x6c, 0x6c, 0x54, 0x61, 0x78, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x43,
+	0x0a, 0x0c, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x74, 0x65, 0x52, 0x46, 0x49, 0x44, 0x12, 0x17,
+	0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x72, 0x61, 0x74, 0x65, 0x52, 0x46, 0x49, 0x44,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x6e,
+	0x65, 0x72, 0x61, 0x74, 0x65, 0x52, 0x46, 0x49, 0x44, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x00, 0x12, 0x43, 0x0a, 0x0c, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x65, 0x52,
+	0x46, 0x49, 0x44, 0x12, 0x17, 0x2e, 0x70, 0x62, 0x2e, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74,
+	0x65, 0x52, 0x46, 0x49, 0x44, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18, 0x2e, 0x70,
+	0x62, 0x2e, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x65, 0x52, 0x46, 0x49, 0x44, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x56, 0x0a, 0x19, 0x43, 0x61, 0x6c, 0x63,
+	0x75, 0x6c, 0x61, 0x74, 0x65, 0x44, 0x65, 0x64, 0x75, 0x63, 0x74, 0x69, 0x62, 0x6c, 0x65, 0x41,
+	0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x1a, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x61, 0x6c, 0x63, 0x75,
+	0x6c, 0x61, 0x74, 0x65, 0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x1b, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x65,
+	0x41, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
+	0x12, 0x43, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x73,
+	0x12, 0x17, 0x2e, 0x70, 0x62, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x4f, 0x77, 0x6e, 0x65,
+	0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18, 0x2e, 0x70, 0x62, 0x2e, 0x47,
+	0x65, 0x74, 0x41, 0x6c, 0x6c, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x5b, 0x0a, 0x16, 0x47, 0x65, 0x74, 0x56, 0x65, 0x68, 0x69,
+	0x63, 0x6c, 0x65, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x12,
+	0x1e, 0x2e, 0x70, 0x62, 0x2e, 0x56, 0x65, 0x68, 0x69, 0x63, 0x6c, 0x65, 0x4f, 0x77, 0x6e, 0x65,
+	0x72, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x1f, 0x2e, 0x70, 0x62, 0x2e, 0x56, 0x65, 0x68, 0x69, 0x63, 0x6c, 0x65, 0x4f, 0x77, 0x6e, 0x65,
+	0x72, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x00, 0x12, 0x55, 0x0a, 0x13, 0x47, 0x65, 0x74, 0x54, 0x6f, 0x6c, 0x6c, 0x42, 0x6f, 0x6f,
+	0x74, 0x68, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x12, 0x1b, 0x2e, 0x70, 0x62, 0x2e, 0x74,
+	0x6f, 0x6c, 0x6c, 0x42, 0x6f, 0x6f, 0x74, 0x68, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1f, 0x2e, 0x70, 0x62, 0x2e, 0x56, 0x65, 0x68, 0x69,
+	0x63, 0x6c, 0x65, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x49, 0x0a, 0x0e, 0x43, 0x72, 0x65,
+	0x61, 0x74, 0x65, 0x4e, 0x65, 0x77, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x12, 0x19, 0x2e, 0x70, 0x62,
+	0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x4e, 0x65, 0x77, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x70, 0x62, 0x2e, 0x43, 0x72, 0x65, 0x61,
+	0x74, 0x65, 0x4e, 0x65, 0x77, 0x4f, 0x77, 0x6e, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x00, 0x42, 0x0d, 0x5a, 0x0b, 0x2e, 0x2f, 0x74, 0x6f, 0x6c, 0x6c, 0x74, 0x61,
+	0x78, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1103,51 +1347,59 @@ func file_tolltax_proto_rawDescGZIP() []byte {
 	return file_tolltax_proto_rawDescData
 }
 
-var file_tolltax_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_tolltax_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_tolltax_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_tolltax_proto_goTypes = []interface{}{
-	(*Owner)(nil),                   // 0: pb.Owner
-	(*Car)(nil),                     // 1: pb.Car
-	(*Netc)(nil),                    // 2: pb.Netc
-	(*TollBooth)(nil),               // 3: pb.TollBooth
-	(*GenerateRFIDRequest)(nil),     // 4: pb.GenerateRFIDRequest
-	(*GenerateRFIDResponse)(nil),    // 5: pb.GenerateRFIDResponse
-	(*ValidateRFIDRequest)(nil),     // 6: pb.ValidateRFIDRequest
-	(*ValidateRFIDResponse)(nil),    // 7: pb.ValidateRFIDResponse
-	(*DeductRequest)(nil),           // 8: pb.DeductRequest
-	(*DeductResponse)(nil),          // 9: pb.DeductResponse
-	(*CreditRequest)(nil),           // 10: pb.CreditRequest
-	(*CreditResponse)(nil),          // 11: pb.CreditResponse
-	(*CalculateAmountRequest)(nil),  // 12: pb.CalculateAmountRequest
-	(*CalculateAmountResponse)(nil), // 13: pb.CalculateAmountResponse
-	(*GetAllOwnersResponse)(nil),    // 14: pb.GetAllOwnersResponse
-	(*GetAllOwnersRequest)(nil),     // 15: pb.GetAllOwnersRequest
-	(*CreateNewOwnerRequest)(nil),   // 16: pb.CreateNewOwnerRequest
-	(*CreateNewOwnerResponse)(nil),  // 17: pb.CreateNewOwnerResponse
+	(ACTION)(0),                         // 0: pb.ACTION
+	(*Owner)(nil),                       // 1: pb.Owner
+	(*Car)(nil),                         // 2: pb.Car
+	(*Netc)(nil),                        // 3: pb.Netc
+	(*TollBooth)(nil),                   // 4: pb.TollBooth
+	(*GenerateRFIDRequest)(nil),         // 5: pb.GenerateRFIDRequest
+	(*GenerateRFIDResponse)(nil),        // 6: pb.GenerateRFIDResponse
+	(*ValidateRFIDRequest)(nil),         // 7: pb.ValidateRFIDRequest
+	(*ValidateRFIDResponse)(nil),        // 8: pb.ValidateRFIDResponse
+	(*DeductRequest)(nil),               // 9: pb.DeductRequest
+	(*DeductResponse)(nil),              // 10: pb.DeductResponse
+	(*CreditRequest)(nil),               // 11: pb.CreditRequest
+	(*CreditResponse)(nil),              // 12: pb.CreditResponse
+	(*CalculateAmountRequest)(nil),      // 13: pb.CalculateAmountRequest
+	(*CalculateAmountResponse)(nil),     // 14: pb.CalculateAmountResponse
+	(*GetAllOwnersResponse)(nil),        // 15: pb.GetAllOwnersResponse
+	(*GetAllOwnersRequest)(nil),         // 16: pb.GetAllOwnersRequest
+	(*CreateNewOwnerRequest)(nil),       // 17: pb.CreateNewOwnerRequest
+	(*CreateNewOwnerResponse)(nil),      // 18: pb.CreateNewOwnerResponse
+	(*VehicleOwnerDetailsRequest)(nil),  // 19: pb.VehicleOwnerDetailsRequest
+	(*TollBoothDetailsRequest)(nil),     // 20: pb.tollBoothDetailsRequest
+	(*VehicleOwnerDetailsResponse)(nil), // 21: pb.VehicleOwnerDetailsResponse
 }
 var file_tolltax_proto_depIdxs = []int32{
-	2,  // 0: pb.GenerateRFIDRequest.netc:type_name -> pb.Netc
-	0,  // 1: pb.DeductRequest.owner:type_name -> pb.Owner
-	3,  // 2: pb.CreditRequest.booth:type_name -> pb.TollBooth
-	0,  // 3: pb.GetAllOwnersResponse.owner:type_name -> pb.Owner
-	4,  // 4: pb.TollTaxService.GenerateRFID:input_type -> pb.GenerateRFIDRequest
-	6,  // 5: pb.TollTaxService.ValidateRFID:input_type -> pb.ValidateRFIDRequest
-	12, // 6: pb.TollTaxService.CalculateDeductibleAmount:input_type -> pb.CalculateAmountRequest
-	8,  // 7: pb.TollTaxService.DeductTransaction:input_type -> pb.DeductRequest
-	10, // 8: pb.TollTaxService.CreditTransaction:input_type -> pb.CreditRequest
-	15, // 9: pb.TollTaxService.GetAllOwners:input_type -> pb.GetAllOwnersRequest
-	16, // 10: pb.TollTaxService.CreateNewOwner:input_type -> pb.CreateNewOwnerRequest
-	5,  // 11: pb.TollTaxService.GenerateRFID:output_type -> pb.GenerateRFIDResponse
-	7,  // 12: pb.TollTaxService.ValidateRFID:output_type -> pb.ValidateRFIDResponse
-	13, // 13: pb.TollTaxService.CalculateDeductibleAmount:output_type -> pb.CalculateAmountResponse
-	9,  // 14: pb.TollTaxService.DeductTransaction:output_type -> pb.DeductResponse
-	11, // 15: pb.TollTaxService.CreditTransaction:output_type -> pb.CreditResponse
-	14, // 16: pb.TollTaxService.GetAllOwners:output_type -> pb.GetAllOwnersResponse
-	17, // 17: pb.TollTaxService.CreateNewOwner:output_type -> pb.CreateNewOwnerResponse
-	11, // [11:18] is the sub-list for method output_type
-	4,  // [4:11] is the sub-list for method input_type
-	4,  // [4:4] is the sub-list for extension type_name
-	4,  // [4:4] is the sub-list for extension extendee
-	0,  // [0:4] is the sub-list for field type_name
+	3,  // 0: pb.GenerateRFIDRequest.netc:type_name -> pb.Netc
+	1,  // 1: pb.DeductRequest.owner:type_name -> pb.Owner
+	4,  // 2: pb.CreditRequest.booth:type_name -> pb.TollBooth
+	1,  // 3: pb.GetAllOwnersResponse.owner:type_name -> pb.Owner
+	0,  // 4: pb.VehicleOwnerDetailsRequest.action:type_name -> pb.ACTION
+	0,  // 5: pb.tollBoothDetailsRequest.action:type_name -> pb.ACTION
+	0,  // 6: pb.VehicleOwnerDetailsResponse.action:type_name -> pb.ACTION
+	5,  // 7: pb.TollTaxService.GenerateRFID:input_type -> pb.GenerateRFIDRequest
+	7,  // 8: pb.TollTaxService.ValidateRFID:input_type -> pb.ValidateRFIDRequest
+	13, // 9: pb.TollTaxService.CalculateDeductibleAmount:input_type -> pb.CalculateAmountRequest
+	16, // 10: pb.TollTaxService.GetAllOwners:input_type -> pb.GetAllOwnersRequest
+	19, // 11: pb.TollTaxService.GetVehicleOwnerDetails:input_type -> pb.VehicleOwnerDetailsRequest
+	20, // 12: pb.TollTaxService.GetTollBoothDetails:input_type -> pb.tollBoothDetailsRequest
+	17, // 13: pb.TollTaxService.CreateNewOwner:input_type -> pb.CreateNewOwnerRequest
+	6,  // 14: pb.TollTaxService.GenerateRFID:output_type -> pb.GenerateRFIDResponse
+	8,  // 15: pb.TollTaxService.ValidateRFID:output_type -> pb.ValidateRFIDResponse
+	14, // 16: pb.TollTaxService.CalculateDeductibleAmount:output_type -> pb.CalculateAmountResponse
+	15, // 17: pb.TollTaxService.GetAllOwners:output_type -> pb.GetAllOwnersResponse
+	21, // 18: pb.TollTaxService.GetVehicleOwnerDetails:output_type -> pb.VehicleOwnerDetailsResponse
+	21, // 19: pb.TollTaxService.GetTollBoothDetails:output_type -> pb.VehicleOwnerDetailsResponse
+	18, // 20: pb.TollTaxService.CreateNewOwner:output_type -> pb.CreateNewOwnerResponse
+	14, // [14:21] is the sub-list for method output_type
+	7,  // [7:14] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_tolltax_proto_init() }
@@ -1372,19 +1624,56 @@ func file_tolltax_proto_init() {
 				return nil
 			}
 		}
+		file_tolltax_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VehicleOwnerDetailsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_tolltax_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TollBoothDetailsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_tolltax_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VehicleOwnerDetailsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_tolltax_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   18,
+			NumEnums:      1,
+			NumMessages:   21,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_tolltax_proto_goTypes,
 		DependencyIndexes: file_tolltax_proto_depIdxs,
+		EnumInfos:         file_tolltax_proto_enumTypes,
 		MessageInfos:      file_tolltax_proto_msgTypes,
 	}.Build()
 	File_tolltax_proto = out.File
@@ -1405,12 +1694,14 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type TollTaxServiceClient interface {
+	// Implemented
 	GenerateRFID(ctx context.Context, in *GenerateRFIDRequest, opts ...grpc.CallOption) (*GenerateRFIDResponse, error)
 	ValidateRFID(ctx context.Context, in *ValidateRFIDRequest, opts ...grpc.CallOption) (*ValidateRFIDResponse, error)
 	CalculateDeductibleAmount(ctx context.Context, in *CalculateAmountRequest, opts ...grpc.CallOption) (*CalculateAmountResponse, error)
-	DeductTransaction(ctx context.Context, in *DeductRequest, opts ...grpc.CallOption) (*DeductResponse, error)
-	CreditTransaction(ctx context.Context, in *CreditRequest, opts ...grpc.CallOption) (*CreditResponse, error)
 	GetAllOwners(ctx context.Context, in *GetAllOwnersRequest, opts ...grpc.CallOption) (*GetAllOwnersResponse, error)
+	// Not Implemented
+	GetVehicleOwnerDetails(ctx context.Context, in *VehicleOwnerDetailsRequest, opts ...grpc.CallOption) (*VehicleOwnerDetailsResponse, error)
+	GetTollBoothDetails(ctx context.Context, in *TollBoothDetailsRequest, opts ...grpc.CallOption) (*VehicleOwnerDetailsResponse, error)
 	CreateNewOwner(ctx context.Context, in *CreateNewOwnerRequest, opts ...grpc.CallOption) (*CreateNewOwnerResponse, error)
 }
 
@@ -1449,27 +1740,27 @@ func (c *tollTaxServiceClient) CalculateDeductibleAmount(ctx context.Context, in
 	return out, nil
 }
 
-func (c *tollTaxServiceClient) DeductTransaction(ctx context.Context, in *DeductRequest, opts ...grpc.CallOption) (*DeductResponse, error) {
-	out := new(DeductResponse)
-	err := c.cc.Invoke(ctx, "/pb.TollTaxService/DeductTransaction", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *tollTaxServiceClient) CreditTransaction(ctx context.Context, in *CreditRequest, opts ...grpc.CallOption) (*CreditResponse, error) {
-	out := new(CreditResponse)
-	err := c.cc.Invoke(ctx, "/pb.TollTaxService/CreditTransaction", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *tollTaxServiceClient) GetAllOwners(ctx context.Context, in *GetAllOwnersRequest, opts ...grpc.CallOption) (*GetAllOwnersResponse, error) {
 	out := new(GetAllOwnersResponse)
 	err := c.cc.Invoke(ctx, "/pb.TollTaxService/GetAllOwners", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tollTaxServiceClient) GetVehicleOwnerDetails(ctx context.Context, in *VehicleOwnerDetailsRequest, opts ...grpc.CallOption) (*VehicleOwnerDetailsResponse, error) {
+	out := new(VehicleOwnerDetailsResponse)
+	err := c.cc.Invoke(ctx, "/pb.TollTaxService/GetVehicleOwnerDetails", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *tollTaxServiceClient) GetTollBoothDetails(ctx context.Context, in *TollBoothDetailsRequest, opts ...grpc.CallOption) (*VehicleOwnerDetailsResponse, error) {
+	out := new(VehicleOwnerDetailsResponse)
+	err := c.cc.Invoke(ctx, "/pb.TollTaxService/GetTollBoothDetails", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1487,12 +1778,14 @@ func (c *tollTaxServiceClient) CreateNewOwner(ctx context.Context, in *CreateNew
 
 // TollTaxServiceServer is the server API for TollTaxService service.
 type TollTaxServiceServer interface {
+	// Implemented
 	GenerateRFID(context.Context, *GenerateRFIDRequest) (*GenerateRFIDResponse, error)
 	ValidateRFID(context.Context, *ValidateRFIDRequest) (*ValidateRFIDResponse, error)
 	CalculateDeductibleAmount(context.Context, *CalculateAmountRequest) (*CalculateAmountResponse, error)
-	DeductTransaction(context.Context, *DeductRequest) (*DeductResponse, error)
-	CreditTransaction(context.Context, *CreditRequest) (*CreditResponse, error)
 	GetAllOwners(context.Context, *GetAllOwnersRequest) (*GetAllOwnersResponse, error)
+	// Not Implemented
+	GetVehicleOwnerDetails(context.Context, *VehicleOwnerDetailsRequest) (*VehicleOwnerDetailsResponse, error)
+	GetTollBoothDetails(context.Context, *TollBoothDetailsRequest) (*VehicleOwnerDetailsResponse, error)
 	CreateNewOwner(context.Context, *CreateNewOwnerRequest) (*CreateNewOwnerResponse, error)
 }
 
@@ -1509,14 +1802,14 @@ func (*UnimplementedTollTaxServiceServer) ValidateRFID(context.Context, *Validat
 func (*UnimplementedTollTaxServiceServer) CalculateDeductibleAmount(context.Context, *CalculateAmountRequest) (*CalculateAmountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CalculateDeductibleAmount not implemented")
 }
-func (*UnimplementedTollTaxServiceServer) DeductTransaction(context.Context, *DeductRequest) (*DeductResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeductTransaction not implemented")
-}
-func (*UnimplementedTollTaxServiceServer) CreditTransaction(context.Context, *CreditRequest) (*CreditResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreditTransaction not implemented")
-}
 func (*UnimplementedTollTaxServiceServer) GetAllOwners(context.Context, *GetAllOwnersRequest) (*GetAllOwnersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllOwners not implemented")
+}
+func (*UnimplementedTollTaxServiceServer) GetVehicleOwnerDetails(context.Context, *VehicleOwnerDetailsRequest) (*VehicleOwnerDetailsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVehicleOwnerDetails not implemented")
+}
+func (*UnimplementedTollTaxServiceServer) GetTollBoothDetails(context.Context, *TollBoothDetailsRequest) (*VehicleOwnerDetailsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTollBoothDetails not implemented")
 }
 func (*UnimplementedTollTaxServiceServer) CreateNewOwner(context.Context, *CreateNewOwnerRequest) (*CreateNewOwnerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateNewOwner not implemented")
@@ -1580,42 +1873,6 @@ func _TollTaxService_CalculateDeductibleAmount_Handler(srv interface{}, ctx cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TollTaxService_DeductTransaction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeductRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TollTaxServiceServer).DeductTransaction(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/pb.TollTaxService/DeductTransaction",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TollTaxServiceServer).DeductTransaction(ctx, req.(*DeductRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TollTaxService_CreditTransaction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreditRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TollTaxServiceServer).CreditTransaction(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/pb.TollTaxService/CreditTransaction",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TollTaxServiceServer).CreditTransaction(ctx, req.(*CreditRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _TollTaxService_GetAllOwners_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAllOwnersRequest)
 	if err := dec(in); err != nil {
@@ -1630,6 +1887,42 @@ func _TollTaxService_GetAllOwners_Handler(srv interface{}, ctx context.Context, 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TollTaxServiceServer).GetAllOwners(ctx, req.(*GetAllOwnersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TollTaxService_GetVehicleOwnerDetails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VehicleOwnerDetailsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TollTaxServiceServer).GetVehicleOwnerDetails(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.TollTaxService/GetVehicleOwnerDetails",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TollTaxServiceServer).GetVehicleOwnerDetails(ctx, req.(*VehicleOwnerDetailsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TollTaxService_GetTollBoothDetails_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TollBoothDetailsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TollTaxServiceServer).GetTollBoothDetails(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.TollTaxService/GetTollBoothDetails",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TollTaxServiceServer).GetTollBoothDetails(ctx, req.(*TollBoothDetailsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1669,16 +1962,16 @@ var _TollTaxService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _TollTaxService_CalculateDeductibleAmount_Handler,
 		},
 		{
-			MethodName: "DeductTransaction",
-			Handler:    _TollTaxService_DeductTransaction_Handler,
-		},
-		{
-			MethodName: "CreditTransaction",
-			Handler:    _TollTaxService_CreditTransaction_Handler,
-		},
-		{
 			MethodName: "GetAllOwners",
 			Handler:    _TollTaxService_GetAllOwners_Handler,
+		},
+		{
+			MethodName: "GetVehicleOwnerDetails",
+			Handler:    _TollTaxService_GetVehicleOwnerDetails_Handler,
+		},
+		{
+			MethodName: "GetTollBoothDetails",
+			Handler:    _TollTaxService_GetTollBoothDetails_Handler,
 		},
 		{
 			MethodName: "CreateNewOwner",

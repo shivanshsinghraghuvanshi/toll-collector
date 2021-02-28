@@ -13,14 +13,17 @@ type Repository interface {
 	Close()
 	GenerateRFID(ctx context.Context, rfid string, ownerid, carid int64) (string, error)
 	ValidateRFID(ctx context.Context, rfid string, carid int64) (bool, error)
-	DeductTransaction(ctx context.Context, amount int32, owner *owner) bool
-	CreditTransaction(ctx context.Context, amount int32, tollbooth *tollbooth) bool
 	CalculateDeductibleAmount(ctx context.Context, cartype string) (int32, error)
 	GetAllOwners(ctx context.Context) ([]*tolltaxpb.Owner, error)
+	CreateNewOwner(ctx context.Context, o *tolltaxpb.CreateNewOwnerRequest) (*tolltaxpb.CreateNewOwnerResponse, error)
 }
 
 type postgresRepository struct {
 	db *sql.DB
+}
+
+func (r *postgresRepository) CreateNewOwner(ctx context.Context, o *tolltaxpb.CreateNewOwnerRequest) (*tolltaxpb.CreateNewOwnerResponse, error) {
+	panic("implement me")
 }
 
 func (r *postgresRepository) GenerateRFID(ctx context.Context, rfid string, ownerid, carid int64) (string, error) {
@@ -46,14 +49,6 @@ func (r *postgresRepository) ValidateRFID(ctx context.Context, rfid string, cari
 	} else {
 		return true, err
 	}
-}
-
-func (r *postgresRepository) DeductTransaction(ctx context.Context, amount int32, owner *owner) bool {
-	panic("implement me")
-}
-
-func (r *postgresRepository) CreditTransaction(ctx context.Context, amount int32, tollbooth *tollbooth) bool {
-	panic("implement me")
 }
 
 func (r *postgresRepository) CalculateDeductibleAmount(ctx context.Context, carType string) (int32, error) {
