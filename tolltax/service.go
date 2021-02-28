@@ -7,7 +7,7 @@ import (
 
 type Service interface {
 	GenerateRFID(ctx context.Context, rfid string, ownerid, carid int64) (string, error)
-	ValidateRFID(ctx context.Context, rfid string, carid int64) bool
+	ValidateRFID(ctx context.Context, rfid string, carid int64) (bool, error)
 	DeductTransaction(ctx context.Context, amount int32, owner *owner) bool
 	CreditTransaction(ctx context.Context, amount int32, tollbooth *tollbooth) bool
 	CalculateDeductibleAmount(ctx context.Context, amount int32, carnumber string) int32
@@ -52,8 +52,12 @@ func (t *tolltaxService) GenerateRFID(ctx context.Context, rfid string, ownerid,
 	return r, nil
 }
 
-func (t *tolltaxService) ValidateRFID(ctx context.Context, rfid string, carid int64) bool {
-	panic("implement me")
+func (t *tolltaxService) ValidateRFID(ctx context.Context, rfid string, carid int64) (bool, error) {
+	r, err := t.repository.ValidateRFID(ctx, rfid, carid)
+	if err != nil {
+		return false, err
+	}
+	return r, nil
 }
 
 func (t *tolltaxService) DeductTransaction(ctx context.Context, amount int32, owner *owner) bool {

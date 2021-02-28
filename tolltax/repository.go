@@ -10,7 +10,7 @@ import (
 type Repository interface {
 	Close()
 	GenerateRFID(ctx context.Context, rfid string, ownerid, carid int64) (string, error)
-	ValidateRFID(ctx context.Context, rfid string, carid int64) bool
+	ValidateRFID(ctx context.Context, rfid string, carid int64) (bool, error)
 	DeductTransaction(ctx context.Context, amount int32, owner *owner) bool
 	CreditTransaction(ctx context.Context, amount int32, tollbooth *tollbooth) bool
 	CalculateDeductibleAmount(ctx context.Context, amount int32, carnumber string) int32
@@ -29,8 +29,23 @@ func (r *postgresRepository) GenerateRFID(ctx context.Context, rfid string, owne
 	return rfid, nil
 }
 
-func (r *postgresRepository) ValidateRFID(ctx context.Context, rfid string, carid int64) bool {
-	panic("implement me")
+func (r *postgresRepository) ValidateRFID(ctx context.Context, rfid string, carid int64) (bool, error) {
+	rows, err := r.db.QueryContext(ctx, "SELECT * from netc where carid = $1 and rfid =$2", carid, rfid)
+	if err != nil {
+		return false, err
+	}
+	defer rows.Close()
+	counter := 0
+	for rows.Next() {
+		if err = rows.Scan(); err == nil {
+			counter++
+		}
+	}
+	if counter == 0 {
+		return false, nil
+	} else {
+		return true, nil
+	}
 }
 
 func (r *postgresRepository) DeductTransaction(ctx context.Context, amount int32, owner *owner) bool {

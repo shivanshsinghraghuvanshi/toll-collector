@@ -72,7 +72,16 @@ message GetAllOwnersResponse{
   repeated Owner owner = 1;
 }
 message GetAllOwnersRequest{
-  int32 ref=1;
+  int32 ref = 1;
+}
+
+message CreateNewOwnerRequest{
+  string name = 1;
+  int64 accountnumber = 2;
+}
+
+message CreateNewOwnerResponse{
+  int64 ownerid = 1;
 }
 service TollTaxService {
   rpc GenerateRFID(GenerateRFIDRequest) returns (GenerateRFIDResponse){}
@@ -81,4 +90,5 @@ service TollTaxService {
   rpc CreditTransaction(CreditRequest) returns(CreditResponse){}
   rpc CalculateDeductibleAmount(CalculateAmountRequest) returns(CalculateAmountResponse){}
   rpc GetAllOwners(GetAllOwnersRequest) returns(GetAllOwnersResponse){}
+  rpc CreateNewOwner(CreateNewOwnerRequest) returns(CreateNewOwnerResponse){}
 }

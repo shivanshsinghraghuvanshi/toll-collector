@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9aae2851-6427-4ca2-813e-eb142d17b589" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ecf1a9eb-1c23-41b5-8cfe-8d7eb4d3194f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ecf1a9eb-1c23-41b5-8cfe-8d7eb4d3194f.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ecf1a9eb-1c23-41b5-8cfe-8d7eb4d3194f/storage_v2/_src_/database/tolltax.kIjhuw/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ecf1a9eb-1c23-41b5-8cfe-8d7eb4d3194f/storage_v2/_src_/database/tolltax.kIjhuw/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphql/query_resolver.go" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/query_resolver.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/pb/tolltaxpb/tolltax.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/pb/tolltaxpb/tolltax.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tolltax/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/repository.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tolltax/tolltax.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/tolltax.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tolltax/up.sql" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/up.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,9 +59,11 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="database.data.extractors.current.export.id" value="SQL-Insert-Multirow.sql.groovy" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="go.vendoring.notification.had.been.shown" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.0" />
@@ -104,7 +108,9 @@
       <workItem from="1614347672531" duration="5054000" />
       <workItem from="1614353004455" duration="315000" />
       <workItem from="1614355579904" duration="11586000" />
-      <workItem from="1614408282863" duration="23651000" />
+      <workItem from="1614408282863" duration="26170000" />
+      <workItem from="1614451218109" duration="242000" />
+      <workItem from="1614494203229" duration="403000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1614346462854</created>
@@ -218,7 +224,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614446653642</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Code till working grapgh API">
+      <created>1614447886288</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1614447886288</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -249,7 +262,8 @@
     <MESSAGE value="Added Generate RFID end to end Testing" />
     <MESSAGE value="Added Testing Code for get All Owners" />
     <MESSAGE value="Code till DB Correction" />
-    <option name="LAST_COMMIT_MESSAGE" value="Code till DB Correction" />
+    <MESSAGE value="Code till working grapgh API" />
+    <option name="LAST_COMMIT_MESSAGE" value="Code till working grapgh API" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -257,11 +271,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/tolltax/server.go</url>
-          <line>54</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/graphql/graph.go</url>
           <line>15</line>

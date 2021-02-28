@@ -35,7 +35,11 @@ func (g *grpcServer) GenerateRFID(ctx context.Context, request *tolltaxpb.Genera
 }
 
 func (g *grpcServer) ValidateRFID(ctx context.Context, request *tolltaxpb.ValidateRFIDRequest) (*tolltaxpb.ValidateRFIDResponse, error) {
-	panic("implement me")
+	r, err := g.service.ValidateRFID(ctx, request.Rfid, request.Carid)
+	if err != nil {
+		return nil, err
+	}
+	return &tolltaxpb.ValidateRFIDResponse{Ok: r}, nil
 }
 
 func (g *grpcServer) DeductTransaction(ctx context.Context, request *tolltaxpb.DeductRequest) (*tolltaxpb.DeductResponse, error) {

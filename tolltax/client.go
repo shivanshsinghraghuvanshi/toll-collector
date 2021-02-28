@@ -25,6 +25,18 @@ func (c *Client) Close() {
 	c.conn.Close()
 }
 
+func (c *Client) ValidateRFID(ctx context.Context, rfid string, carid int64) (*tolltaxpb.ValidateRFIDResponse, error) {
+
+	in := &tolltaxpb.ValidateRFIDRequest{
+		Rfid:  rfid,
+		Carid: carid,
+	}
+	r, err := c.service.ValidateRFID(ctx, in)
+	if err != nil {
+		return nil, err
+	}
+	return r, nil
+}
 func (c *Client) GenerateRFID(ctx context.Context, ownerid, carid int64) (*tolltaxpb.GenerateRFIDResponse, error) {
 
 	p := &tolltaxpb.GenerateRFIDRequest{Netc: &tolltaxpb.Netc{
