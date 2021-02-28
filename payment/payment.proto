@@ -34,8 +34,8 @@ message TransactionFilter{
   PAYMENTACTION action = 4;
 }
 enum PAYMENTACTION{
-  DEBIT = 0;
-  CREDIT = 1;
+  PDEBIT = 0;
+  PCREDIT = 1;
 }
 message GetTransactionHistoryRequest{
   string startDate = 1;

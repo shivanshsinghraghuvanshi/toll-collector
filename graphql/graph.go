@@ -5,6 +5,7 @@ import (
 	"github.com/shivanshsinghraghuvanshi/toll-collector/graphql/graph/generated"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/payment"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/tolltax"
+	"log"
 )
 
 type Server struct {
@@ -13,7 +14,7 @@ type Server struct {
 }
 
 func NewGraphQLServer(tolltaxurl string, paymentServiceUrl string) (*Server, error) {
-
+	log.Println("tolltax url and payment service url")
 	// TOLL TAX SERVICE LOADING
 	t, err := tolltax.NewClient(tolltaxurl)
 	if err != nil {
@@ -21,7 +22,7 @@ func NewGraphQLServer(tolltaxurl string, paymentServiceUrl string) (*Server, err
 	}
 
 	// Payment Service Wiring
-	p, e := payment.NewClient(tolltaxurl)
+	p, e := payment.NewClient(paymentServiceUrl)
 	if e != nil {
 		return nil, err
 	}

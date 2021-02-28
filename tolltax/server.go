@@ -105,13 +105,13 @@ func ListenGRPC(s Service, paymentserviceURL string, port int) error {
 
 	paymentClient, err := payment.NewClient(paymentserviceURL)
 	if err != nil {
-		log.Fatal("Cannot Connect to tolltax service")
+		log.Fatal("Cannot Connect to payment service")
 		return err
 	}
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
-	if err != nil {
+	lis, e := net.Listen("tcp", fmt.Sprintf(":%d", port))
+	if e != nil {
 		paymentClient.Close()
-		return err
+		return e
 	}
 	serv := grpc.NewServer()
 	tolltaxpb.RegisterTollTaxServiceServer(serv, &grpcServer{s, paymentClient})

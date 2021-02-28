@@ -123,6 +123,7 @@ func (r *postgresRepository) GetTransactionHistory(ctx context.Context) (*paymen
 func NewPostgresRepository(url string) (Repository, error) {
 	db, err := sql.Open("postgres", url)
 	if err != nil {
+		log.Fatal(err)
 		return nil, err
 	}
 	err = db.Ping()

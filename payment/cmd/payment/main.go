@@ -19,7 +19,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	log.Printf("databesurl for payment service %v\n", cfg.DatabaseURL)
 	var r payment.Repository
 	retry.ForeverSleep(2*time.Second, func(_ int) (err error) {
 		r, err = payment.NewPostgresRepository(cfg.DatabaseURL)
