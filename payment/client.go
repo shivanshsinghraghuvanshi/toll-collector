@@ -51,7 +51,7 @@ func (c *Client) GetAccountDetails(ctx context.Context, accNum int64) (*paymentp
 	log.Printf("return is %v\n", r.Accountid)
 	return r, nil
 }
-func (c *Client) GetTransactionHistory(ctx context.Context, sDate, endDate *string, accNumber *int64, remarks *string, tID *int64, act *paymentpb.ACTION) (*paymentpb.GetTransactionHistoryResponse, error) {
+func (c *Client) GetTransactionHistory(ctx context.Context, sDate, endDate *string, accNumber *int64, remarks *string, tID *int64, act *paymentpb.PAYMENTACTION) (*paymentpb.GetTransactionHistoryResponse, error) {
 	in := &paymentpb.GetTransactionHistoryRequest{
 		StartDate: *sDate,
 		EndDate:   *endDate,

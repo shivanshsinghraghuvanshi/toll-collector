@@ -31,9 +31,9 @@ message TransactionFilter{
   int64 accountNumber = 1;
   string remarks = 2;
   repeated string transactionid = 3;
-  ACTION action = 4;
+  PAYMENTACTION action = 4;
 }
-enum ACTION{
+enum PAYMENTACTION{
   DEBIT = 0;
   CREDIT = 1;
 }
