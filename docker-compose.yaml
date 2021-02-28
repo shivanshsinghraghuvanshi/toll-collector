@@ -4,7 +4,7 @@ services:
   ui:
     image: tolltaxcollectorui:latest
     ports:
-      - 80:8080
+      - 4200:3000
     build:
       context: .
       dockerfile: ./client/app.dockerfile

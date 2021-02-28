@@ -2,13 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9aae2851-6427-4ca2-813e-eb142d17b589" name="Default Changelist" comment="Setup Docker Compose for payment Service with dependencies">
-      <change afterPath="$PROJECT_DIR$/client/.dockerignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/app.dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/nginx/nginx.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/client/.dockerignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/app.dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/client/app.dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/payment.proto" beforeDir="false" afterPath="$PROJECT_DIR$/payment/payment.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/pb/paymentpb/payment.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/payment/pb/paymentpb/payment.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/payment/repository.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/payment/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/payment/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/payment/service.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +120,7 @@
       <workItem from="1614408282863" duration="26170000" />
       <workItem from="1614451218109" duration="242000" />
       <workItem from="1614494203229" duration="19005000" />
-      <workItem from="1614518094293" duration="1963000" />
+      <workItem from="1614518094293" duration="5825000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1614346462854</created>
@@ -343,7 +346,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614519498685</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Building and serving UI over nginx">
+      <created>1614520960024</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1614520960024</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -385,7 +395,8 @@
     <MESSAGE value="Initaite structure and binding for payment service" />
     <MESSAGE value="Setup Docker Compose for payment Service with dependencies" />
     <MESSAGE value="Setting up docker compose with image" />
-    <option name="LAST_COMMIT_MESSAGE" value="Setting up docker compose with image" />
+    <MESSAGE value="Building and serving UI over nginx" />
+    <option name="LAST_COMMIT_MESSAGE" value="Building and serving UI over nginx" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

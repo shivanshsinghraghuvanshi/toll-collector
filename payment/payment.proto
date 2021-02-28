@@ -43,13 +43,17 @@ message GetTransactionHistoryRequest{
   TransactionFilter filters = 3;
 }
 
-message GetTransactionHistoryResponse{
+message TransactionHistory{
   int64 transactionID = 1;
   string timestamp = 2;
   int64 debitAcoountNumber = 3;
   int64 creditAccountNumber = 4;
   int32 amount = 5;
   string remarks = 6;
+}
+
+message GetTransactionHistoryResponse{
+  repeated TransactionHistory transactionHistory = 1;
 }
 service PaymentService{
   rpc ExecuteTransaction(ExecuteTRequest) returns (ExecuteTResponse){}
