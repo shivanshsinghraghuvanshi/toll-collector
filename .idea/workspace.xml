@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9aae2851-6427-4ca2-813e-eb142d17b589" name="Default Changelist" comment="All tolltax Service">
-      <change afterPath="$PROJECT_DIR$/payment/payment.proto" afterDir="false" />
+    <list default="true" id="9aae2851-6427-4ca2-813e-eb142d17b589" name="Default Changelist" comment="Init Payment Service Stubs">
+      <change afterPath="$PROJECT_DIR$/payment/app.dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment/client.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment/cmd/payment/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment/db.dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment/repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment/server.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/payment/service.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,11 +65,17 @@
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/payment" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ssinghraghuvanshi\Documents\GoRepos\src\github.com\shivanshsinghraghuvanshi\toll-collector\payment" />
+    </key>
   </component>
   <component name="RunManager" selected="Go Build.go build github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/cmd/tolltax">
     <configuration name="go build github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/cmd/tolltax" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
@@ -105,7 +117,7 @@
       <workItem from="1614355579904" duration="11586000" />
       <workItem from="1614408282863" duration="26170000" />
       <workItem from="1614451218109" duration="242000" />
-      <workItem from="1614494203229" duration="16311000" />
+      <workItem from="1614494203229" duration="18223000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1614346462854</created>
@@ -296,7 +308,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614512915874</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Init Payment Service Stubs">
+      <created>1614514965270</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1614514965270</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -334,7 +353,8 @@
     <MESSAGE value="Complete GetOwners and GetTollBooth Details stubs in tolltax service" />
     <MESSAGE value="All good till now" />
     <MESSAGE value="All tolltax Service" />
-    <option name="LAST_COMMIT_MESSAGE" value="All tolltax Service" />
+    <MESSAGE value="Init Payment Service Stubs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Init Payment Service Stubs" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
