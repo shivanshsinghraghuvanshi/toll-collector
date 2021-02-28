@@ -43,6 +43,11 @@ type NewTollBooth struct {
 	Name          string `json:"name"`
 }
 
+type NewTollTax struct {
+	Cartype *string `json:"cartype"`
+	Amount  *int    `json:"amount"`
+}
+
 type Owner struct {
 	Ownerid       string `json:"ownerid"`
 	Accountnumber string `json:"accountnumber"`

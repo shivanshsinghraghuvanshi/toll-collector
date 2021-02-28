@@ -31,6 +31,10 @@ func (r *mutationResolver) ValidateRfid(ctx context.Context, input model.Validat
 	panic(fmt.Errorf("not implemented"))
 }
 
+func (r *mutationResolver) CreateTollTax(ctx context.Context, input *model.NewTollTax) (bool, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 func (r *queryResolver) Cars(ctx context.Context) ([]*model.Car, error) {
 	panic(fmt.Errorf("not implemented"))
 }

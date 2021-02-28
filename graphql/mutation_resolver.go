@@ -17,6 +17,10 @@ type mutationResolver struct {
 	server *Server
 }
 
+func (m mutationResolver) CreateTollTax(ctx context.Context, input *model.NewTollTax) (bool, error) {
+	panic("implement me")
+}
+
 func (m mutationResolver) ValidateRfid(ctx context.Context, input model.ValidateRfid) (bool, error) {
 	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()

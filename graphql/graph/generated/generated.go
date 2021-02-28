@@ -61,6 +61,7 @@ type ComplexityRoot struct {
 		CreateOwner     func(childComplexity int, input model.NewOwner) int
 		CreateRfid      func(childComplexity int, input *model.NewRfid) int
 		CreateTollBooth func(childComplexity int, input *model.NewTollBooth) int
+		CreateTollTax   func(childComplexity int, input *model.NewTollTax) int
 		ValidateRfid    func(childComplexity int, input model.ValidateRfid) int
 	}
 
@@ -117,6 +118,7 @@ type MutationResolver interface {
 	CreateTollBooth(ctx context.Context, input *model.NewTollBooth) (string, error)
 	CreateRfid(ctx context.Context, input *model.NewRfid) (string, error)
 	ValidateRfid(ctx context.Context, input model.ValidateRfid) (bool, error)
+	CreateTollTax(ctx context.Context, input *model.NewTollTax) (bool, error)
 }
 type QueryResolver interface {
 	Cars(ctx context.Context) ([]*model.Car, error)
@@ -239,6 +241,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.CreateTollBooth(childComplexity, args["input"].(*model.NewTollBooth)), true
+
+	case "Mutation.createTollTax":
+		if e.complexity.Mutation.CreateTollTax == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTollTax_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.CreateTollTax(childComplexity, args["input"].(*model.NewTollTax)), true
 
 	case "Mutation.validateRFID":
 		if e.complexity.Mutation.ValidateRfid == nil {
@@ -581,6 +595,10 @@ input NewCar{
   cartype:String!
   carnumber:String!
 }
+input NewTollTax{
+  cartype:String
+  amount:Int
+}
 input ValidateRFID{
   rfid:String!
   carid:Int!
@@ -591,6 +609,7 @@ type Mutation{
   createTollBooth(input:NewTollBooth):String!
   createRFID(input:NewRFID):String!
   validateRFID(input:ValidateRFID!):Boolean!
+  createTollTax(input:NewTollTax):Boolean!
 }
 
 type Query{
@@ -662,6 +681,21 @@ func (ec *executionContext) field_Mutation_createTollBooth_args(ctx context.Cont
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 		arg0, err = ec.unmarshalONewTollBooth2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐNewTollBooth(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_createTollTax_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *model.NewTollTax
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalONewTollTax2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐNewTollTax(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -1255,6 +1289,48 @@ func (ec *executionContext) _Mutation_validateRFID(ctx context.Context, field gr
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return ec.resolvers.Mutation().ValidateRfid(rctx, args["input"].(model.ValidateRfid))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_createTollTax(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_createTollTax_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().CreateTollTax(rctx, args["input"].(*model.NewTollTax))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3422,6 +3498,34 @@ func (ec *executionContext) unmarshalInputNewTollBooth(ctx context.Context, obj 
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputNewTollTax(ctx context.Context, obj interface{}) (model.NewTollTax, error) {
+	var it model.NewTollTax
+	var asMap = obj.(map[string]interface{})
+
+	for k, v := range asMap {
+		switch k {
+		case "cartype":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cartype"))
+			it.Cartype, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "amount":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("amount"))
+			it.Amount, err = ec.unmarshalOInt2ᚖint(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputValidateRFID(ctx context.Context, obj interface{}) (model.ValidateRfid, error) {
 	var it model.ValidateRfid
 	var asMap = obj.(map[string]interface{})
@@ -3574,6 +3678,11 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			}
 		case "validateRFID":
 			out.Values[i] = ec._Mutation_validateRFID(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "createTollTax":
+			out.Values[i] = ec._Mutation_createTollTax(ctx, field)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -4624,6 +4733,14 @@ func (ec *executionContext) unmarshalONewTollBooth2ᚖgithubᚗcomᚋshivanshsin
 		return nil, nil
 	}
 	res, err := ec.unmarshalInputNewTollBooth(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalONewTollTax2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐNewTollTax(ctx context.Context, v interface{}) (*model.NewTollTax, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputNewTollTax(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 

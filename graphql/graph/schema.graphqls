@@ -68,6 +68,10 @@ input NewCar{
   cartype:String!
   carnumber:String!
 }
+input NewTollTax{
+  cartype:String
+  amount:Int
+}
 input ValidateRFID{
   rfid:String!
   carid:Int!
@@ -78,6 +82,7 @@ type Mutation{
   createTollBooth(input:NewTollBooth):String!
   createRFID(input:NewRFID):String!
   validateRFID(input:ValidateRFID!):Boolean!
+  createTollTax(input:NewTollTax):Boolean!
 }
 
 type Query{
