@@ -43,6 +43,14 @@ func (r *queryResolver) Tollbooths(ctx context.Context) ([]*model.Tollbooth, err
 	panic(fmt.Errorf("not implemented"))
 }
 
+func (r *queryResolver) Deductions(ctx context.Context, cartype *string) (int, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *queryResolver) Carowners(ctx context.Context, ownerid *int) (*model.Relation, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 

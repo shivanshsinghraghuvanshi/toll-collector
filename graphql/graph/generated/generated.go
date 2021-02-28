@@ -8,6 +8,7 @@ import (
 	"errors"
 	"strconv"
 	"sync"
+	"sync/atomic"
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
@@ -77,7 +78,9 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
+		Carowners  func(childComplexity int, ownerid *int) int
 		Cars       func(childComplexity int) int
+		Deductions func(childComplexity int, cartype *string) int
 		Owners     func(childComplexity int) int
 		Tollbooths func(childComplexity int) int
 	}
@@ -105,6 +108,8 @@ type QueryResolver interface {
 	Cars(ctx context.Context) ([]*model.Car, error)
 	Owners(ctx context.Context) ([]*model.Owner, error)
 	Tollbooths(ctx context.Context) ([]*model.Tollbooth, error)
+	Deductions(ctx context.Context, cartype *string) (int, error)
+	Carowners(ctx context.Context, ownerid *int) (*model.Relation, error)
 }
 
 type executableSchema struct {
@@ -280,12 +285,36 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Owner.Ownerid(childComplexity), true
 
+	case "Query.carowners":
+		if e.complexity.Query.Carowners == nil {
+			break
+		}
+
+		args, err := ec.field_Query_carowners_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.Carowners(childComplexity, args["ownerid"].(*int)), true
+
 	case "Query.cars":
 		if e.complexity.Query.Cars == nil {
 			break
 		}
 
 		return e.complexity.Query.Cars(childComplexity), true
+
+	case "Query.deductions":
+		if e.complexity.Query.Deductions == nil {
+			break
+		}
+
+		args, err := ec.field_Query_deductions_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.Deductions(childComplexity, args["cartype"].(*string)), true
 
 	case "Query.owners":
 		if e.complexity.Query.Owners == nil {
@@ -475,6 +504,8 @@ type Query{
   cars:[Car!]
   owners:[Owner!]
   tollbooths:[Tollbooth!]
+  deductions(cartype:String):Int!
+  carowners(ownerid:Int):Relation!
 }
 `, BuiltIn: false},
 }
@@ -571,6 +602,36 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 		}
 	}
 	args["name"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_carowners_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *int
+	if tmp, ok := rawArgs["ownerid"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("ownerid"))
+		arg0, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["ownerid"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_deductions_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *string
+	if tmp, ok := rawArgs["cartype"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cartype"))
+		arg0, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["cartype"] = arg0
 	return args, nil
 }
 
@@ -1406,6 +1467,90 @@ func (ec *executionContext) _Query_tollbooths(ctx context.Context, field graphql
 	res := resTmp.([]*model.Tollbooth)
 	fc.Result = res
 	return ec.marshalOTollbooth2ᚕᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐTollboothᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Query_deductions(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_deductions_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().Deductions(rctx, args["cartype"].(*string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Query_carowners(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_carowners_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().Carowners(rctx, args["ownerid"].(*int))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.Relation)
+	fc.Result = res
+	return ec.marshalNRelation2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐRelation(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -3151,6 +3296,34 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				res = ec._Query_tollbooths(ctx, field)
 				return res
 			})
+		case "deductions":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_deductions(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			})
+		case "carowners":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_carowners(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			})
 		case "__type":
 			out.Values[i] = ec._Query___type(ctx, field)
 		case "__schema":
@@ -3547,6 +3720,20 @@ func (ec *executionContext) marshalNOwner2ᚖgithubᚗcomᚋshivanshsinghraghuva
 	return ec._Owner(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalNRelation2githubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐRelation(ctx context.Context, sel ast.SelectionSet, v model.Relation) graphql.Marshaler {
+	return ec._Relation(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNRelation2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐRelation(ctx context.Context, sel ast.SelectionSet, v *model.Relation) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	return ec._Relation(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalNString2string(ctx context.Context, v interface{}) (string, error) {
 	res, err := graphql.UnmarshalString(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -3868,6 +4055,21 @@ func (ec *executionContext) marshalOCar2ᚕᚖgithubᚗcomᚋshivanshsinghraghuv
 	}
 	wg.Wait()
 	return ret
+}
+
+func (ec *executionContext) unmarshalOInt2ᚖint(ctx context.Context, v interface{}) (*int, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := graphql.UnmarshalInt(v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOInt2ᚖint(ctx context.Context, sel ast.SelectionSet, v *int) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return graphql.MarshalInt(*v)
 }
 
 func (ec *executionContext) unmarshalONewCar2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐNewCar(ctx context.Context, v interface{}) (*model.NewCar, error) {

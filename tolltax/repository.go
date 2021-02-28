@@ -6,6 +6,7 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/pb/tolltaxpb"
 	"log"
+	"strings"
 )
 
 type Repository interface {
@@ -14,7 +15,7 @@ type Repository interface {
 	ValidateRFID(ctx context.Context, rfid string, carid int64) (bool, error)
 	DeductTransaction(ctx context.Context, amount int32, owner *owner) bool
 	CreditTransaction(ctx context.Context, amount int32, tollbooth *tollbooth) bool
-	CalculateDeductibleAmount(ctx context.Context, amount int32, carnumber string) int32
+	CalculateDeductibleAmount(ctx context.Context, cartype string) (int32, error)
 	GetAllOwners(ctx context.Context) ([]*tolltaxpb.Owner, error)
 }
 
@@ -55,8 +56,21 @@ func (r *postgresRepository) CreditTransaction(ctx context.Context, amount int32
 	panic("implement me")
 }
 
-func (r *postgresRepository) CalculateDeductibleAmount(ctx context.Context, amount int32, carnumber string) int32 {
-	panic("implement me")
+func (r *postgresRepository) CalculateDeductibleAmount(ctx context.Context, carType string) (int32, error) {
+	rows, err := r.db.QueryContext(ctx, "SELECT amount from deductible where cartype=$1", strings.ToUpper(carType))
+	if err != nil {
+		return 0, err
+	}
+	defer rows.Close()
+	amount := 0
+	for rows.Next() {
+		err := rows.Scan(&amount)
+		if err != nil {
+			log.Fatal("Error while fetching the amount")
+			return 0, err
+		}
+	}
+	return int32(amount), nil
 }
 
 func (r *postgresRepository) GetAllOwners(ctx context.Context) ([]*tolltaxpb.Owner, error) {

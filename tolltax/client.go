@@ -60,6 +60,13 @@ func (c *Client) GetAllOwners(ctx context.Context) (*tolltaxpb.GetAllOwnersRespo
 	log.Printf("all the owners are %v\n", r.Owner)
 	return &tolltaxpb.GetAllOwnersResponse{Owner: r.Owner}, err
 }
+func (c *Client) CalculateDeductibleAmount(ctx context.Context, cartype string) (*tolltaxpb.CalculateAmountResponse, error) {
+	r, err := c.service.CalculateDeductibleAmount(ctx, &tolltaxpb.CalculateAmountRequest{Cartype: cartype})
+	if err != nil {
+		return nil, err
+	}
+	return r, nil
+}
 
 func (c *Client) GenerateMatrix(ctx context.Context, n int) ([][]int, int) {
 	a := make([][]int, n)

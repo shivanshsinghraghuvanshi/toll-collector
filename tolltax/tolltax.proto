@@ -61,7 +61,7 @@ message CreditResponse{
 }
 
 message CalculateAmountRequest{
-  Car car = 1;
+  string cartype = 1;
 }
 
 message CalculateAmountResponse{
@@ -86,9 +86,12 @@ message CreateNewOwnerResponse{
 service TollTaxService {
   rpc GenerateRFID(GenerateRFIDRequest) returns (GenerateRFIDResponse){}
   rpc ValidateRFID(ValidateRFIDRequest) returns(ValidateRFIDResponse){}
+  rpc CalculateDeductibleAmount(CalculateAmountRequest) returns(CalculateAmountResponse){}
+
+
   rpc DeductTransaction(DeductRequest) returns(DeductResponse){}
   rpc CreditTransaction(CreditRequest) returns(CreditResponse){}
-  rpc CalculateDeductibleAmount(CalculateAmountRequest) returns(CalculateAmountResponse){}
+
   rpc GetAllOwners(GetAllOwnersRequest) returns(GetAllOwnersResponse){}
   rpc CreateNewOwner(CreateNewOwnerRequest) returns(CreateNewOwnerResponse){}
 }

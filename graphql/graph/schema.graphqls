@@ -73,4 +73,6 @@ type Query{
   cars:[Car!]
   owners:[Owner!]
   tollbooths:[Tollbooth!]
+  deductions(cartype:String):Int!
+  carowners(ownerid:Int):Relation!
 }

@@ -15,6 +15,18 @@ type grpcServer struct {
 	service Service
 }
 
+func (g *grpcServer) CalculateDeductibleAmount(ctx context.Context, request *tolltaxpb.CalculateAmountRequest) (*tolltaxpb.CalculateAmountResponse, error) {
+	r, err := g.service.CalculateDeductibleAmount(ctx, request.Cartype)
+	if err != nil {
+		return nil, err
+	}
+	return &tolltaxpb.CalculateAmountResponse{Deducible: r}, nil
+}
+
+func (g *grpcServer) CreateNewOwner(ctx context.Context, request *tolltaxpb.CreateNewOwnerRequest) (*tolltaxpb.CreateNewOwnerResponse, error) {
+	panic("implement me")
+}
+
 func (g *grpcServer) GetAllOwners(ctx context.Context, request *tolltaxpb.GetAllOwnersRequest) (*tolltaxpb.GetAllOwnersResponse, error) {
 	r, err := g.service.GetAllOwners(ctx)
 	if err != nil {
@@ -49,10 +61,6 @@ func (g *grpcServer) DeductTransaction(ctx context.Context, request *tolltaxpb.D
 }
 
 func (g *grpcServer) CreditTransaction(ctx context.Context, request *tolltaxpb.CreditRequest) (*tolltaxpb.CreditResponse, error) {
-	panic("implement me")
-}
-
-func (g *grpcServer) CalculateDeductibleAmount(ctx context.Context, request *tolltaxpb.CalculateAmountRequest) (*tolltaxpb.CalculateAmountResponse, error) {
 	panic("implement me")
 }
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/graphql/graph/model"
 	"log"
 	"strconv"
@@ -12,6 +13,27 @@ type queryResolver struct {
 	server *Server
 }
 
+func (q queryResolver) Deductions(ctx context.Context, cartype *string) (int, error) {
+	if cartype != nil {
+		ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
+		defer cancel()
+		r, err := q.server.tolltaxClient.CalculateDeductibleAmount(ctx, *cartype)
+
+		if err != nil {
+			log.Fatal(err)
+			return 0, err
+		}
+
+		return int(r.Deducible), nil
+	} else {
+		return 0, errors.New("no id provided as an argument.")
+	}
+}
+
+func (q queryResolver) Carowners(ctx context.Context, ownerid *int) (*model.Relation, error) {
+	panic("implement me")
+}
+
 func (q queryResolver) Cars(ctx context.Context) ([]*model.Car, error) {
 	panic("implement me")
 }
@@ -19,24 +41,6 @@ func (q queryResolver) Cars(ctx context.Context) ([]*model.Car, error) {
 func (q queryResolver) Owners(ctx context.Context) ([]*model.Owner, error) {
 	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()
-
-	// Get single
-	//if id != nil {
-	//	r, err := r.server.tolltaxClient.GetOwners(ctx, *id)
-	//	if err != nil {
-	//		log.Println(err)
-	//		return nil, err
-	//	}
-	//	return []*Account{{
-	//		ID:   r.ID,
-	//		Name: r.Name,
-	//	}}, nil
-	//}
-
-	//skip, take := uint64(0), uint64(0)
-	//if pagination != nil {
-	//	skip, take = pagination.bounds()
-	//}
 
 	r, err := q.server.tolltaxClient.GetAllOwners(ctx)
 	if err != nil {

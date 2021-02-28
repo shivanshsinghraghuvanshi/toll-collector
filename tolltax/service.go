@@ -10,7 +10,7 @@ type Service interface {
 	ValidateRFID(ctx context.Context, rfid string, carid int64) (bool, error)
 	DeductTransaction(ctx context.Context, amount int32, owner *owner) bool
 	CreditTransaction(ctx context.Context, amount int32, tollbooth *tollbooth) bool
-	CalculateDeductibleAmount(ctx context.Context, amount int32, carnumber string) int32
+	CalculateDeductibleAmount(ctx context.Context, cartype string) (int32, error)
 	GetAllOwners(ctx context.Context) ([]*tolltaxpb.Owner, error)
 }
 
@@ -68,8 +68,12 @@ func (t *tolltaxService) CreditTransaction(ctx context.Context, amount int32, to
 	panic("implement me")
 }
 
-func (t *tolltaxService) CalculateDeductibleAmount(ctx context.Context, amount int32, carnumber string) int32 {
-	panic("implement me")
+func (t *tolltaxService) CalculateDeductibleAmount(ctx context.Context, cartype string) (int32, error) {
+	r, err := t.repository.CalculateDeductibleAmount(ctx, cartype)
+	if err != nil {
+		return 0, err
+	}
+	return r, nil
 }
 
 func NewService(r Repository) Service {
