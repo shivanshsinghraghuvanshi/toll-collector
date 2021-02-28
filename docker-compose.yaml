@@ -11,28 +11,17 @@ services:
       #DATABASE_URL: postgres://boomshiva:123456@tolltax_db/tollcollector?sslmode=disable
       DATABASE_URL: postgresql://postgres:admin123456@toll-collection.cr1qmxeqm6pf.us-east-1.rds.amazonaws.com:5432/tolltax?sslmode=disable
     restart: on-failure
-    #  catalog:
-    #    build:
-    #      context: .
-    #      dockerfile: ./catalog/app.dockerfile
-    #    depends_on:
-    #      - catalog_db
-    #    environment:
-    #      DATABASE_URL: http://catalog_db:9200
-    #    restart: on-failure
-    #
-    #  order:
-    #    build:
-    #      context: .
-    #      dockerfile: ./order/app.dockerfile
-    #    depends_on:
-    #      - order_db
-    #    environment:
-    #      DATABASE_URL: postgres://spidey:123456@order_db/spidey?sslmode=disable
-    #      ACCOUNT_SERVICE_URL: account:8080
-    #      CATALOG_SERVICE_URL: catalog:8080
-    #    restart: on-failure
-    #
+  payment:
+    build:
+      context: .
+      dockerfile: ./payment/app.dockerfile
+    depends_on:
+      - tolltax
+      - payment_db
+    environment:
+      DATABASE_URL: postgresql://postgres:admin123456@toll-collection.cr1qmxeqm6pf.us-east-1.rds.amazonaws.com:5432/tolltax?sslmode=disable
+      TOLLTAX_SERVICE_URL: tolltax:8080
+    restart: on-failure
   graphql:
     build:
       context: .
@@ -44,8 +33,16 @@ services:
     environment:
       TOLLTAX_SERVICE_URL: tolltax:8080
     restart: on-failure
-  #
   tolltax_db:
+    build:
+      context: ./tolltax
+      dockerfile: ./db.dockerfile
+    environment:
+      POSTGRES_DB: tollcollector
+      POSTGRES_USER: boomshiva
+      POSTGRES_PASSWORD: 123456
+    restart: unless-stopped
+  payment_db:
     build:
       context: ./tolltax
       dockerfile: ./db.dockerfile
