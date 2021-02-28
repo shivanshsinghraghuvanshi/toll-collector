@@ -1,7 +1,19 @@
 version: "3.7"
 
 services:
+  ui:
+    image: tolltaxcollectorui:latest
+    ports:
+      - 80:8080
+    build:
+      context: .
+      dockerfile: ./client/app.dockerfile
+    depends_on:
+      - graphql
+    environment:
+      GRAPH_URL: http://localhost:8000/graphql
   tolltax:
+    image: tolltax:latest
     build:
       context: .
       dockerfile: ./tolltax/app.dockerfile
@@ -11,6 +23,7 @@ services:
       DATABASE_URL: postgres://boomshiva:123456@tolltax_db/tollcollector?sslmode=disable
     restart: on-failure
   payment:
+    image: payment:latest
     build:
       context: .
       dockerfile: ./payment/app.dockerfile
@@ -22,6 +35,7 @@ services:
       TOLLTAX_SERVICE_URL: tolltax:8080
     restart: on-failure
   graphql:
+    image: tolltaxcollectorgraph:latest
     build:
       context: .
       dockerfile: ./graphql/app.dockerfile
@@ -34,6 +48,7 @@ services:
       TOLLTAX_SERVICE_URL: tolltax:8080
     restart: on-failure
   tolltax_db:
+    image: tolltaxdb:latest
     build:
       context: ./tolltax
       dockerfile: ./db.dockerfile
@@ -43,6 +58,7 @@ services:
       POSTGRES_PASSWORD: 123456
     restart: unless-stopped
   payment_db:
+    image: paymentdb:latest
     build:
       context: ./tolltax
       dockerfile: ./db.dockerfile
@@ -51,19 +67,3 @@ services:
       POSTGRES_USER: boomshiva
       POSTGRES_PASSWORD: 123456
     restart: unless-stopped
-#
-#  catalog_db:
-#    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
-#    environment:
-#      ES_JAVA_OPTS: -Xms1g -Xmx1g
-#      discovery.type: single-node
-#
-#  order_db:
-#    build:
-#      context: ./order
-#      dockerfile: ./db.dockerfile
-#    environment:
-#      POSTGRES_DB: spidey
-#      POSTGRES_USER: spidey
-#      POSTGRES_PASSWORD: 123456
-#    restart: unless-stopped
