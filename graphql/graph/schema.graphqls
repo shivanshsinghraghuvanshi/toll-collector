@@ -74,7 +74,7 @@ input NewTollTax{
 }
 input ValidateRFID{
     rfid:String!
-    carid:Int!
+    carnumber:String!
 }
 
 input PayTollTax{
@@ -116,6 +116,7 @@ type Mutation{
 type Query{
     cars:[Car!]
     owners:[Owner!]
+    netc:[Netc!]
     tollbooths:[Tollbooth!]
     deductions(cartype:String):Int!
     carowners(ownerid:Int):Relation!

@@ -14,6 +14,10 @@ type queryResolver struct {
 	server *Server
 }
 
+func (q queryResolver) Netc(ctx context.Context) ([]*model.Netc, error) {
+	panic("implement me")
+}
+
 func (q queryResolver) TransactionHistory(ctx context.Context, startDate *string, endDate *string) ([]*model.TransactionHistory, error) {
 	panic("implement me")
 }

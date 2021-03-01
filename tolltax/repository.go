@@ -3,7 +3,7 @@ package tolltax
 import (
 	"context"
 	"database/sql"
-	"errors"
+	"fmt"
 	_ "github.com/lib/pq"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/pb/tolltaxpb"
 	"log"
@@ -13,7 +13,7 @@ import (
 type Repository interface {
 	Close()
 	GenerateRFID(ctx context.Context, rfid string, ownerid int64, carnumber string) (string, error)
-	ValidateRFID(ctx context.Context, rfid string, carid int64) (bool, error)
+	ValidateRFID(ctx context.Context, rfid string, carnumber string) (bool, error)
 	CalculateDeductibleAmount(ctx context.Context, cartype string) (int32, error)
 	GetAllOwners(ctx context.Context) ([]*tolltaxpb.Owner, error)
 	CreateNewOwner(ctx context.Context, o *tolltaxpb.CreateNewOwnerRequest) (*tolltaxpb.CreateNewOwnerResponse, error)
@@ -66,31 +66,44 @@ func (r *postgresRepository) CreateNewOwner(ctx context.Context, o *tolltaxpb.Cr
 }
 
 func (r *postgresRepository) GenerateRFID(ctx context.Context, rfid string, ownerid int64, carnumber string) (string, error) {
+	carid, e := r.getCarID(ctx, carnumber)
+	if e != nil {
+		return "", e
+	}
+	res, ee := r.db.ExecContext(ctx, "INSERT INTO netc(ownerid,carid,rfid) VALUES($1,$2,$3)", ownerid, carid, rfid)
+	if ee != nil {
+		return "", ee
+	}
+	id, _ := res.LastInsertId()
+	rowsaf, _ := res.RowsAffected()
+	fmt.Println("The values from gene %v %v", id, rowsaf)
+	return rfid, nil
+}
 
+func (r *postgresRepository) getCarID(ctx context.Context, carnumber string) (int64, error) {
 	q, e := r.db.QueryContext(ctx, "SELECT carid from car where carnumber like $1", strings.ToUpper(carnumber))
 	if e != nil {
-		return "", errors.New("No car is associated with this car number")
+		return 0, e
 	}
-	defer r.Close()
+
 	var carid int64
 
 	for q.Next() {
 		err := q.Scan(&carid)
 		if err != nil {
 			log.Fatal("Error while fetching the carid")
-			return "", err
+			return 0, err
 		}
 	}
 	log.Printf("the carid is %v\n", carid)
-	_, err := r.db.ExecContext(ctx, "INSERT INTO netc(ownerid,carid,rfid) VALUES($1,$2,$3)", ownerid, carid, rfid)
-	if err != nil {
-		return "", err
-	}
-	return rfid, nil
+	return carid, nil
 }
-
-func (r *postgresRepository) ValidateRFID(ctx context.Context, rfid string, carid int64) (bool, error) {
-	rows, err := r.db.QueryContext(ctx, "SELECT COUNT(*) from netc where carid = $1 and rfid =$2", carid, rfid)
+func (r *postgresRepository) ValidateRFID(ctx context.Context, rfid string, carnumber string) (bool, error) {
+	carid, e := r.getCarID(ctx, carnumber)
+	if e != nil {
+		return false, e
+	}
+	rows, err := r.db.QueryContext(ctx, "SELECT COUNT(*) from netc where carid = $1 and rfid like $2", carid, rfid)
 	if err != nil {
 		return false, err
 	}

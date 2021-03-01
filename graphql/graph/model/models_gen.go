@@ -107,6 +107,6 @@ type TransactionHistory struct {
 }
 
 type ValidateRfid struct {
-	Rfid  string `json:"rfid"`
-	Carid int    `json:"carid"`
+	Rfid      string `json:"rfid"`
+	Carnumber string `json:"carnumber"`
 }

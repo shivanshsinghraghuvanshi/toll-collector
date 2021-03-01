@@ -47,6 +47,10 @@ func (r *queryResolver) Owners(ctx context.Context) ([]*model.Owner, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
+func (r *queryResolver) Netc(ctx context.Context) ([]*model.Netc, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 func (r *queryResolver) Tollbooths(ctx context.Context) ([]*model.Tollbooth, error) {
 	panic(fmt.Errorf("not implemented"))
 }

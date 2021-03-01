@@ -93,8 +93,8 @@ func (g *grpcServer) GenerateRFID(ctx context.Context, request *tolltaxpb.Genera
 }
 
 func (g *grpcServer) ValidateRFID(ctx context.Context, request *tolltaxpb.ValidateRFIDRequest) (*tolltaxpb.ValidateRFIDResponse, error) {
-	log.Printf("at server inputs are %v %v\n", request.Rfid, request.Carid)
-	r, err := g.service.ValidateRFID(ctx, request.Rfid, request.Carid)
+	log.Printf("at server inputs are %v %v\n", request.Rfid, request.Carnumber)
+	r, err := g.service.ValidateRFID(ctx, request.Rfid, request.Carnumber)
 	if err != nil {
 		return nil, err
 	}

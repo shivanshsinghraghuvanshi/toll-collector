@@ -35,7 +35,7 @@ func (m mutationResolver) CreateTollTax(ctx context.Context, input *model.NewTol
 func (m mutationResolver) ValidateRfid(ctx context.Context, input model.ValidateRfid) (bool, error) {
 	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
-	r, err := m.server.tolltaxClient.ValidateRFID(ctx, input.Rfid, int64(input.Carid))
+	r, err := m.server.tolltaxClient.ValidateRFID(ctx, input.Rfid, input.Carnumber)
 	if err != nil {
 		log.Println(err)
 		return false, err

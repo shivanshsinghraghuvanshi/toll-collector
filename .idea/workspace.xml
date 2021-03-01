@@ -6,9 +6,10 @@
       <change beforePath="$PROJECT_DIR$/graphql/graph/generated/generated.go" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/graph/generated/generated.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphql/graph/model/models_gen.go" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/graph/model/models_gen.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphql/graph/schema.graphqls" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/graph/schema.graphqls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphql/graph/schema.resolvers.go" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/graph/schema.resolvers.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphql/mutation_resolver.go" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/mutation_resolver.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphql/query_resolver.go" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/query_resolver.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tolltax/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/cmd/tolltax/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/cmd/tolltax/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tolltax/pb/tolltaxpb/tolltax.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/pb/tolltaxpb/tolltax.pb.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tolltax/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/repository.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tolltax/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/server.go" afterDir="false" />
@@ -124,7 +125,7 @@
       <workItem from="1614494203229" duration="19005000" />
       <workItem from="1614518094293" duration="19622000" />
       <workItem from="1614541125393" duration="9361000" />
-      <workItem from="1614583279934" duration="11135000" />
+      <workItem from="1614583279934" duration="19194000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1614346462854</created>
@@ -441,7 +442,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614590516172</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="generate new rfid">
+      <created>1614601305432</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1614601305432</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -461,8 +469,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Added Testing Code for get All Owners" />
-    <MESSAGE value="Code till DB Correction" />
     <MESSAGE value="Code till working grapgh API" />
     <MESSAGE value="Validate RFID implementation" />
     <MESSAGE value="Get Deductible Amount Implementation" />
@@ -486,7 +492,9 @@
     <MESSAGE value="Fix typo in service" />
     <MESSAGE value="ui integration" />
     <MESSAGE value="Generate Matrix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Generate Matrix" />
+    <MESSAGE value="generate new rfid" />
+    <MESSAGE value="fixed issue with validate rfid" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed issue with validate rfid" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

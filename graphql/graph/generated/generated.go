@@ -104,6 +104,7 @@ type ComplexityRoot struct {
 		Cars               func(childComplexity int) int
 		Deductions         func(childComplexity int, cartype *string) int
 		GenerateMatrix     func(childComplexity int, num int) int
+		Netc               func(childComplexity int) int
 		Ownerinfo          func(childComplexity int, rfid *string, action *int) int
 		Owners             func(childComplexity int) int
 		Tollboothinfo      func(childComplexity int, id *int, action *int) int
@@ -150,6 +151,7 @@ type MutationResolver interface {
 type QueryResolver interface {
 	Cars(ctx context.Context) ([]*model.Car, error)
 	Owners(ctx context.Context) ([]*model.Owner, error)
+	Netc(ctx context.Context) ([]*model.Netc, error)
 	Tollbooths(ctx context.Context) ([]*model.Tollbooth, error)
 	Deductions(ctx context.Context, cartype *string) (int, error)
 	Carowners(ctx context.Context, ownerid *int) (*model.Relation, error)
@@ -482,6 +484,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.GenerateMatrix(childComplexity, args["num"].(int)), true
 
+	case "Query.netc":
+		if e.complexity.Query.Netc == nil {
+			break
+		}
+
+		return e.complexity.Query.Netc(childComplexity), true
+
 	case "Query.ownerinfo":
 		if e.complexity.Query.Ownerinfo == nil {
 			break
@@ -770,7 +779,7 @@ input NewTollTax{
 }
 input ValidateRFID{
     rfid:String!
-    carid:Int!
+    carnumber:String!
 }
 
 input PayTollTax{
@@ -812,6 +821,7 @@ type Mutation{
 type Query{
     cars:[Car!]
     owners:[Owner!]
+    netc:[Netc!]
     tollbooths:[Tollbooth!]
     deductions(cartype:String):Int!
     carowners(ownerid:Int):Relation!
@@ -2288,6 +2298,38 @@ func (ec *executionContext) _Query_owners(ctx context.Context, field graphql.Col
 	res := resTmp.([]*model.Owner)
 	fc.Result = res
 	return ec.marshalOOwner2ᚕᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐOwnerᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Query_netc(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().Netc(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.Netc)
+	fc.Result = res
+	return ec.marshalONetc2ᚕᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐNetcᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_tollbooths(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -4434,11 +4476,11 @@ func (ec *executionContext) unmarshalInputValidateRFID(ctx context.Context, obj 
 			if err != nil {
 				return it, err
 			}
-		case "carid":
+		case "carnumber":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("carid"))
-			it.Carid, err = ec.unmarshalNInt2int(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("carnumber"))
+			it.Carnumber, err = ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -4799,6 +4841,17 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_owners(ctx, field)
+				return res
+			})
+		case "netc":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_netc(ctx, field)
 				return res
 			})
 		case "tollbooths":
@@ -5361,6 +5414,16 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 	return res
 }
 
+func (ec *executionContext) marshalNNetc2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐNetc(ctx context.Context, sel ast.SelectionSet, v *model.Netc) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	return ec._Netc(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalNNewOwner2githubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐNewOwner(ctx context.Context, v interface{}) (model.NewOwner, error) {
 	res, err := ec.unmarshalInputNewOwner(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -5797,6 +5860,46 @@ func (ec *executionContext) marshalOMatrixResponse2ᚖgithubᚗcomᚋshivanshsin
 		return graphql.Null
 	}
 	return ec._MatrixResponse(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalONetc2ᚕᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐNetcᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Netc) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNNetc2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐNetc(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+	return ret
 }
 
 func (ec *executionContext) unmarshalONewCar2ᚖgithubᚗcomᚋshivanshsinghraghuvanshiᚋtollᚑcollectorᚋgraphqlᚋgraphᚋmodelᚐNewCar(ctx context.Context, v interface{}) (*model.NewCar, error) {

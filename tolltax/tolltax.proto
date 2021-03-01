@@ -36,7 +36,7 @@ message GenerateRFIDResponse {
 
 message ValidateRFIDRequest{
   string rfid = 1;
-  int64 carid = 2;
+  string carnumber = 2;
 }
 
 message ValidateRFIDResponse{
