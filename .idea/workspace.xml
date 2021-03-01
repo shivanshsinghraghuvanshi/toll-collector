@@ -2,19 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9aae2851-6427-4ca2-813e-eb142d17b589" name="Default Changelist" comment="Setup Docker Compose for payment Service with dependencies">
+      <change afterPath="$PROJECT_DIR$/client/src/components/Home.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/Matrix.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/Reports.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/components/TollBooth.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/service/Service.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphql/graph/generated/generated.go" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/graph/generated/generated.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphql/graph/model/models_gen.go" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/graph/model/models_gen.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphql/graph/schema.graphqls" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/graph/schema.graphqls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphql/graph/schema.resolvers.go" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/graph/schema.resolvers.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphql/mutation_resolver.go" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/mutation_resolver.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphql/query_resolver.go" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/query_resolver.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/pb/tolltaxpb/tolltax.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/pb/tolltaxpb/tolltax.pb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/tolltax.proto" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/tolltax.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphql/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +122,8 @@
       <workItem from="1614494203229" duration="19005000" />
       <workItem from="1614518094293" duration="19622000" />
       <workItem from="1614541125393" duration="9361000" />
-      <workItem from="1614583279934" duration="19194000" />
+      <workItem from="1614583279934" duration="19435000" />
+      <workItem from="1614615537306" duration="311000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1614346462854</created>
@@ -449,7 +447,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614601305432</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="fixed issue with validate rfid">
+      <created>1614609055102</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1614609055102</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
