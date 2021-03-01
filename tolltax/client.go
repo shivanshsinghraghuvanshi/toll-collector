@@ -38,11 +38,11 @@ func (c *Client) ValidateRFID(ctx context.Context, rfid string, carid int64) (*t
 	log.Printf("return is %v\n", r.Ok)
 	return r, nil
 }
-func (c *Client) GenerateRFID(ctx context.Context, ownerid, carid int64) (*tolltaxpb.GenerateRFIDResponse, error) {
+func (c *Client) GenerateRFID(ctx context.Context, ownerid int64, carnumber string) (*tolltaxpb.GenerateRFIDResponse, error) {
 
 	p := &tolltaxpb.GenerateRFIDRequest{Netc: &tolltaxpb.Netc{
 		Fkownerid: ownerid,
-		Fkcarid:   carid,
+		Carnumber: carnumber,
 	}}
 	r, err := c.service.GenerateRFID(ctx, p)
 	if err != nil {

@@ -7,7 +7,7 @@ import (
 )
 
 type Service interface {
-	GenerateRFID(ctx context.Context, rfid string, ownerid, carid int64) (string, error)
+	GenerateRFID(ctx context.Context, rfid string, ownerid int64, carnumber string) (string, error)
 	ValidateRFID(ctx context.Context, rfid string, carid int64) (bool, error)
 	DeductTransaction(ctx context.Context, amount int32, owner *owner) bool
 	CreditTransaction(ctx context.Context, amount int32, tollbooth *tollbooth) bool
@@ -64,8 +64,8 @@ func (t *tolltaxService) GetAllOwners(ctx context.Context) ([]*tolltaxpb.Owner, 
 	return r, nil
 }
 
-func (t *tolltaxService) GenerateRFID(ctx context.Context, rfid string, ownerid, carid int64) (string, error) {
-	r, err := t.repository.GenerateRFID(ctx, rfid, ownerid, carid)
+func (t *tolltaxService) GenerateRFID(ctx context.Context, rfid string, ownerid int64, carnumber string) (string, error) {
+	r, err := t.repository.GenerateRFID(ctx, rfid, ownerid, carnumber)
 	if err != nil {
 		return "", err
 	}

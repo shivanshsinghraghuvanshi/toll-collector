@@ -59,8 +59,8 @@ func (m mutationResolver) CreateRfid(ctx context.Context, input *model.NewRfid) 
 	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 	oId, _ := strconv.ParseInt(input.Ownerid, 10, 64)
-	cID, _ := strconv.ParseInt(input.Carid, 10, 64)
-	r, err := m.server.tolltaxClient.GenerateRFID(ctx, oId, cID)
+	//cID, _ := strconv.ParseInt(input.Carid, 10, 64)
+	r, err := m.server.tolltaxClient.GenerateRFID(ctx, oId, input.Carnumber)
 	if err != nil {
 		log.Println(err)
 		return "", err

@@ -748,7 +748,7 @@ type TollBoothInfoDetails{
 }
 input NewRFID{
     ownerid:String!
-    carid:String!
+    carnumber:String!
 }
 
 input NewOwner{
@@ -4306,11 +4306,11 @@ func (ec *executionContext) unmarshalInputNewRFID(ctx context.Context, obj inter
 			if err != nil {
 				return it, err
 			}
-		case "carid":
+		case "carnumber":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("carid"))
-			it.Carid, err = ec.unmarshalNString2string(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("carnumber"))
+			it.Carnumber, err = ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}

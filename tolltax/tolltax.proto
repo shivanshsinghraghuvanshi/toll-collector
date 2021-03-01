@@ -17,7 +17,7 @@ message Car{
 
 message Netc{
   int64 fkownerid = 1;
-  int64 fkcarid = 2;
+  string carnumber =2;
 }
 
 message TollBooth{

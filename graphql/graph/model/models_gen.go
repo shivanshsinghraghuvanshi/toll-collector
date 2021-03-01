@@ -47,8 +47,8 @@ type NewOwner struct {
 }
 
 type NewRfid struct {
-	Ownerid string `json:"ownerid"`
-	Carid   string `json:"carid"`
+	Ownerid   string `json:"ownerid"`
+	Carnumber string `json:"carnumber"`
 }
 
 type NewTollBooth struct {

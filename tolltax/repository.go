@@ -3,6 +3,7 @@ package tolltax
 import (
 	"context"
 	"database/sql"
+	"errors"
 	_ "github.com/lib/pq"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/tolltax/pb/tolltaxpb"
 	"log"
@@ -11,7 +12,7 @@ import (
 
 type Repository interface {
 	Close()
-	GenerateRFID(ctx context.Context, rfid string, ownerid, carid int64) (string, error)
+	GenerateRFID(ctx context.Context, rfid string, ownerid int64, carnumber string) (string, error)
 	ValidateRFID(ctx context.Context, rfid string, carid int64) (bool, error)
 	CalculateDeductibleAmount(ctx context.Context, cartype string) (int32, error)
 	GetAllOwners(ctx context.Context) ([]*tolltaxpb.Owner, error)
@@ -64,7 +65,23 @@ func (r *postgresRepository) CreateNewOwner(ctx context.Context, o *tolltaxpb.Cr
 	panic("implement me")
 }
 
-func (r *postgresRepository) GenerateRFID(ctx context.Context, rfid string, ownerid, carid int64) (string, error) {
+func (r *postgresRepository) GenerateRFID(ctx context.Context, rfid string, ownerid int64, carnumber string) (string, error) {
+
+	q, e := r.db.QueryContext(ctx, "SELECT carid from car where carnumber like $1", strings.ToUpper(carnumber))
+	if e != nil {
+		return "", errors.New("No car is associated with this car number")
+	}
+	defer r.Close()
+	var carid int64
+
+	for q.Next() {
+		err := q.Scan(&carid)
+		if err != nil {
+			log.Fatal("Error while fetching the carid")
+			return "", err
+		}
+	}
+	log.Printf("the carid is %v\n", carid)
 	_, err := r.db.ExecContext(ctx, "INSERT INTO netc(ownerid,carid,rfid) VALUES($1,$2,$3)", ownerid, carid, rfid)
 	if err != nil {
 		return "", err

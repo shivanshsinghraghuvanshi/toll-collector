@@ -82,7 +82,7 @@ func (g *grpcServer) GetAllOwners(ctx context.Context, request *tolltaxpb.GetAll
 
 func (g *grpcServer) GenerateRFID(ctx context.Context, request *tolltaxpb.GenerateRFIDRequest) (*tolltaxpb.GenerateRFIDResponse, error) {
 	u, _ := uuid.NewV4()
-	_, err := g.service.GenerateRFID(ctx, u.String(), request.Netc.Fkownerid, request.Netc.Fkcarid)
+	_, err := g.service.GenerateRFID(ctx, u.String(), request.Netc.Fkownerid, request.Netc.Carnumber)
 	if err != nil {
 		return nil, err
 	}

@@ -52,7 +52,7 @@ type TollBoothInfoDetails{
 }
 input NewRFID{
     ownerid:String!
-    carid:String!
+    carnumber:String!
 }
 
 input NewOwner{

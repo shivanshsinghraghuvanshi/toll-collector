@@ -1,12 +1,11 @@
 package main
 
 import (
-	"log"
-	"time"
-
 	"github.com/kelseyhightower/envconfig"
 	"github.com/shivanshsinghraghuvanshi/toll-collector/tolltax"
 	"github.com/tinrab/retry"
+	"log"
+	"time"
 )
 
 type Config struct {
