@@ -105,7 +105,8 @@ func (c *Client) PayTollTax(ctx context.Context, rfid string, tollid int64, amou
 }
 
 func (c *Client) GenerateMatrix(ctx context.Context, n int) ([]int, int) {
-
+	// TODO optimization if function can be reuse ?
+	// TODO optimization if can be run all movement in concurrent ?
 	var s int
 	if (n*n)%2 == 1 {
 		s = ((n * n) / 2) + 1
@@ -117,15 +118,16 @@ func (c *Client) GenerateMatrix(ctx context.Context, n int) ([]int, int) {
 
 func even(n int) []int {
 	left, top, right, bottom := 0, 0, n-1, n-1
-	sz := n * n
-	s := make([]int, sz)
+	s := make([]int, n*n)
 	i := 1
 	for left < right {
+		// move top to right
 		for c := left; c <= right; c++ {
 			s[top*n+c] = i
 			i++
 		}
 		top++
+		//move top to bottom
 		for r := top; r <= bottom; r++ {
 			s[r*n+right] = i
 			i++
@@ -134,11 +136,13 @@ func even(n int) []int {
 		if top == bottom {
 			break
 		}
+		//move bottom to left
 		for c := right; c >= left; c-- {
 			s[bottom*n+c] = i
 			i++
 		}
 		bottom--
+		// move left to top
 		for r := bottom; r >= top; r-- {
 			s[r*n+left] = i
 			i++
@@ -152,15 +156,16 @@ func even(n int) []int {
 
 func odd(n int) []int {
 	left, top, right, bottom := 0, 0, n-1, n-1
-	sz := n * n
-	s := make([]int, sz)
+	s := make([]int, n*n)
 	i := 1
 	for left < right {
+		//start from bottom to left
 		for c := right; c >= left; c-- {
 			s[bottom*n+c] = i
 			i++
 		}
 		bottom--
+		//move left to top
 		for r := bottom; r >= top; r-- {
 			s[r*n+left] = i
 			i++
@@ -170,12 +175,13 @@ func odd(n int) []int {
 		if top == bottom {
 			break
 		}
-
+		//move top to right
 		for c := left; c <= right; c++ {
 			s[top*n+c] = i
 			i++
 		}
 		top++
+		// move right to bottom
 		for r := top; r <= bottom; r++ {
 			s[r*n+right] = i
 			i++
