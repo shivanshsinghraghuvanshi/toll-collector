@@ -47,7 +47,20 @@ func (q queryResolver) AccountDetails(ctx context.Context, accountNumber int) (*
 }
 
 func (q queryResolver) GenerateMatrix(ctx context.Context, num int) (*model.MatrixResponse, error) {
-	panic("implement me")
+	if num == 0 {
+		return nil, errors.New("Input Cannot be 0")
+	} else {
+		ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
+		defer cancel()
+
+		a, s := q.server.tolltaxClient.GenerateMatrix(ctx, num)
+
+		return &model.MatrixResponse{
+			Special: s,
+			Matrix:  a,
+		}, nil
+	}
+
 }
 
 func (q queryResolver) Ownerinfo(ctx context.Context, rfid *string, action *int) (*model.OwnerInfoDetails, error) {

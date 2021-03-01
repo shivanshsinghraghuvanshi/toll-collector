@@ -24,8 +24,8 @@ type Deductible struct {
 }
 
 type MatrixResponse struct {
-	Special int    `json:"special"`
-	Matrix  []*int `json:"matrix"`
+	Special int   `json:"special"`
+	Matrix  []int `json:"matrix"`
 }
 
 type Netc struct {

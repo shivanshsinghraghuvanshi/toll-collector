@@ -3,8 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="9aae2851-6427-4ca2-813e-eb142d17b589" name="Default Changelist" comment="Setup Docker Compose for payment Service with dependencies">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/payment/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tolltax/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/server.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphql/graph/generated/generated.go" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/graph/generated/generated.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphql/graph/model/models_gen.go" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/graph/model/models_gen.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphql/graph/schema.graphqls" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/graph/schema.graphqls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphql/query_resolver.go" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/query_resolver.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tolltax/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/tolltax/client.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +118,8 @@
       <workItem from="1614451218109" duration="242000" />
       <workItem from="1614494203229" duration="19005000" />
       <workItem from="1614518094293" duration="19622000" />
-      <workItem from="1614541125393" duration="9006000" />
+      <workItem from="1614541125393" duration="9361000" />
+      <workItem from="1614583279934" duration="5351000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1614346462854</created>
@@ -403,7 +408,21 @@
       <option name="project" value="LOCAL" />
       <updated>1614549085253</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Fix typo in service">
+      <created>1614550189036</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1614550189036</updated>
+    </task>
+    <task id="LOCAL-00043" summary="ui integration">
+      <created>1614550478459</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1614550478459</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -423,8 +442,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Graphql Support" />
-    <MESSAGE value="Changes with graphql server" />
     <MESSAGE value="Added Generate RFID end to end Testing" />
     <MESSAGE value="Added Testing Code for get All Owners" />
     <MESSAGE value="Code till DB Correction" />
@@ -448,7 +465,9 @@
     <MESSAGE value="Fixed Protobuf Issue" />
     <MESSAGE value="Correction in url config for payment service binding" />
     <MESSAGE value="Worked on Transaction API" />
-    <option name="LAST_COMMIT_MESSAGE" value="Worked on Transaction API" />
+    <MESSAGE value="Fix typo in service" />
+    <MESSAGE value="ui integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="ui integration" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

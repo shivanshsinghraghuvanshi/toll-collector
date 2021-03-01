@@ -93,7 +93,7 @@ type TransactionHistory{
 }
 type MatrixResponse{
     special:Int!
-    matrix:[Int]
+    matrix:[Int!]
 }
 type AccountDetails{
     Accountnumber:Int

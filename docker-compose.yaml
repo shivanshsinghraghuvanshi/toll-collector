@@ -1,17 +1,17 @@
 version: "3.7"
 
 services:
-  ui:
-    image: tolltaxcollectorui:latest
-    ports:
-      - 4200:3000
-    build:
-      context: .
-      dockerfile: ./client/app.dockerfile
-    depends_on:
-      - graphql
-    environment:
-      GRAPH_URL: http://localhost:8000/graphql
+  # ui:
+  #   image: tolltaxcollectorui:latest
+  #   ports:
+  #     - 4200:3000
+  #   build:
+  #     context: .
+  #     dockerfile: ./client/app.dockerfile
+  #   depends_on:
+  #     - graphql
+  #   environment:
+  #     GRAPH_URL: http://localhost:8000/graphql
   tolltax:
     image: tolltax:latest
     build:
