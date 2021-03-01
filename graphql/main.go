@@ -2,7 +2,9 @@ package main
 
 import (
 	"github.com/99designs/gqlgen/handler"
+	"github.com/go-chi/chi"
 	"github.com/kelseyhightower/envconfig"
+	"github.com/rs/cors"
 	"log"
 	"net/http"
 )
@@ -14,6 +16,13 @@ type AppConfig struct {
 
 func main() {
 	var cfg AppConfig
+
+	router := chi.NewRouter()
+	router.Use(cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowCredentials: true,
+		Debug:            true,
+	}).Handler)
 	err := envconfig.Process("", &cfg)
 	if err != nil {
 		log.Fatal(err)

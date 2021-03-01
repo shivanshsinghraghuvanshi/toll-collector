@@ -2,16 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9aae2851-6427-4ca2-813e-eb142d17b589" name="Default Changelist" comment="Setup Docker Compose for payment Service with dependencies">
-      <change afterPath="$PROJECT_DIR$/client/src/components/Home.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/Matrix.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/Reports.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/components/TollBooth.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/service/Service.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/go-chi/chi/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/go-chi/chi/.travis.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/go-chi/chi/CHANGELOG.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/go-chi/chi/CONTRIBUTING.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/go-chi/chi/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/go-chi/chi/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/go-chi/chi/chain.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/go-chi/chi/chi.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/go-chi/chi/context.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/go-chi/chi/mux.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/go-chi/chi/tree.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/rs/cors/.travis.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/rs/cors/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/rs/cors/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/rs/cors/cors.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/rs/cors/go.mod" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/github.com/rs/cors/utils.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphql/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/modules.txt" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/modules.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +136,7 @@
       <workItem from="1614518094293" duration="19622000" />
       <workItem from="1614541125393" duration="9361000" />
       <workItem from="1614583279934" duration="19435000" />
-      <workItem from="1614615537306" duration="311000" />
+      <workItem from="1614615537306" duration="2171000" />
     </task>
     <task id="LOCAL-00001" summary="First Commit">
       <created>1614346462854</created>
@@ -454,7 +467,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614609055102</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="Ui Changes Commit">
+      <created>1614623166211</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1614623166211</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -474,7 +494,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Code till working grapgh API" />
     <MESSAGE value="Validate RFID implementation" />
     <MESSAGE value="Get Deductible Amount Implementation" />
     <MESSAGE value="Generated protobuf definations for vehicle details and owners details" />
@@ -499,7 +518,8 @@
     <MESSAGE value="Generate Matrix" />
     <MESSAGE value="generate new rfid" />
     <MESSAGE value="fixed issue with validate rfid" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed issue with validate rfid" />
+    <MESSAGE value="Ui Changes Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ui Changes Commit" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

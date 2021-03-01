@@ -4,10 +4,12 @@ go 1.15
 
 require (
 	github.com/99designs/gqlgen v0.13.0
+	github.com/go-chi/chi v3.3.2+incompatible
 	github.com/golang/protobuf v1.4.3
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/lib/pq v1.9.0
 	github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d
+	github.com/rs/cors v1.6.0
 	github.com/tinrab/retry v1.0.0
 	github.com/vektah/gqlparser/v2 v2.1.0
 	golang.org/x/net v0.0.0-20210226172049-e18ecbb05110 // indirect
